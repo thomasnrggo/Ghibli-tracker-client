@@ -1,0 +1,42 @@
+@import './_Vars.scss';
+
+.btn {
+    display: flex;
+    align-items: center;
+    width: auto;
+    height: fit-content;
+    padding: 0.75rem 1.25rem;
+    text-transform: uppercase;
+    font-family: $text-font;
+    font-weight: 700;
+    font-size: 0.8rem;
+    line-height: 0.9rem;
+    border: none;
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    -ms-border-radius: 100px;
+    -o-border-radius: 100px;
+
+    i {
+        font-size: 1.2rem;
+        margin-right: 0.5rem;
+    }
+
+    &-primary {
+        color: $text-color;
+        background: linear-gradient(to right, $primary-color, $secondary-color, $primary-color);
+        background-size: 200%;
+        background-position: left;
+        transition: background 0.3s ease-in-out;
+        -webkit-transition: background 0.3s ease-in-out;
+        -moz-transition: background 0.3s ease-in-out;
+        -ms-transition: background 0.3s ease-in-out;
+        -o-transition: background 0.3s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+            background-position: right;
+        }
+}
+}
