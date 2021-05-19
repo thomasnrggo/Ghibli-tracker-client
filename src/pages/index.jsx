@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import Layout from '../common/components/containers/Layout/Layout';
+import Card from '../common/components/containers/Card/Card';
 
 export default function Home() {
   return (
@@ -14,7 +15,9 @@ export default function Home() {
       </Head>
 
       <Layout>
-        <p className="text">Hello World!</p>
+        <div className="films__container">
+          <Card/>
+        </div>
       </Layout>
     </>
   );

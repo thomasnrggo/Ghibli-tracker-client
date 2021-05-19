@@ -25,5 +25,6 @@ module.exports = {
     'no-shadow': ['off'],
     'react/forbid-prop-types': ['off'],
     'react/jsx-props-no-spreading': ['off'],
+    "ignoreDestructuring": true
   },
 };

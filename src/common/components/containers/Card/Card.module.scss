@@ -1,0 +1,53 @@
+@import '../../../../styles/Vars';
+
+.card__container {
+  background: $container-color;
+  color: $text-color;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: $shadow;
+
+  display: flex;
+  flex-direction: row;
+
+  cursor: pointer;
+  transition: ease .4s;
+
+  &:hover {
+    transform: scale(1.01);
+  }
+
+  .card__thumbnail{
+    width: 40%;
+    @media (min-width: $iphoneX) {
+      width: 35%;
+    }
+  }
+
+  .card__detail{
+    width: 60%;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+
+    @media (max-width: $iphoneX) {
+      width: 60%;
+      padding: 12px;
+    }
+
+    .title {
+      font-family: $heading-font;
+      font-size: 24px;
+      @media (max-width: $iphoneX) {
+        font-size: 18px;
+      }
+    }
+
+    .description {
+      display: none;
+      @media (min-width: 768px) {
+        display: block;
+      }
+    }
+  }
+}

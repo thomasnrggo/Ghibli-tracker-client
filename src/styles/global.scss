@@ -90,6 +90,17 @@ p {
     padding-left: 15px;
 }
 
+.img-fluid{
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+
+// TODO: define media querys of Iphone 8, X, 11 and saved as sass variables
+// TODO: define media querys of Xiaomi, Huawei y Samsung (most populars)
+
+
 @media (min-width: 576px) {
     .container {
         max-width: 540px;
