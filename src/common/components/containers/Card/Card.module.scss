@@ -17,10 +17,14 @@
     transform: scale(1.01);
   }
 
+
   .card__thumbnail{
     width: 40%;
     @media (min-width: $iphoneX) {
       width: 35%;
+    }
+    .img-fluid{
+      object-fit: cover;
     }
   }
 

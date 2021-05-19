@@ -6,7 +6,10 @@ export default function Layout({ children }) {
     <>
       <Header className="container" />
 
-      <main className="main container">{children}</main>
+      {/* TODO: define if we are gointo to use a fluid container */}
+      <main className="main container">
+        {children}
+      </main>
     </>
   );
 }

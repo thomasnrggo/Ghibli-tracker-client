@@ -84,10 +84,12 @@ p {
 }
 
 .container {
-    margin-right: auto;
-    margin-left: auto;
-    padding-right: 15px;
-    padding-left: 15px;
+    margin: 0 auto;
+
+    &-fluid{
+        width: 96%;
+        margin: 0 auto;
+    }
 }
 
 .img-fluid{
