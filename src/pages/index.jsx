@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import Layout from '../common/components/containers/Layout/Layout';
+import Layout from '../common/components/Layout';
 
 export default function Home() {
   return (
