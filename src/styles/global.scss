@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Zilla+Slab:ital@0;1&display=swap');
 @import './_Vars.scss';
 @import './_Button.scss';
-@import './_Header.scss';
 @import './_Footer.scss';
 
 :root {
@@ -104,6 +103,13 @@ p {
 
     &:hover {
         opacity: 0.7;    
+    }
+}
+
+.main{
+    padding-top: 7em;
+    @media (max-width: $iphoneX) {
+        padding-top: 5.5em;
     }
 }
 

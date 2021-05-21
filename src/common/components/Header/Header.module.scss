@@ -1,5 +1,38 @@
 @import '../../../styles/Vars';
 
 .header{
+    position: fixed;
+    width: 100%;
+    max-width: 100%;
+    z-index: 99;
 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .6rem ;
+    
+    color: $text-color;
+    background: darken($color: $bg-color, $amount: 3%);
+
+    @media (min-width: $iphoneX) {
+      padding: .6em 1.5em;
+    }
+
+    .logo{
+      max-width: 150px;
+    }
+
+    .title {
+      font-size: 18px;
+    }
+
+    .icon{
+      cursor: pointer;
+      font-size: 26px;
+      transition: ease .4s;
+
+      &:hover{
+        color: lighten($color: $brand-color, $amount: 25%);
+      }
+    }
 }
