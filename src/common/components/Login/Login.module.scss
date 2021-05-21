@@ -1,0 +1,50 @@
+@import '../../../styles/_Vars.scss';
+
+.login {
+    display: none;
+    position: fixed;
+
+    &.isOpen {
+        display: block;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    &__container {
+        position: relative;
+        padding: 1.9rem;
+        margin: auto;
+        margin-top: 4rem;
+        width: 100%;
+        min-width: 280px;
+        max-width: 500px;
+        background: $container-color;
+        box-shadow: 0px 30px 40px rgba(0, 0, 0, 0.1);
+        border-radius: 0.4rem;
+        -webkit-border-radius: 0.4rem;
+        -moz-border-radius: 0.4rem;
+        -ms-border-radius: 0.4rem;
+        -o-border-radius: 0.4rem;
+    }
+
+    
+    &__title {
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    &__btn {
+        position: relative;
+        margin-top: 1rem;
+        width: 100%;
+
+        &_icon {
+            position: absolute;
+            top: 0.6rem;
+            right: 0.75rem;
+        }
+    }
+}

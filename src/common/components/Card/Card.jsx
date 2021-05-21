@@ -11,14 +11,13 @@ export default function Card(props) {
     original_title_romanised,
     description,
     director,
-    rt_score = 97 / 5,
+    rt_score,
     release_date,
     running_time,
   } = props;
   const id = 'hola';
 
   const handleOnCardClik = () => {
-    console.log(rt_score);
     // let id = 'test';
     // router.push(`/film/${id}`);
   };
@@ -37,7 +36,9 @@ export default function Card(props) {
         />
       </div>
       <div className={styles.card__detail}>
-        <h3 className={styles.subtitle}>{original_title || '天空の城ラピュタ'}</h3>
+        <h3 className={styles.subtitle}>
+          {original_title || '天空の城ラピュタ'}
+        </h3>
         <h2 className={styles.title}>{title || 'Castle in the Sky'}</h2>
         <div className={styles.rating}>
           <ReactStars

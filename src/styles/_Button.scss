@@ -3,6 +3,7 @@
 .btn {
     display: flex;
     align-items: center;
+    justify-content: center;
     width: auto;
     height: fit-content;
     padding: 0.75rem 1.25rem;
@@ -17,10 +18,17 @@
     -moz-border-radius: 100px;
     -ms-border-radius: 100px;
     -o-border-radius: 100px;
+    cursor: pointer;
+    transition: opacity 0.3s ease-in-out;
+    -webkit-transition: opacity 0.3s ease-in-out;
+    -moz-transition: opacity 0.3s ease-in-out;
+    -ms-transition: opacity 0.3s ease-in-out;
+    -o-transition: opacity 0.3s ease-in-out;
 
     i {
         font-size: 1.2rem;
         margin-right: 0.5rem;
+        color: #fff;
     }
 
     &-primary {
@@ -33,10 +41,46 @@
         -moz-transition: background 0.3s ease-in-out;
         -ms-transition: background 0.3s ease-in-out;
         -o-transition: background 0.3s ease-in-out;
-        cursor: pointer;
 
         &:hover {
             background-position: right;
         }
-}
+    }
+
+    &-close {
+        top: 0;
+        right: 0;
+        position: absolute;
+        padding: 1rem;
+        background: transparent;
+
+        i {
+            margin: 0;
+            cursor: pointer;
+
+        }
+
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+
+    &-facebook {
+        margin-top: 0;
+        color: #fff;
+        background-color: #3b5998;
+
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+
+    &-twitter {
+        color: #fff;
+        background-color: #1da1f2;
+
+        &:hover {
+            opacity: 0.7;
+        }
+    }
 }
