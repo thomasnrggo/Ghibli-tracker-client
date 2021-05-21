@@ -1,26 +1,38 @@
 
-.detailsContainer {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  
-  .col {
-    max-width: 400px;
-    margin: 15px;
-    height: auto;
-    width: 80%;
-  }
-  
-  .movieImage {
-    border-radius: 15px;
-  }
-  
-  .movieDetails {
-    font-size: 1.5rem;
-  }
-  
-  .firstItem {
-    margin-top: 0;
-  }
-  
+@import '../../../../styles/Vars';
+
+.container{
+    
+    .container h1{
+        color:$text-color; 
+        width: 260px;
+        margin: 0 auto;
+        text-transform: uppercase;
+    }
+    .container__detail {
+        display: flex;
+        color: $text-color;
+        justify-content: center;
+        flex-wrap: wrap;
+        .col {
+            max-width: 400px;
+            margin: 15px;
+            height: auto;
+            width: 80%;
+        }
+        .movieImage {
+            border-radius: 15px;
+        }
+        
+        .movieDetails {
+            font-size: 1.5rem;
+        }
+        
+        .firstItem {
+            margin-top: 0;
+        }  
+    }
+}
+
+
+
