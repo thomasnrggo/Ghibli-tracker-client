@@ -1,8 +1,9 @@
 import React from 'react';
+import styles from './Footer.module.scss';
 
 export default function Footer() {
   return (
-    <footer className="footer container">
+    <footer className={`${styles.footer} container`}>
       <p className="text">
         Made with 💚 by{' '}
         <a

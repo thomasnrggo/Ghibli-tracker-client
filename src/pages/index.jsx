@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import Layout from '../common/components/Layout';
+import Layout from '../common/components/Layout/Layout';
 
 export default function Home() {
   return (
@@ -13,9 +13,7 @@ export default function Home() {
         />
       </Head>
 
-      <Layout>
-        <p className="text">Hello World!</p>
-      </Layout>
+      <Layout></Layout>
     </>
   );
 }
