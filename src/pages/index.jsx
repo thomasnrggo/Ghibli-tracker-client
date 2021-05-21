@@ -1,6 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
 import Layout from '../common/components/Layout/Layout';
+import Card from '../common/components/Card/Card';
+import styles from '../styles/pages/index.module.scss';
 
 export default function Home() {
   return (

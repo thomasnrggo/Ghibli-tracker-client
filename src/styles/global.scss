@@ -2,7 +2,6 @@
 @import './_Vars.scss';
 @import './_Button.scss';
 @import './_Input.scss';
-@import './_Footer.scss';
 
 :root {
     font-family: $text-font;
@@ -114,7 +113,7 @@ p {
 
 .main {
     padding-top: 7em;
-    
+
     @media (max-width: $iphoneX) {
         padding-top: 5.5em;
     }
