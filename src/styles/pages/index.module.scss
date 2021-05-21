@@ -1,0 +1,16 @@
+@import '../Vars';
+
+.films__container{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(480px, 1fr)); 
+  grid-gap: 1em;
+  max-width: 100%;
+  width: 100%;
+  
+  @media (max-width: $iphoneX) {
+    padding: 12px;
+    grid-template-columns: auto; 
+  }
+
+  // TODO: handle padding an width of container
+}

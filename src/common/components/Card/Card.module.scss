@@ -1,0 +1,85 @@
+@import '../../../styles/Vars';
+
+.card__container {
+  background: $container-color;
+  color: $text-color;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: $shadow;
+
+  display: flex;
+  flex-direction: row;
+
+  cursor: pointer;
+  transition: ease .4s;
+
+  max-width: 100%;
+
+  &:hover {
+    transform: scale(1.01);
+  }
+
+
+  .card__thumbnail{
+    width: 40%;
+    @media (min-width: $iphoneX) {
+      width: 35%;
+    }
+    .img-fluid{
+      object-fit: cover;
+    }
+  }
+
+  .card__detail{
+    width: 60%;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+
+    @media (min-width: $iphoneX) {
+      width: 65%;
+      padding: 12px;
+    }
+
+    .title {
+      font-family: $heading-font;
+      font-size: 2em;
+      @media (max-width: $iphoneX) {
+        font-size: 1.3em;
+      }
+    }
+
+    .subtitle{
+      font-size: 1em;
+      @media (max-width: $iphoneX) {
+        font-size: .7em;
+      }
+    }
+
+    .description {
+      display: none;
+      @media (min-width: 768px) {
+        margin-top: 8px;
+        font-size: 14px;
+        display: block;
+      }
+    }
+
+    .emoji__container{
+      margin-top: auto;
+      align-self: flex-end;
+    }
+  }
+}
+
+.emoji__container{
+  .emoji {
+    padding-right: 8px;
+    font-size: 28px;
+    transition: ease .4s;
+
+    &:hover{
+      font-size: 34px;
+    }
+  }
+}

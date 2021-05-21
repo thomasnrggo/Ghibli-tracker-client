@@ -2,6 +2,7 @@
 @import './_Vars.scss';
 @import './_Button.scss';
 @import './_Input.scss';
+@import './_Footer.scss';
 
 :root {
     font-family: $text-font;
@@ -79,6 +80,10 @@ body {
     color: $secondary-text-color;
 }
 
+.pr-2{
+    padding-right: .5em !important;
+}
+
 p {
     margin: 0;
 }
@@ -107,12 +112,33 @@ p {
     border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
-.container {
-    margin-right: auto;
-    margin-left: auto;
-    padding-right: 15px;
-    padding-left: 15px;
+.main {
+    padding-top: 7em;
+    
+    @media (max-width: $iphoneX) {
+        padding-top: 5.5em;
+    }
 }
+
+.container {
+    margin: 0 auto;
+
+    &-fluid{
+        width: 96%;
+        margin: 0 auto;
+    }
+}
+
+.img-fluid{
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+
+// TODO: define media querys of Iphone 8, X, 11 and saved as sass variables
+// TODO: define media querys of Xiaomi, Huawei y Samsung (most populars)
+
 
 @media (min-width: 576px) {
     .container {
@@ -137,5 +163,3 @@ p {
         max-width: 1140px;
     }
 }
-
-

@@ -13,7 +13,17 @@ export default function Home() {
         />
       </Head>
 
-      <Layout></Layout>
+      <Layout>
+        <div className={styles.films__container}>
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+        </div>
+      </Layout>
     </>
   );
 }
