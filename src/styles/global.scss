@@ -1,8 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Zilla+Slab:ital@0;1&display=swap');
 @import './_Vars.scss';
 @import './_Button.scss';
-@import './_Header.scss';
-@import './_Footer.scss';
+@import './_Input.scss';
 
 :root {
     font-family: $text-font;
@@ -80,6 +79,10 @@ body {
     color: $secondary-text-color;
 }
 
+.pr-2{
+    padding-right: .5em !important;
+}
+
 p {
     margin: 0;
 }
@@ -100,6 +103,19 @@ p {
 
     &:hover {
         opacity: 0.7;    
+    }
+}
+
+.divider {
+    margin: 1.5rem 0;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.main {
+    padding-top: 7em;
+
+    @media (max-width: $iphoneX) {
+        padding-top: 5.5em;
     }
 }
 
@@ -146,5 +162,3 @@ p {
         max-width: 1140px;
     }
 }
-
-

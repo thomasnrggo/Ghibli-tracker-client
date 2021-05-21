@@ -1,0 +1,72 @@
+.input {
+    margin-top: 0.25rem;
+    padding: 10px 15px 8px 10px;
+    width: 100%;
+    font-size: 1rem;
+    font-family: $text-font;
+    color: #747D88;
+    border: none;
+    border-left: 5px solid #fff;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    transition: border 0.3s ease-in-out;
+    -webkit-transition: border 0.3s ease-in-out;
+    -moz-transition: border 0.3s ease-in-out;
+    -ms-transition: border 0.3s ease-in-out;
+    -o-transition: border 0.3s ease-in-out;
+
+    &__container {
+        margin-bottom: 0.5rem;
+        position: relative;
+        width: 100%;
+    }
+
+    &__label {
+        user-select: none;
+        color: $secondary-text-color;
+        text-transform: uppercase;
+        font-family: $text-font;
+        font-weight: 400;
+        font-size: 0.7rem;
+    }
+
+    &__helper {
+        margin-top: 0.25rem;
+        color: $secondary-text-color;
+        font-weight: 400;
+        font-size: 0.7rem;
+
+    }
+
+    &-error {
+        .input {
+            border-left: 5px solid $error-color;
+
+            &__helper {
+                color: $error-color;
+            }
+        }
+
+    }
+
+    &-success {
+        .input {
+            border-left: 5px solid $success-color;
+
+            &__helper {
+                color: $success-color;
+            }
+        }
+    }
+
+    &:focus {
+        border-left: 5px solid $primary-color;
+    }
+
+    &::placeholder {
+        color: $secondary-text-color;
+    }
+}
