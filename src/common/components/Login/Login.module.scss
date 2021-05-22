@@ -6,6 +6,13 @@
         text-align: center;
     }
 
+    &__buttons {
+        display: flex;
+        justify-content: space-between;
+        margin: auto;
+        max-width: 500px;
+    }
+
     &__btn {
         position: relative;
         margin: auto;

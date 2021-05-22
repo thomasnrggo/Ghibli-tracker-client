@@ -12,7 +12,7 @@
     font-weight: 700;
     font-size: 0.8rem;
     line-height: 0.9rem;
-    border: none;
+    border: 3px solid transparent;
     border-radius: 100px;
     -webkit-border-radius: 100px;
     -moz-border-radius: 100px;
@@ -44,6 +44,17 @@
 
         &:hover {
             background-position: right;
+        }
+    }
+
+    &-secondary {
+        margin-right: 0.5rem !important;
+        color: $primary-color;
+        background: transparent;
+        border: 3px solid $primary-color;
+
+        &:hover {
+            opacity: 0.7;
         }
     }
 
