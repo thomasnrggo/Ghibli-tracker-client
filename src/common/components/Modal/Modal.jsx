@@ -24,11 +24,4 @@ export default function Modal(props) {
       </div>
     </Client>
   );
-
-  // return ReactDOM.createPortal(
-  //   <div className={styles.modal__container}>
-  //     <div className={styles.modal}>{props.children}</div>
-  //   </div>,
-  //   document.getElementById('modal')
-  // );
 }

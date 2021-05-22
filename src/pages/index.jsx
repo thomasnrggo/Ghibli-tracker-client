@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Head from 'next/head';
 import Layout from '../common/components/Layout/Layout';
 import Card from '../common/components/Card/Card';
 import styles from '../styles/pages/index.module.scss';
 import Modal from '../common/components/Modal/Modal';
 import response from '../common/data/films.json'
+import {store} from '../common/context/store'
 
 export default function Home() {
   const [films, setFilms] = useState([])
+  const {state, dispatch} = useContext(store)
+  const { isOpen } = state
+
 
   useEffect(() => {
     setFilms(response)
@@ -32,7 +36,12 @@ export default function Home() {
           )}
         </div>
 
-        <Modal isOpen={false}>
+    
+        <div onClick={() => dispatch({ type: 'MODAL_TRIGGER' })}>
+          try modal {`${isOpen}`}
+        </div>
+
+        <Modal isOpen={isOpen} onClose={() => dispatch({ type: 'MODAL_TRIGGER' })}>
           <h2>Ich bin a modal</h2>
         </Modal>
       </Layout>

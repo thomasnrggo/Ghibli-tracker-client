@@ -19,12 +19,17 @@
         padding: 1rem;
         width: 55%;
         max-width: 1480px;
-        padding: 0;
+        padding: 1.2em;
         border-radius: .8em;
         overflow: hidden;
     }
 
     .modal__trigger{
+      cursor: pointer;
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 24px;
       color: red;
     }
 }
