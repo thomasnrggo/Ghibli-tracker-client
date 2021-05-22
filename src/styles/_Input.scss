@@ -19,9 +19,11 @@
     -o-transition: border 0.3s ease-in-out;
 
     &__container {
+        margin: auto;
         margin-bottom: 0.5rem;
         position: relative;
         width: 100%;
+        max-width: 500px;
     }
 
     &__label {

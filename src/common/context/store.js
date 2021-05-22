@@ -1,27 +1,32 @@
-import React, {createContext, useReducer} from 'react';
+import React, { createContext, useReducer } from 'react';
 
 const initialState = {
   isOpen: false,
-  isSearchActive: false
+  modal: '',
+  isSearchActive: false,
 };
 const store = createContext(initialState);
 const { Provider } = store;
 
-const ContextProvider = ( { children } ) => {
+const ContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer((state, action) => {
-    switch(action.type) {
+    switch (action.type) {
       case 'MODAL_TRIGGER':
-        return {...state, isOpen: !state.isOpen};
+        return {
+          ...state,
+          isOpen: !state.isOpen,
+          modal: action.modal,
+        };
       case 'SEARCH_TRIGGER':
-        return {...state, isSearchActive: !state.isSearchActive};
+        return { ...state, isSearchActive: !state.isSearchActive };
       case 'SET_USER':
-          return state;
+        return state;
       default:
-        return state
-    };
+        return state;
+    }
   }, initialState);
 
   return <Provider value={{ state, dispatch }}>{children}</Provider>;
 };
 
-export { store, ContextProvider }
+export { store, ContextProvider };

@@ -4,18 +4,17 @@ import Layout from '../common/components/Layout/Layout';
 import Card from '../common/components/Card/Card';
 import styles from '../styles/pages/index.module.scss';
 import Modal from '../common/components/Modal/Modal';
-import response from '../common/data/films.json'
-import {store} from '../common/context/store'
+import response from '../common/data/films.json';
+import { store } from '../common/context/store';
 
 export default function Home() {
-  const [films, setFilms] = useState([])
-  const {state, dispatch} = useContext(store)
-  const { isOpen } = state
-
+  const [films, setFilms] = useState([]);
+  const { state, dispatch } = useContext(store);
+  const { isOpen, modal } = state;
 
   useEffect(() => {
-    setFilms(response)
-  }, [])
+    setFilms(response);
+  }, []);
 
   return (
     <>
@@ -29,21 +28,27 @@ export default function Home() {
 
       <Layout>
         <div className={styles.films__container}>
-          {films ? films.map(film => (
-            <Card key={film.id} film={film} />
-          )) : (
+          {films ? (
+            films.map((film) => <Card key={film.id} film={film} />)
+          ) : (
             <h2>Cargando</h2>
           )}
         </div>
 
-    
-        <div onClick={() => dispatch({ type: 'MODAL_TRIGGER' })}>
+        <div onClick={() => dispatch({ type: 'MODAL_TRIGGER', modal: 'test' })}>
           try modal {`${isOpen}`}
         </div>
 
-        <Modal isOpen={isOpen} onClose={() => dispatch({ type: 'MODAL_TRIGGER' })}>
-          <h2>Ich bin a modal</h2>
-        </Modal>
+        {modal === 'test' ? (
+          <Modal
+            isOpen={isOpen}
+            onClose={() => dispatch({ type: 'MODAL_TRIGGER' })}
+          >
+            <h2>Ich bin a modal</h2>
+          </Modal>
+        ) : (
+          ''
+        )}
       </Layout>
     </>
   );
