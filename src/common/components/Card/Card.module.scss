@@ -22,9 +22,15 @@
 
   .card__thumbnail{
     width: 40%;
-    @media (min-width: $iphoneX) {
+    min-height: 300px;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    @media (max-width: $iphoneX) {
+      min-height: 180px;
       width: 35%;
     }
+
     .img-fluid{
       object-fit: cover;
     }
@@ -58,10 +64,11 @@
 
     .description {
       display: none;
+      
       @media (min-width: 768px) {
+        display: block;
         margin-top: 8px;
         font-size: 14px;
-        display: block;
       }
     }
 

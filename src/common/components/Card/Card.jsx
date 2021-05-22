@@ -6,6 +6,7 @@ import styles from './Card.module.scss';
 export default function Card(props) {
   const router = useRouter();
   const {
+    id,
     title,
     original_title,
     original_title_romanised,
@@ -14,32 +15,26 @@ export default function Card(props) {
     rt_score,
     release_date,
     running_time,
-  } = props;
-  const id = 'hola';
+    poster
+  } = props.film;
 
   const handleOnCardClik = () => {
-    // let id = 'test';
-    // router.push(`/film/${id}`);
-  };
-
-  const ratingChanged = (newRating) => {
-    console.log(newRating);
+    router.push(`/film/${id}`);
   };
 
   return (
     <div className={styles.card__container} onClick={() => handleOnCardClik()}>
-      <div className={styles.card__thumbnail}>
-        <img
-          className="img-fluid"
-          src="https://images-na.ssl-images-amazon.com/images/I/51Mg8os52AL._AC_.jpg"
-          alt={`${title}_poster` || 'Film poster'}
-        />
+      <div className={styles.card__thumbnail} style={{
+        backgroundImage: `url(${poster})`
+        }}>
       </div>
       <div className={styles.card__detail}>
         <h3 className={styles.subtitle}>
           {original_title || '天空の城ラピュタ'}
         </h3>
         <h2 className={styles.title}>{title || 'Castle in the Sky'}</h2>
+        <h5 >{director || 'director'} - {release_date || 'release_date'}</h5>
+
         <div className={styles.rating}>
           <ReactStars
             count={5}
@@ -50,7 +45,6 @@ export default function Card(props) {
             activeColor="#ffd700"
           />
         </div>
-        <p className={styles.description}>{description || 'description'}</p>
         <div className={styles.emoji__container}>
           <span className={styles.emoji}>😭</span>
           <span className={styles.emoji}>😐</span>
