@@ -27,7 +27,7 @@ export default function Home() {
           <Card />
         </div>
 
-        <Modal isOpen={false}>
+        <Modal isOpen={true}>
           <h2>Ich bin a modal</h2>
         </Modal>
       </Layout>
