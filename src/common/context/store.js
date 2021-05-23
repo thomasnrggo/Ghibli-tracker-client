@@ -2,6 +2,7 @@ import React, { createContext, useReducer } from 'react';
 
 const initialState = {
   isOpen: false,
+  authModal: false,
   modal: '',
   isSearchActive: false,
 };
@@ -17,6 +18,8 @@ const ContextProvider = ({ children }) => {
           isOpen: !state.isOpen,
           modal: action.modal,
         };
+      case 'AUTH_TRIGGER':
+        return {...state, authModal: !state.authModal}
       case 'SEARCH_TRIGGER':
         return { ...state, isSearchActive: !state.isSearchActive };
       case 'SET_USER':

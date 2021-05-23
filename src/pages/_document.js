@@ -36,8 +36,9 @@ class MyDocument extends Document {
           />
         </Head>
         <body>
-          <div id="modal" />
           <Main />
+          <div id="auth" />
+          <div id="modal" />
           <NextScript />
         </body>
       </Html>

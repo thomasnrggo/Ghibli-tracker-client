@@ -35,20 +35,13 @@ export default function Home() {
           )}
         </div>
 
-        <div onClick={() => dispatch({ type: 'MODAL_TRIGGER', modal: 'test' })}>
-          try modal {`${isOpen}`}
+        <div className='btn btn-primary mt-2' onClick={() => dispatch({ type: 'MODAL_TRIGGER', modal: 'test' })}>
+          Try me, I'm a modal
         </div>
 
-        {modal === 'test' ? (
-          <Modal
-            isOpen={isOpen}
-            onClose={() => dispatch({ type: 'MODAL_TRIGGER' })}
-          >
-            <h2>Ich bin a modal</h2>
-          </Modal>
-        ) : (
-          ''
-        )}
+        <Modal selector={"#modal"} isOpen={isOpen} onClose={() => dispatch({ type: 'MODAL_TRIGGER' })}>
+            This is a test modal, remove me 
+        </Modal>
       </Layout>
     </>
   );
