@@ -13,7 +13,7 @@ import styles from './Header.module.scss';
 
 export default function Header() {
   const { state, dispatch } = useContext(store);
-  const { modal } = state;
+  const { authModal } = state;
   const router = useRouter();
 
   let onSearchIconClick = () => {
@@ -33,7 +33,7 @@ export default function Header() {
             <FontAwesomeIcon
               icon={faUser}
               onClick={() =>
-                dispatch({ type: 'MODAL_TRIGGER', modal: 'login' })
+                dispatch({ type: 'AUTH_TRIGGER' })
               }
             />
           )}
@@ -49,7 +49,7 @@ export default function Header() {
         </div>
       </header>
 
-      {modal === 'login' ? <Login /> : ''}
+      {authModal ? <Login /> : null}
     </>
   );
 }

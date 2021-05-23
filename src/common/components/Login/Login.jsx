@@ -25,7 +25,7 @@ export default function Login() {
   });
   const [currentTab, setCurrentTab] = useState('login');
   const { state, dispatch } = useContext(store);
-  const { isOpen } = state;
+  const { authModal } = state;
 
   function handleChange(e, type) {
     const { name, value } = e.target;
@@ -84,8 +84,9 @@ export default function Login() {
 
   return (
     <Modal
-      isOpen={isOpen}
-      onClose={() => dispatch({ type: 'MODAL_TRIGGER', modal: 'login' })}
+      selector={"#auth"}
+      isOpen={authModal}
+      onClose={() => dispatch({ type: 'AUTH_TRIGGER' })}
       className={styles.login__container}
     >
       <p className={`${styles.login__title} h3`}>
