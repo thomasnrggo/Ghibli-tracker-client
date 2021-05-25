@@ -6,6 +6,7 @@ import styles from '../styles/pages/index.module.scss';
 import Modal from '../common/components/Modal/Modal';
 import response from '../common/data/films.json';
 import { store } from '../common/context/store';
+import EmptyState from '../common/components/emptyState/emptyState';
 
 export default function Home() {
   const [films, setFilms] = useState([]);
@@ -24,7 +25,9 @@ export default function Home() {
   }
 
   const NoSearchResults = () => (
-    <h2>No hay resultados</h2>
+    <EmptyState>
+      <h2 className='h5'>Ups... Looks like the movie your looking for doesn't exists.</h2>
+    </EmptyState>
   )
 
   const renderCards = () => {
@@ -63,7 +66,7 @@ export default function Home() {
       <Layout>
         {isSearchActive && (
           <div className={styles.search__container}>
-            <label className='h3'>Search</label>
+            <label className='h2'>Search</label>
             <input 
               className='input' 
               type="text" 
@@ -82,13 +85,13 @@ export default function Home() {
           )}
         </div>
 
-        <div className='btn btn-primary mt-2' onClick={() => dispatch({ type: 'MODAL_TRIGGER', modal: 'test' })}>
+        {/* <div className='btn btn-primary mt-2' onClick={() => dispatch({ type: 'MODAL_TRIGGER', modal: 'test' })}>
           Try me, I'm a modal
         </div>
 
         <Modal selector={"#modal"} isOpen={isOpen} onClose={() => dispatch({ type: 'MODAL_TRIGGER' })}>
             This is a test modal, remove me 
-        </Modal>
+        </Modal> */}
       </Layout>
     </>
   );
