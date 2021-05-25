@@ -23,6 +23,33 @@ export default function Home() {
     setQuery(e.target.value)
   }
 
+  const NoSearchResults = () => (
+    <h2>No hay resultados</h2>
+  )
+
+  const renderCards = () => {
+    let allFilms = films
+    let results = allFilms.filter((film) => {
+      if (query == null) {
+        return film
+      } else if (
+        film.title.toLowerCase().includes(query.toLowerCase()) ||
+        film.original_title.toLowerCase().includes(query.toLowerCase()) ||
+        film.original_title_romanised.toLowerCase().includes(query.toLowerCase()) ||
+        film.director.toLowerCase().includes(query.toLowerCase()) ||
+        film.release_date.toLowerCase().includes(query.toLowerCase())
+      ) {
+        return film
+      }
+    })
+
+    if(results.length >= 1) {
+      return results.map((film) => <Card key={film.id} film={film} />)
+    } else {
+      return NoSearchResults()
+    }
+  }
+
   return (
     <>
       <Head>
@@ -49,7 +76,7 @@ export default function Home() {
         
         <div className={styles.films__container}>
           {films ? (
-            films.map((film) => <Card key={film.id} film={film} />)
+            renderCards()
           ) : (
             <h2>Cargando</h2>
           )}
