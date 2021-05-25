@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
-import Modal from '../Modal/Modal';
+import { useRouter } from 'next/router';
 import { store } from '../../context/store';
+import Modal from '../Modal/Modal';
 
 import styles from './Login.module.scss';
 
@@ -26,6 +27,7 @@ export default function Login() {
   const [currentTab, setCurrentTab] = useState('login');
   const { state, dispatch } = useContext(store);
   const { authModal } = state;
+  const router = useRouter();
 
   function handleChange(e, type) {
     const { name, value } = e.target;
@@ -82,11 +84,16 @@ export default function Login() {
     validateForm(type);
   }
 
+  function handleAuthModal() {
+    router.push('/');
+    dispatch({ type: 'AUTH_TRIGGER' });
+  }
+
   return (
     <Modal
-      selector={"#auth"}
+      selector={'#auth'}
       isOpen={authModal}
-      onClose={() => dispatch({ type: 'AUTH_TRIGGER' })}
+      onClose={handleAuthModal}
       className={styles.login__container}
     >
       <p className={`${styles.login__title} h3`}>

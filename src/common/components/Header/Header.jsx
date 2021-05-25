@@ -1,5 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { signIn } from 'next-auth/client';
 import {
   faChevronLeft,
   faSearch,
@@ -12,13 +13,16 @@ import { store } from '../../context/store';
 import styles from './Header.module.scss';
 
 export default function Header() {
-  const { state, dispatch } = useContext(store);
-  const { authModal } = state;
+  const { dispatch } = useContext(store);
   const router = useRouter();
 
   let onSearchIconClick = () => {
-    dispatch({ type: 'SEARCH_TRIGGER' })
+    dispatch({ type: 'SEARCH_TRIGGER' });
   };
+
+  useEffect(() => {
+    if (!!router.query.signin) dispatch({ type: 'AUTH_TRIGGER' });
+  }, [router.query.signin]);
 
   return (
     <>
@@ -30,12 +34,7 @@ export default function Header() {
               onClick={() => router.back()}
             />
           ) : (
-            <FontAwesomeIcon
-              icon={faUser}
-              onClick={() =>
-                dispatch({ type: 'AUTH_TRIGGER' })
-              }
-            />
+            <FontAwesomeIcon icon={faUser} onClick={() => signIn()} />
           )}
         </div>
 
@@ -49,7 +48,7 @@ export default function Header() {
         </div>
       </header>
 
-      {authModal ? <Login /> : null}
+      <Login />
     </>
   );
 }

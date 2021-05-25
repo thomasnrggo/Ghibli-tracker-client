@@ -5,7 +5,7 @@ import { Provider as AuthProvider } from 'next-auth/client';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <AuthProvider>
+    <AuthProvider session={pageProps.session}>
       <ContextProvider>
         <Component {...pageProps} />;
       </ContextProvider>
