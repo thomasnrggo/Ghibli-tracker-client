@@ -17,7 +17,7 @@ export default function Header() {
   const router = useRouter();
 
   let onSearchIconClick = () => {
-    console.log('Click');
+    dispatch({ type: 'SEARCH_TRIGGER' })
   };
 
   return (

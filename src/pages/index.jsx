@@ -10,11 +10,18 @@ import { store } from '../common/context/store';
 export default function Home() {
   const [films, setFilms] = useState([]);
   const { state, dispatch } = useContext(store);
-  const { isOpen, modal } = state;
+  const { isOpen, isSearchActive } = state;
+  const [query, setQuery] = useState("")
 
   useEffect(() => {
-    setFilms(response);
+    setTimeout(() => {
+      setFilms(response);     
+    }, 2000);
   }, []);
+
+  const handleSearchInputChange = e => {
+    setQuery(e.target.value)
+  }
 
   return (
     <>
@@ -27,6 +34,19 @@ export default function Home() {
       </Head>
 
       <Layout>
+        {isSearchActive && (
+          <div className={styles.search__container}>
+            <label className='h3'>Search</label>
+            <input 
+              className='input' 
+              type="text" 
+              placeholder='Try typing the name, year, director of the movie your are looking for'
+              onChange={handleSearchInputChange}
+              value={query}
+            />
+          </div>
+        )}
+        
         <div className={styles.films__container}>
           {films ? (
             films.map((film) => <Card key={film.id} film={film} />)
