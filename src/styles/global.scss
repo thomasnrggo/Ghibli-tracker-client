@@ -134,6 +134,7 @@ p {
 }
 
 .main {
+    min-height: 90vh;
     padding-top: 7em;
 
     @media (max-width: $iphoneX) {
