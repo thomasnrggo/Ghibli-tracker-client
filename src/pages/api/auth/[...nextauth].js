@@ -6,14 +6,18 @@ const providers = [
   Providers.Credentials({
     name: 'Credentials',
     authorize: async (credentials) => {
-      const response = users;
-      const user = response.find((item) => credentials.email === item.email);
+      try {
+        const response = users;
+        const user = response.find((item) => credentials.email === item.email);
 
-      if (user) {
-        console.log('Logged');
-        return user;
-      } else {
-        return null;
+        if (user) {
+          console.log(`User logged: ${user.username}`);
+          return user;
+        }
+      } catch (e) {
+        const { message } = e.response.data;
+
+        throw new Error(`${message}&email=${credentials.email}`);
       }
     },
   }),
@@ -21,6 +25,9 @@ const providers = [
 
 const options = {
   providers,
+  pages: {
+    error: '/?signin=true',
+  },
 };
 
 export default (req, res) => NextAuth(req, res, options);

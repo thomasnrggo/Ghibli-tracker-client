@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { signIn } from 'next-auth/client';
 import { useRouter } from 'next/router';
 import { store } from '../../context/store';
@@ -44,6 +44,7 @@ export default function Login() {
   }
 
   function validateForm(type) {
+    let isValid = false;
     const validations = {
       login: {
         email: /\S+@\S+\.\S+/,
@@ -55,40 +56,72 @@ export default function Login() {
         password: /(?=.{8,})/,
       },
     };
+
     const options = {
-      login: () =>
+      login: () => {
+        const emailValidated = validations.login.email.test(
+          loginData.email.trim().toLowerCase()
+        );
+        const passwordValidated = validations.login.password.test(
+          loginData.password.trim()
+        );
+
         setLoginFormValidation((state) => ({
-          email: validations.login.email.test(
-            loginData.email.trim().toLowerCase()
-          ),
-          password: validations.login.password.test(loginData.password.trim()),
-        })),
-      signup: () =>
+          email: emailValidated,
+          password: passwordValidated,
+        }));
+
+        emailValidated && passwordValidated
+          ? (isValid = true)
+          : (isValid = false);
+      },
+      signup: () => {
+        const usernameValidated = validations.signup.username.test(
+          signupData.username.trim().toLowerCase()
+        );
+        const emailValidated = validations.signup.username.test(
+          signupData.email.trim().toLowerCase()
+        );
+        const passwordValidated = validations.signup.password.test(
+          signupData.password.trim()
+        );
+
         setSignupFormValidation((state) => ({
-          username: validations.signup.username.test(
-            signupData.username.trim().toLowerCase()
-          ),
-          email: validations.signup.username.test(
-            signupData.email.trim().toLowerCase()
-          ),
-          password: validations.signup.password.test(
-            signupData.password.trim()
-          ),
-        })),
+          username: usernameValidated,
+          email: emailValidated,
+          password: passwordValidated,
+        }));
+
+        usernameValidated && emailValidated && passwordValidated
+          ? (isValid = true)
+          : (isValid = false);
+      },
     };
 
-    return options[type]();
+    options[type]();
+
+    return isValid;
   }
 
   function handleSubmit(e, type) {
     e.preventDefault();
-    validateForm(type);
+
+    if (validateForm(type))
+      signIn('credentials', {
+        email: loginData.email,
+        password: loginData.password,
+      });
   }
 
   function handleAuthModal() {
     router.push('/');
     dispatch({ type: 'AUTH_TRIGGER' });
   }
+
+  useEffect(() => {
+    if (router.query.error) {
+    }
+  }, [router]);
 
   return (
     <Modal
@@ -167,12 +200,6 @@ export default function Login() {
                 type="submit"
                 className={`btn btn-primary ${styles.login__btn}`}
                 formNoValidate="formnovalidate"
-                onClick={() =>
-                  signIn('credentials', {
-                    email: loginData.email,
-                    password: loginData.password,
-                  })
-                }
               >
                 Log In{' '}
                 <i
