@@ -1,38 +1,26 @@
 import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
+import users from '../../../common/data/userDBExample.json';
 
-export default NextAuth({
-  providers: [
-    Providers.Credentials({
-      name: 'Credentials',
-      credentials: {
-        email: {
-          label: 'Email',
-          type: 'text',
-          placeholder: 'Your email here...',
-        },
-        password: {
-          label: 'Password',
-          type: 'password',
-          placeholder: 'Your password here...',
-        },
-        async authorize(credentials, req) {
-          const user = (credentials, req) => {
-            //   Logic to check if the credentials are right and return data to work with
-            return null;
-          };
+const providers = [
+  Providers.Credentials({
+    name: 'Credentials',
+    authorize: async (credentials) => {
+      const response = users;
+      const user = response.find((item) => credentials.email === item.email);
 
-          if (user) {
-            //   Any user object returned here will be saved in the JSON Web Token. Do not save sensitive data
-            return user;
-          } else {
-            return null;
-          }
-        },
-      },
-    }),
-  ],
-  pages: {
-    signIn: '/?signin=true',
-  },
-});
+      if (user) {
+        console.log('Logged');
+        return user;
+      } else {
+        return null;
+      }
+    },
+  }),
+];
+
+const options = {
+  providers,
+};
+
+export default (req, res) => NextAuth(req, res, options);

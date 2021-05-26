@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { signIn } from 'next-auth/client';
 import { useRouter } from 'next/router';
 import { store } from '../../context/store';
 import Modal from '../Modal/Modal';
@@ -166,6 +167,12 @@ export default function Login() {
                 type="submit"
                 className={`btn btn-primary ${styles.login__btn}`}
                 formNoValidate="formnovalidate"
+                onClick={() =>
+                  signIn('credentials', {
+                    email: loginData.email,
+                    password: loginData.password,
+                  })
+                }
               >
                 Log In{' '}
                 <i

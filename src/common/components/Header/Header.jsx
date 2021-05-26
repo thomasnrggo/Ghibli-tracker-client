@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { signIn } from 'next-auth/client';
 import {
   faChevronLeft,
   faSearch,
@@ -22,7 +21,7 @@ export default function Header() {
 
   useEffect(() => {
     if (!!router.query.signin) dispatch({ type: 'AUTH_TRIGGER' });
-  }, [router.query.signin]);
+  }, [router]);
 
   return (
     <>
@@ -34,7 +33,10 @@ export default function Header() {
               onClick={() => router.back()}
             />
           ) : (
-            <FontAwesomeIcon icon={faUser} onClick={() => signIn()} />
+            <FontAwesomeIcon
+              icon={faUser}
+              onClick={() => router.push('/?signin=true')}
+            />
           )}
         </div>
 

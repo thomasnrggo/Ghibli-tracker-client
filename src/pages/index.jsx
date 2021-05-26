@@ -9,8 +9,8 @@ import EmptyState from '../common/components/emptyState/emptyState';
 
 export default function Home() {
   const [films, setFilms] = useState([]);
-  const { state, dispatch } = useContext(store);
-  const { isOpen, isSearchActive } = state;
+  const { state } = useContext(store);
+  const { isSearchActive } = state;
   const [query, setQuery] = useState('');
 
   useEffect(() => {
