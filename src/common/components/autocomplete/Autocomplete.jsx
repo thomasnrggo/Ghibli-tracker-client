@@ -1,9 +1,11 @@
+import React, { useState } from 'react'
+import styles from './Autocomplete.module.scss'
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useEffect, useState } from 'react'
-import styles from './Autocomplete.module.scss'
+import { useRouter } from 'next/router'
 
 export default function Autocomplete(props) {
+  const router = useRouter();
   const [activeSuggestion, setActiveSuggestion] = useState(0)
   const [filteredSuggestions, setFilteredSuggestions] = useState([])
   const [showSuggestions, setShowSuggestions] = useState(false)
@@ -35,7 +37,7 @@ export default function Autocomplete(props) {
   let renderSuggestions = () => {
     if(filteredSuggestions.length >= 1) {
       return filteredSuggestions.map(item => (
-        <div key={item.id} className={styles.suggestion__container}>
+        <div key={item.id} className={styles.suggestion__container} onClick={() => router.push(`/film/${item.id}`)}>
           <div className={styles.thumbnail} style={{backgroundImage: `url(${item.poster})`}}></div>
           <div className={styles.details}>
             <p><b>{item.title}</b> (<i>{item.original_title_romanised}</i>)</p>

@@ -8,11 +8,13 @@
     position: absolute;
     top: 120%;
     width: 100%;
-    z-index: 999;
+    z-index: 99;
     background: $container-color;
     box-shadow: $shadow;
     border-radius: 6px;
     overflow: hidden;
+    max-height: 212px;
+    overflow-y: scroll;
   }
 
   .suggestion__container{
