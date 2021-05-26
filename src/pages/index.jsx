@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import Head from 'next/head';
 import Layout from '../common/components/Layout/Layout';
 import Card from '../common/components/Card/Card';
@@ -7,6 +7,7 @@ import Modal from '../common/components/Modal/Modal';
 import response from '../common/data/films.json';
 import { store } from '../common/context/store';
 import EmptyState from '../common/components/emptyState/emptyState';
+import Autocomplete from '../common/components/autocomplete/autocomplete';
 
 export default function Home() {
   const [films, setFilms] = useState([]);
@@ -53,6 +54,10 @@ export default function Home() {
     }
   }
 
+  let handleInputChange = data => {
+    setQuery(data)
+  }
+
   return (
     <>
       <Head>
@@ -65,21 +70,21 @@ export default function Home() {
 
       <Layout>
         {isSearchActive && (
-          <div className={styles.search__container}>
-            <label className='h2'>Search</label>
-            <input 
-              className='input' 
-              type="text" 
-              placeholder='Try typing the name, year, director of the movie your are looking for'
-              onChange={handleSearchInputChange}
-              value={query}
-            />
-          </div>
+          <Fragment>
+            <div className={styles.search__container}>
+              <label className='h2'>Search</label>
+              {films.length >= 1 && <Autocomplete suggestions={films} onChange={handleInputChange}/>}
+            </div>
+          </Fragment>
+
         )}
+
         
         <div className={styles.films__container}>
           {films ? (
-            renderCards()
+            <Fragment>
+              {renderCards()}
+            </Fragment>
           ) : (
             <h2>Cargando</h2>
           )}
@@ -92,6 +97,9 @@ export default function Home() {
         <Modal selector={"#modal"} isOpen={isOpen} onClose={() => dispatch({ type: 'MODAL_TRIGGER' })}>
             This is a test modal, remove me 
         </Modal> */}
+
+
+
       </Layout>
     </>
   );

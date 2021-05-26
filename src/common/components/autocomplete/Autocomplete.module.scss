@@ -1,0 +1,58 @@
+@import '../../../styles/Vars';
+
+.autocomplete__container {
+  position: relative;
+  color: $text-color;
+
+  .suggestions__container{
+    position: absolute;
+    top: 120%;
+    width: 100%;
+    z-index: 999;
+    background: $container-color;
+    box-shadow: $shadow;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .suggestion__container{
+    display: flex;
+    cursor: pointer;
+    padding: 8px;
+    transition: ease .4s;
+
+    &:hover {
+      background: lighten($color: $container-color, $amount: 5%);
+    }
+  }
+
+  .thumbnail{
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 50px;
+    min-width: 50px;
+  }
+
+  .details{
+    display: flex;
+    padding: 8px;
+    flex-direction: column;
+  }
+
+
+  .close__btn{
+    cursor: pointer;
+    color: $container-color;
+    position: absolute;
+    right: 12px;
+    top: 14px;
+    transition: ease .4s;
+    &:hover{
+      color: $bg-color;
+    }
+  }
+}
+
+.empty__suggestion{
+  padding: 8px;
+}
