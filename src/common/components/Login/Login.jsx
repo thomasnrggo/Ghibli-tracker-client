@@ -134,6 +134,12 @@ export default function Login() {
     if (validateForm(form)) getLoginResponse(type);
   }
 
+  async function handleFacebookLogin() {
+    signIn('facebook', {
+      callbackUrl: '/',
+    });
+  }
+
   function handleAuthModal() {
     router.push('/');
     dispatch({ type: 'AUTH_TRIGGER' });
@@ -338,6 +344,7 @@ export default function Login() {
         <button
           className={`btn btn-facebook ${styles.login__btn}`}
           type="button"
+          onClick={handleFacebookLogin}
         >
           <i className="fab fa-facebook-f" /> Log in with Facebook
         </button>
