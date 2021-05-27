@@ -1,4 +1,5 @@
 import React, { Fragment, useContext, useEffect, useState } from 'react';
+import { useSession } from 'next-auth/client';
 import Head from 'next/head';
 import Layout from '../common/components/Layout/Layout';
 import Card from '../common/components/Card/Card';
@@ -10,6 +11,7 @@ import Autocomplete from '../common/components/autocomplete/autocomplete';
 import Loader from '../common/components/Loader/Loader';
 
 export default function Home() {
+  const [session, loading] = useSession();
   const [films, setFilms] = useState([]);
   const { state } = useContext(store);
   const { isSearchActive } = state;
@@ -88,7 +90,7 @@ export default function Home() {
         )}
 
         <div className={styles.films__container}>
-          {films.length >= 1 ? (
+          {films.length >= 1 && !loading ? (
             <Fragment>{renderCards()}</Fragment>
           ) : (
             <Loader />

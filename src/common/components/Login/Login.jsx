@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { signIn } from 'next-auth/client';
 import { useRouter } from 'next/router';
 import { store } from '../../context/store';
@@ -144,11 +144,6 @@ export default function Login() {
     router.push('/');
     dispatch({ type: 'AUTH_TRIGGER' });
   }
-
-  useEffect(() => {
-    if (router.query.error) {
-    }
-  }, [router]);
 
   return (
     <Modal

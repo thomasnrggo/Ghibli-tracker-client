@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/client';
 import {
   faChevronLeft,
   faSearch,
@@ -12,6 +13,7 @@ import { store } from '../../context/store';
 import styles from './Header.module.scss';
 
 export default function Header() {
+  const [session, loading] = useSession();
   const { dispatch } = useContext(store);
   const router = useRouter();
 
@@ -19,8 +21,13 @@ export default function Header() {
     dispatch({ type: 'SEARCH_TRIGGER' });
   };
 
+  function handleProfile() {
+    router.push(!session ? '/?signin=true' : '/profile');
+  }
+
   useEffect(() => {
-    if (!!router.query.signin) dispatch({ type: 'AUTH_TRIGGER' });
+    if (router.query.signin && !session && !loading)
+      dispatch({ type: 'AUTH_TRIGGER' });
   }, [router]);
 
   return (
@@ -33,10 +40,7 @@ export default function Header() {
               onClick={() => router.back()}
             />
           ) : (
-            <FontAwesomeIcon
-              icon={faUser}
-              onClick={() => router.push('/?signin=true')}
-            />
+            <FontAwesomeIcon icon={faUser} onClick={handleProfile} />
           )}
         </div>
 
