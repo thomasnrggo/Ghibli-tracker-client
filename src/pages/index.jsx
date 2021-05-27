@@ -74,7 +74,7 @@ export default function Home() {
           <Fragment>
             <div className={styles.search__container}>
               <label className='h2'>Search</label>
-              {/* {films.length >= 1 && <Autocomplete suggestions={films} onChange={handleInputChange}/>} */}
+              {films.length >= 1 && <Autocomplete suggestions={films} onChange={handleInputChange}/>}
             </div>
           </Fragment>
 
