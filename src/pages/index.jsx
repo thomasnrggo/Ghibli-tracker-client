@@ -7,7 +7,7 @@ import Modal from '../common/components/Modal/Modal';
 import response from '../common/data/films.json';
 import { store } from '../common/context/store';
 import EmptyState from '../common/components/emptyState/emptyState';
-// import Autocomplete from '../common/components/autocomplete/autocomplete';
+import Autocomplete from '../common/components/autocomplete/Autocomplete';
 import Loader from '../common/components/Loader/Loader';
 
 export default function Home() {
@@ -74,7 +74,7 @@ export default function Home() {
           <Fragment>
             <div className={styles.search__container}>
               <label className='h2'>Search</label>
-              {/* {films.length >= 1 && <Autocomplete suggestions={films} onChange={handleInputChange}/>} */}
+              {films.length >= 1 && <Autocomplete suggestions={films} onChange={handleInputChange}/>}
             </div>
           </Fragment>
 
