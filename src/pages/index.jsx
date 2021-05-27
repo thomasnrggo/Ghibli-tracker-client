@@ -17,7 +17,7 @@ export default function Home() {
 
   useEffect(() => {
     setTimeout(() => {
-      setFilms(response);     
+      setFilms(response);
     }, 5000);
   }, []);
 
@@ -58,9 +58,9 @@ export default function Home() {
     }
   };
 
-  let handleInputChange = data => {
-    setQuery(data)
-  }
+  let handleInputChange = (data) => {
+    setQuery(data);
+  };
 
   return (
     <>
@@ -74,46 +74,25 @@ export default function Home() {
 
       <Layout>
         {isSearchActive && (
-<<<<<<< HEAD
-          <div className={styles.search__container}>
-            <label className="h2">Search</label>
-            <input
-              className="input"
-              type="text"
-              placeholder="Try typing the name, year, director of the movie your are looking for"
-              onChange={handleSearchInputChange}
-              value={query}
-            />
-          </div>
-        )}
-
-        <div className={styles.films__container}>
-          {films ? renderCards() : <h2>Cargando</h2>}
-=======
           <Fragment>
             <div className={styles.search__container}>
-              <label className='h2'>Search</label>
-              {films.length >= 1 && <Autocomplete suggestions={films} onChange={handleInputChange}/>}
+              <label className="h2">Search</label>
+              {films.length >= 1 && (
+                <Autocomplete
+                  suggestions={films}
+                  onChange={handleInputChange}
+                />
+              )}
             </div>
           </Fragment>
-
         )}
 
-        
         <div className={styles.films__container}>
           {films.length >= 1 ? (
-            <Fragment>
-              {renderCards()}
-            </Fragment>
+            <Fragment>{renderCards()}</Fragment>
           ) : (
-            <Loader/>
+            <Loader />
           )}
-        </div>
-
-
-        {/* <div className='btn btn-primary mt-2' onClick={() => dispatch({ type: 'MODAL_TRIGGER', modal: 'test' })}>
-          Try me, I'm a modal
->>>>>>> development
         </div>
       </Layout>
     </>
