@@ -8,6 +8,7 @@ import response from '../common/data/films.json';
 import { store } from '../common/context/store';
 import EmptyState from '../common/components/emptyState/emptyState';
 import Autocomplete from '../common/components/autocomplete/autocomplete';
+import Loader from '../common/components/Loader/Loader';
 
 export default function Home() {
   const [films, setFilms] = useState([]);
@@ -18,7 +19,7 @@ export default function Home() {
   useEffect(() => {
     setTimeout(() => {
       setFilms(response);     
-    }, 2000);
+    }, 5000);
   }, []);
 
   const handleSearchInputChange = e => {
@@ -81,14 +82,15 @@ export default function Home() {
 
         
         <div className={styles.films__container}>
-          {films ? (
+          {films.length >= 1 ? (
             <Fragment>
               {renderCards()}
             </Fragment>
           ) : (
-            <h2>Cargando</h2>
+            <Loader/>
           )}
         </div>
+
 
         {/* <div className='btn btn-primary mt-2' onClick={() => dispatch({ type: 'MODAL_TRIGGER', modal: 'test' })}>
           Try me, I'm a modal
@@ -97,9 +99,6 @@ export default function Home() {
         <Modal selector={"#modal"} isOpen={isOpen} onClose={() => dispatch({ type: 'MODAL_TRIGGER' })}>
             This is a test modal, remove me 
         </Modal> */}
-
-
-
       </Layout>
     </>
   );
