@@ -5,6 +5,7 @@ import { store } from '../../context/store';
 import Modal from '../Modal/Modal';
 
 import styles from './Login.module.scss';
+import Alert from '../Alert/Alert';
 
 export default function Login() {
   const [loginData, setLoginData] = useState({
@@ -24,6 +25,10 @@ export default function Login() {
     username: false,
     email: false,
     password: false,
+  });
+  const [error, setError] = useState({
+    state: false,
+    message: '',
   });
   const [currentTab, setCurrentTab] = useState('login');
   const { state, dispatch } = useContext(store);
@@ -103,14 +108,30 @@ export default function Login() {
     return isValid;
   }
 
-  function handleSubmit(e, type) {
+  async function getLoginResponse(type) {
+    const res = await signIn(type, {
+      email: loginData.email,
+      password: loginData.password,
+      callbackUrl: `/`,
+      redirect: false,
+    });
+
+    if (res?.error)
+      setError({
+        state: true,
+        message: res.error,
+      });
+    if (res?.url) {
+      router.push(res.url);
+      dispatch({ type: 'AUTH_TRIGGER' });
+      setError(false);
+    }
+  }
+
+  function handleSubmit(e, form, type) {
     e.preventDefault();
 
-    if (validateForm(type))
-      signIn('credentials', {
-        email: loginData.email,
-        password: loginData.password,
-      });
+    if (validateForm(form)) getLoginResponse(type);
   }
 
   function handleAuthModal() {
@@ -136,7 +157,7 @@ export default function Login() {
 
       <form
         className={styles.login__form}
-        onSubmit={(e) => handleSubmit(e, currentTab)}
+        onSubmit={(e) => handleSubmit(e, currentTab, 'credentials')}
       >
         {currentTab === 'login' ? (
           <>
@@ -303,6 +324,14 @@ export default function Login() {
             </div>
           </>
         )}
+
+        <Alert
+          isOpen={error.state}
+          type="error"
+          onClose={() => setError(false)}
+        >
+          {`Error: ${error.message}`}
+        </Alert>
 
         <hr className="divider" />
 
