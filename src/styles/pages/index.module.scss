@@ -1,5 +1,24 @@
 @import '../Vars';
 
+.filter__container{
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  margin: 8px 0;
+  color: $text-color;
+  font-size: 16px;
+
+  .trigger {
+    cursor: pointer;
+    font-size: 18px;
+    margin: 4px;
+    transition: .4s ease;
+    &:hover{
+      color: $brand-color-light;
+    }
+  }
+}
+
 .films__container{
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(480px, 1fr)); 

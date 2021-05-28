@@ -10,6 +10,8 @@ import EmptyState from '../common/components/emptyState/emptyState';
 import Autocomplete from '../common/components/autocomplete/Autocomplete';
 import Loader from '../common/components/Loader/Loader';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilter, faSortAlphaDown, faSortAlphaUp, faSortAmountDown, faSortAmountDownAlt } from '@fortawesome/free-solid-svg-icons';
 
 export default function Home() {
   const [session, loading] = useSession();
@@ -17,10 +19,11 @@ export default function Home() {
   const { state } = useContext(store);
   const { isSearchActive } = state;
   const [query, setQuery] = useState('');
+  const [reverse, setReverse] = useState(false)
+  const [filterField, setFilterField] = useState('title')
 
   const getFilms = async () => {
     let res = await axios.get('https://masterghibli.herokuapp.com/films/')
-    console.log('Films', res.data);
     return res.data
   }
 
@@ -42,27 +45,45 @@ export default function Home() {
     </EmptyState>
   );
 
+  let filter = (a, b) => {
+    let order = [a,b]
+    reverse && order.reverse()
+    
+    let A = order[0][filterField]
+    let B = order[1][filterField]
+
+    if (A >  B) {
+      return 1;
+    }
+    if (A < B) {
+      return -1;
+    }
+    return 0;
+  }
+
+
   const renderCards = () => {
     let allFilms = films;
-    let results = allFilms.filter((film) => {
-      if (query == null) {
-        return film;
-      } else if (
-        film.title.toLowerCase().includes(query.toLowerCase()) ||
-        film.original_title.toLowerCase().includes(query.toLowerCase()) ||
-        film.original_title_romanised.toLowerCase().includes(query.toLowerCase()) ||
-        film.director.toLowerCase().includes(query.toLowerCase()) ||
-        film.release_date.toString().toLowerCase().includes(query.toLowerCase())
-      ) {
-        return film;
-      }
-    });
+    // let results = allFilms.filter((film) => {
+    //   if (query == null) {
+    //     return film;
+    //   } else if (
+    //     film.title.toLowerCase().includes(query.toLowerCase()) ||
+    //     film.original_title.toLowerCase().includes(query.toLowerCase()) ||
+    //     film.original_title_romanised.toLowerCase().includes(query.toLowerCase()) ||
+    //     film.director.toLowerCase().includes(query.toLowerCase()) ||
+    //     film.release_date.toString().toLowerCase().includes(query.toLowerCase())
+    //   ) {
+    //     return film;
+    //   }
+    // });
 
-    if (results.length >= 1) {
-      return results.map((film) => <Card key={film.id} film={film} />);
-    } else {
-      return NoSearchResults();
-    }
+    // if (results.length >= 1) {
+    //   return results.map((film) => <Card key={film.id} film={film} />);
+    // } else {
+    //   return NoSearchResults();
+    // }
+    return allFilms.sort(filter).map((film) => <Card key={film.id} film={film} />)
   };
 
   let handleInputChange = (data) => {
@@ -93,6 +114,17 @@ export default function Home() {
             </div>
           </Fragment>
         )}
+
+        <div className={styles.filter__container}>
+          <div className={styles.trigger}>
+            <FontAwesomeIcon icon={faFilter} />
+          </div>
+          <div className={styles.trigger} onClick={() => setReverse(!reverse)}>
+            {!reverse ? <FontAwesomeIcon icon={faSortAlphaDown}/> : <FontAwesomeIcon icon={faSortAlphaUp} />}
+          </div>
+        </div>
+
+        
 
         <div className={styles.films__container}>
           {films.length >= 1 && !loading ? (

@@ -4,7 +4,6 @@ import ReactStars from 'react-rating-stars-component';
 import styles from './Card.module.scss';
 
 export default function Card(props) {
-  console.log(props.film.rt_score/20);
   const router = useRouter();
   const {
     id,
