@@ -19,9 +19,9 @@ export default function Autocomplete(props) {
       suggestion => 
       suggestion.title.toLowerCase().indexOf(value.toLowerCase()) > -1 || 
       suggestion.director.toLowerCase().indexOf(value.toLowerCase()) > -1 ||
-      suggestion.release_date.toLowerCase().indexOf(value.toLowerCase()) > -1 ||
+      suggestion.release_date.toString().toLowerCase().indexOf(value.toLowerCase()) > -1 ||
       suggestion.original_title_romanised.toLowerCase().indexOf(value.toLowerCase()) > -1 ||
-      suggestion.rt_score.toLowerCase().indexOf(value.toLowerCase()) > -1 
+      suggestion.rt_score.toString().toLowerCase().indexOf(value.toLowerCase()) > -1 
     )
     setActiveSuggestion(0)
     setFilteredSuggestions(filteredSuggestions)
@@ -38,7 +38,7 @@ export default function Autocomplete(props) {
     if(filteredSuggestions.length >= 1) {
       return filteredSuggestions.map(item => (
         <div key={item.id} className={styles.suggestion__container} onClick={() => router.push(`/film/${item.id}`)}>
-          <div className={styles.thumbnail} style={{backgroundImage: `url(${item.poster})`}}></div>
+          <div className={styles.thumbnail} style={{backgroundImage: `url(${item.cover_url})`}}></div>
           <div className={styles.details}>
             <p><b>{item.title}</b> (<i>{item.original_title_romanised}</i>)</p>
             <p>Directed by {item.director} in <b>{item.release_date}</b></p>
