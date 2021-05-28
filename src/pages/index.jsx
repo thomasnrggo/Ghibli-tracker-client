@@ -37,13 +37,13 @@ export default function Home() {
     })
   }, []);
 
-  const NoSearchResults = () => (
-    <EmptyState>
-      <h2 className="h5">
-        Ups... Looks like the movie your looking for doesn't exists.
-      </h2>
-    </EmptyState>
-  );
+  // const NoSearchResults = () => (
+  //   <EmptyState>
+  //     <h2 className="h5">
+  //       Ups... Looks like the movie your looking for doesn't exists.
+  //     </h2>
+  //   </EmptyState>
+  // );
 
   let filter = (a, b) => {
     let order = [a,b]
@@ -64,6 +64,9 @@ export default function Home() {
 
   const renderCards = () => {
     let allFilms = films;
+
+    // TODO: we will keep this? filter by search result
+
     // let results = allFilms.filter((film) => {
     //   if (query == null) {
     //     return film;

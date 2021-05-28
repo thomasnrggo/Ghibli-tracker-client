@@ -60,7 +60,7 @@ export default function Autocomplete(props) {
         type="text"
         className='input'
         value={inputValue}
-        placeholder='Search a film by name, director, release year or rotten tomatos audience score.'
+        placeholder='Search by name'
         onChange={onChange}
       />
       <span className={styles.close__btn} onClick={() => closeSuggestions()}>
