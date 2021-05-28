@@ -29,6 +29,7 @@
 <p align="center">
   <a href="#key-features">Key Features</a> •
   <a href="#how-to-use">How To Use</a> •
+  <a href="#demo">Demo</a> •
   <a href="#specifications">Specifications</a> •
   <a href="#credits">Credits</a> •
   <a href="#collaborators">Collaborators</a>
@@ -62,6 +63,10 @@ $ npm install
 # Run the app
 $ npm run dev
 ```
+
+## Demo
+
+[Ghibli Tracker](https://ghibli-tracker-client.vercel.app/)
 
 ## Specifications
 
@@ -119,6 +124,8 @@ This site uses the following open source packages:
 - [Next.js 10.2](https://nextjs.org/) • Managing performance and SEO with SSR and SSG
 - [Jest 26.6](https://jestjs.io/) • Testing
 - [Vercel](https://vercel.com/) • Deployment
+
+With the supervision of [Erik Ochoa](https://twitter.com/Elyager), Academic Coach at [Platzi Master](https://platzi.com/master/)
 
 ## Collaborators
 
