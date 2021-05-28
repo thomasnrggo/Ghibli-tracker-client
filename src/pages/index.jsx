@@ -9,6 +9,7 @@ import { store } from '../common/context/store';
 import EmptyState from '../common/components/emptyState/emptyState';
 import Autocomplete from '../common/components/autocomplete/Autocomplete';
 import Loader from '../common/components/Loader/Loader';
+import axios from 'axios';
 
 export default function Home() {
   const [session, loading] = useSession();
@@ -17,15 +18,21 @@ export default function Home() {
   const { isSearchActive } = state;
   const [query, setQuery] = useState('');
 
-  useEffect(() => {
-    setTimeout(() => {
-      setFilms(response);
-    }, 5000);
-  }, []);
+  const getFilms = async () => {
+    let res = await axios.get('https://masterghibli.herokuapp.com/films/')
+    console.log('Films', res.data);
+    return res.data
+  }
 
-  const handleSearchInputChange = (e) => {
-    setQuery(e.target.value);
-  };
+  useEffect(() => {
+    getFilms()
+    .then(res => {
+      setFilms(res);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }, []);
 
   const NoSearchResults = () => (
     <EmptyState>
@@ -43,11 +50,9 @@ export default function Home() {
       } else if (
         film.title.toLowerCase().includes(query.toLowerCase()) ||
         film.original_title.toLowerCase().includes(query.toLowerCase()) ||
-        film.original_title_romanised
-          .toLowerCase()
-          .includes(query.toLowerCase()) ||
+        film.original_title_romanised.toLowerCase().includes(query.toLowerCase()) ||
         film.director.toLowerCase().includes(query.toLowerCase()) ||
-        film.release_date.toLowerCase().includes(query.toLowerCase())
+        film.release_date.toString().toLowerCase().includes(query.toLowerCase())
       ) {
         return film;
       }
