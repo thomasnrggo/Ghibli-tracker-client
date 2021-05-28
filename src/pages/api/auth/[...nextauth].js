@@ -27,6 +27,11 @@ const providers = [
     clientId: process.env.FACEBOOK_ID,
     clientSecret: process.env.FACEBOOK_SECRET,
   }),
+  Providers.Twitter({
+    name: 'Twitter',
+    clientId: process.env.TWITTER_ID,
+    clientSecret: process.env.TWITTER_SECRET,
+  }),
 ];
 
 const options = {

@@ -134,8 +134,8 @@ export default function Login() {
     if (validateForm(form)) getLoginResponse(type);
   }
 
-  async function handleFacebookLogin() {
-    signIn('facebook', {
+  async function handleSocialLogin(type) {
+    signIn(type, {
       callbackUrl: '/',
     });
   }
@@ -339,7 +339,7 @@ export default function Login() {
         <button
           className={`btn btn-facebook ${styles.login__btn}`}
           type="button"
-          onClick={handleFacebookLogin}
+          onClick={() => handleSocialLogin('facebook')}
         >
           <i className="fab fa-facebook-f" /> Log in with Facebook
         </button>
@@ -347,6 +347,7 @@ export default function Login() {
         <button
           className={`btn btn-twitter ${styles.login__btn}`}
           type="button"
+          onClick={() => handleSocialLogin('twitter')}
         >
           <i className="fab fa-twitter" /> Log in with Twitter
         </button>
