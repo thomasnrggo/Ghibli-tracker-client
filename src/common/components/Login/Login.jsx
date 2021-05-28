@@ -1,8 +1,11 @@
 import React, { useContext, useState } from 'react';
-import Modal from '../Modal/Modal';
+import { signIn } from 'next-auth/client';
+import { useRouter } from 'next/router';
 import { store } from '../../context/store';
+import Modal from '../Modal/Modal';
 
 import styles from './Login.module.scss';
+import Alert from '../Alert/Alert';
 
 export default function Login() {
   const [loginData, setLoginData] = useState({
@@ -23,9 +26,14 @@ export default function Login() {
     email: false,
     password: false,
   });
+  const [error, setError] = useState({
+    state: false,
+    message: '',
+  });
   const [currentTab, setCurrentTab] = useState('login');
   const { state, dispatch } = useContext(store);
   const { authModal } = state;
+  const router = useRouter();
 
   function handleChange(e, type) {
     const { name, value } = e.target;
@@ -41,6 +49,7 @@ export default function Login() {
   }
 
   function validateForm(type) {
+    let isValid = false;
     const validations = {
       login: {
         email: /\S+@\S+\.\S+/,
@@ -52,41 +61,95 @@ export default function Login() {
         password: /(?=.{8,})/,
       },
     };
+
     const options = {
-      login: () =>
+      login: () => {
+        const emailValidated = validations.login.email.test(
+          loginData.email.trim().toLowerCase()
+        );
+        const passwordValidated = validations.login.password.test(
+          loginData.password.trim()
+        );
+
         setLoginFormValidation((state) => ({
-          email: validations.login.email.test(
-            loginData.email.trim().toLowerCase()
-          ),
-          password: validations.login.password.test(loginData.password.trim()),
-        })),
-      signup: () =>
+          email: emailValidated,
+          password: passwordValidated,
+        }));
+
+        emailValidated && passwordValidated
+          ? (isValid = true)
+          : (isValid = false);
+      },
+      signup: () => {
+        const usernameValidated = validations.signup.username.test(
+          signupData.username.trim().toLowerCase()
+        );
+        const emailValidated = validations.signup.username.test(
+          signupData.email.trim().toLowerCase()
+        );
+        const passwordValidated = validations.signup.password.test(
+          signupData.password.trim()
+        );
+
         setSignupFormValidation((state) => ({
-          username: validations.signup.username.test(
-            signupData.username.trim().toLowerCase()
-          ),
-          email: validations.signup.username.test(
-            signupData.email.trim().toLowerCase()
-          ),
-          password: validations.signup.password.test(
-            signupData.password.trim()
-          ),
-        })),
+          username: usernameValidated,
+          email: emailValidated,
+          password: passwordValidated,
+        }));
+
+        usernameValidated && emailValidated && passwordValidated
+          ? (isValid = true)
+          : (isValid = false);
+      },
     };
 
-    return options[type]();
+    options[type]();
+
+    return isValid;
   }
 
-  function handleSubmit(e, type) {
+  async function getLoginResponse(type) {
+    const res = await signIn(type, {
+      email: loginData.email,
+      password: loginData.password,
+      callbackUrl: `/`,
+      redirect: false,
+    });
+
+    if (res?.error)
+      setError({
+        state: true,
+        message: res.error,
+      });
+    if (res?.url) {
+      router.push(res.url);
+      dispatch({ type: 'AUTH_TRIGGER' });
+      setError(false);
+    }
+  }
+
+  function handleSubmit(e, form, type) {
     e.preventDefault();
-    validateForm(type);
+
+    if (validateForm(form)) getLoginResponse(type);
+  }
+
+  async function handleSocialLogin(type) {
+    signIn(type, {
+      callbackUrl: '/',
+    });
+  }
+
+  function handleAuthModal() {
+    router.push('/');
+    dispatch({ type: 'AUTH_TRIGGER' });
   }
 
   return (
     <Modal
-      selector={"#auth"}
+      selector={'#auth'}
       isOpen={authModal}
-      onClose={() => dispatch({ type: 'AUTH_TRIGGER' })}
+      onClose={handleAuthModal}
       className={styles.login__container}
     >
       <p className={`${styles.login__title} h3`}>
@@ -95,7 +158,7 @@ export default function Login() {
 
       <form
         className={styles.login__form}
-        onSubmit={(e) => handleSubmit(e, currentTab)}
+        onSubmit={(e) => handleSubmit(e, currentTab, 'credentials')}
       >
         {currentTab === 'login' ? (
           <>
@@ -263,11 +326,20 @@ export default function Login() {
           </>
         )}
 
+        <Alert
+          isOpen={error.state}
+          type="error"
+          onClose={() => setError(false)}
+        >
+          {`Error: ${error.message}`}
+        </Alert>
+
         <hr className="divider" />
 
         <button
           className={`btn btn-facebook ${styles.login__btn}`}
           type="button"
+          onClick={() => handleSocialLogin('facebook')}
         >
           <i className="fab fa-facebook-f" /> Log in with Facebook
         </button>
@@ -275,6 +347,7 @@ export default function Login() {
         <button
           className={`btn btn-twitter ${styles.login__btn}`}
           type="button"
+          onClick={() => handleSocialLogin('twitter')}
         >
           <i className="fab fa-twitter" /> Log in with Twitter
         </button>
