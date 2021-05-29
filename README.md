@@ -29,12 +29,13 @@
 <p align="center">
   <a href="#key-features">Key Features</a> •
   <a href="#how-to-use">How To Use</a> •
+  <a href="#demo">Demo</a> •
   <a href="#specifications">Specifications</a> •
   <a href="#credits">Credits</a> •
   <a href="#collaborators">Collaborators</a>
 </p>
 
-<!-- ![screenshot](https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.gif) -->
+![Website screenshot](https://imgur.com/qjhMjWr.png)
 
 ## Key Features
 
@@ -62,6 +63,10 @@ $ npm install
 # Run the app
 $ npm run dev
 ```
+
+## Demo
+
+[Ghibli Tracker](https://ghibli-tracker-client.vercel.app/)
 
 ## Specifications
 
@@ -115,23 +120,29 @@ $ npm run dev
 
 This site uses the following open source packages:
 
-- [React.js](https://reactjs.org/)
-- [Next.js](https://nextjs.org/)
-- [Jest](https://jestjs.io/) (Testing)
+- [React.js 17](https://reactjs.org/) • Building the UI
+- [Next.js 10.2](https://nextjs.org/) • Managing performance and SEO with SSR and SSG
+- [Jest 26.6](https://jestjs.io/) • Testing
+- [Vercel](https://vercel.com/) • Deployment
+
+With the supervision of [Erik Ochoa](https://twitter.com/Elyager), Academic Coach at [Platzi Master](https://platzi.com/master/)
 
 ## Collaborators
 
 This app was created with 💚 by:
 
-> Anthony Gonzalez | Web Designer and Frontend Developer 
+> Anthony Gonzalez &nbsp;&middot;&nbsp;
+> [thomasnrggo.com](https://thomasnrggo.com) &nbsp;&middot;&nbsp;
+> Web Designer &nbsp;&middot;&nbsp;
+> Frontend Developer &nbsp;&middot;&nbsp;
 > GitHub [@thomasnrggo](https://github.com/thomasnrggo) &nbsp;&middot;&nbsp;
 > Twitter [@thomasnrggo](https://twitter.com/thomasnrggo)
 
-> Juan Daniel Martínez | Frontend Developer
+> Juan Daniel Martínez &nbsp;&middot;&nbsp;
 > [juanda.dev](https://juanda.dev) &nbsp;&middot;&nbsp;
+> Frontend Developer &nbsp;&middot;&nbsp;
 > GitHub [@juandadev](https://github.com/juandadev) &nbsp;&middot;&nbsp;
 > Twitter [@juanda_dev_](https://twitter.com/juanda_dev_)
 
-> Jonathan Reyes | Frontend Developer
-
->Luis Loaeza | Backend Developer
+> Jonathan Reyes &nbsp;&middot;&nbsp;
+> Frontend Developer

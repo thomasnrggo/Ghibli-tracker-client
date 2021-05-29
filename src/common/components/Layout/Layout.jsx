@@ -7,7 +7,7 @@ export default function Layout({ children }) {
     <>
       <Header className="container" />
       {/* TODO: define if we are gointo to use a fluid container */}
-      <main className="main container">{children}</main>
+      <main className="main container-fluid">{children}</main>
 
       <Footer />
     </>

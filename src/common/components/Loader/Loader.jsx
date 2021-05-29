@@ -80,7 +80,6 @@ export default function LoaderComponent(props) {
 
   useEffect(() => {
     let randomQuote = getRandonQuote ()
-    console.log(randomQuote);
     setQuote(randomQuote)
   }, [])
 
