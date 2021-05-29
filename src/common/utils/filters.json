@@ -1,0 +1,14 @@
+[
+  {
+    "value": "title",
+    "label": "Title"
+  },
+  {
+    "value": "release_date",
+    "label": "Release year"
+  },
+  {
+    "value": "rt_score",
+    "label": "RT Score"
+  }
+]

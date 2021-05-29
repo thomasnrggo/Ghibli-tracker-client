@@ -4,12 +4,23 @@
   display: flex;
   width: 100%;
   justify-content: flex-end;
+  align-items: center;
   color: $text-color;
   font-size: 16px;
-  padding: 12px;
+  padding: 12px 0;
 
   @media (max-width: $iphoneX) {
     padding: 1em 12px 0 12px;
+    flex-direction: column-reverse;
+  }
+
+  .triggers__container{
+    display: flex;
+
+    @media (max-width: $iphoneX) {
+      width: 100%;
+      justify-content: space-between;
+    }
   }
 
   .trigger {
@@ -17,8 +28,67 @@
     font-size: 18px;
     margin: 4px;
     transition: .4s ease;
+    
+
     &:hover{
       color: $brand-color-light;
+    }
+
+    &.active{
+      color: $brand-color-light;
+
+      &:hover{
+        color: $text-color;
+      }
+    }
+  }
+
+  .filterButton__container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+
+    @media (max-width: $iphoneX) {
+      margin-top: 8px;
+      display: grid;
+      width: 100%;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
+    }
+
+    .filterButton{
+      font-family: $text-font;
+      cursor: pointer;
+      background: $bg-color;
+      color: $text-color;
+      border: 1px solid;
+      border-radius: 6px;
+      padding: 6px;
+      margin-right: 8px;
+      min-width: 100px;
+  
+      color: $text-color;
+      background: $container-color;
+      border-color: $container-color;
+  
+      transition: .4s ease;
+
+      @media (max-width: $iphoneX) {
+        margin-bottom: 8px;
+      }
+  
+      
+  
+      &:hover {
+        color: $container-color;
+        background: lighten($color: $brand-color-light, $amount: 10%);
+        border-color: lighten($color: $brand-color-light, $amount: 10%);
+      }
+  
+      &.selected{
+        color: $container-color;
+        background: $brand-color-light;
+        border-color: $brand-color-light;
+      }
     }
   }
 }

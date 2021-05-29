@@ -12,6 +12,7 @@ import Loader from '../common/components/Loader/Loader';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faSortAlphaDown, faSortAlphaUp, faSortAmountDown, faSortAmountDownAlt } from '@fortawesome/free-solid-svg-icons';
+import filters from '../common/utils/filters.json'
 
 export default function Home() {
   const [session, loading] = useSession();
@@ -21,6 +22,7 @@ export default function Home() {
   const [query, setQuery] = useState('');
   const [reverse, setReverse] = useState(false)
   const [filterField, setFilterField] = useState('title')
+  const [showFilters, setShowFilters] = useState(false)
 
   const getFilms = async () => {
     let res = await axios.get('https://masterghibli.herokuapp.com/films/')
@@ -93,6 +95,10 @@ export default function Home() {
     setQuery(data);
   };
 
+  let setFilter = filter => {
+    setFilterField(filter)
+  }
+
   return (
     <>
       <Head>
@@ -117,13 +123,25 @@ export default function Home() {
             </div>
           </Fragment>
         )}
+        
 
         <div className={styles.filter__container}>
-          <div className={styles.trigger}>
-            <FontAwesomeIcon icon={faFilter} />
-          </div>
-          <div className={styles.trigger} onClick={() => setReverse(!reverse)}>
-            {!reverse ? <FontAwesomeIcon icon={faSortAlphaDown}/> : <FontAwesomeIcon icon={faSortAlphaUp} />}
+          {showFilters && (
+            <div className={styles.filterButton__container}>
+              {filters.map(filter => (
+                <button className={`${styles.filterButton} ${filterField === filter.value ? styles.selected : ''} `} onClick={() => setFilter(filter.value)}>
+                  {filter.label}
+                </button>
+              ))}
+            </div>
+          )}
+          <div className={styles.triggers__container}>
+            <div className={`${styles.trigger} ${showFilters ? styles.active : ''}`} onClick={() => setShowFilters(!showFilters)}>
+              <FontAwesomeIcon icon={faFilter} />
+            </div>
+            <div className={styles.trigger} onClick={() => setReverse(!reverse)}>
+              {!reverse ? <FontAwesomeIcon icon={faSortAlphaDown}/> : <FontAwesomeIcon icon={faSortAlphaUp} />}
+            </div>
           </div>
         </div>
 
