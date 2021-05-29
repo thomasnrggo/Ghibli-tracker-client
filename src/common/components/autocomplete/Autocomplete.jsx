@@ -50,8 +50,11 @@ export default function Autocomplete(props) {
             <img className='img-fluid' src={item.cover_url}/>
           </div>
           <div className={styles.details}>
-            <h2 className={styles.title}>{item.title}</h2>
-            {/* <p>Directed by {item.director} in <b>{item.release_date}</b></p> */}
+            <h5 className={styles.subtitle}>{item.original_title_romanised}</h5>
+            <h2 className={styles.title}>{item.title} <span className={styles.year}>({item.release_date})</span></h2>
+            <h6 className={styles.director}>By {item.director}</h6>
+            <h6 className={styles.rating}>Audience score: {item.rt_score}</h6>
+
           </div>
         </div>
       ))
