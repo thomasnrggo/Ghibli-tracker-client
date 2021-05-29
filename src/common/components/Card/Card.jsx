@@ -15,7 +15,7 @@ export default function Card(props) {
     rt_score,
     release_date,
     running_time,
-    poster
+    cover_url
   } = props.film;
 
   const handleOnCardClik = () => {
@@ -25,7 +25,7 @@ export default function Card(props) {
   return (
     <div className={styles.card__container} onClick={() => handleOnCardClik()}>
       <div className={styles.card__thumbnail} style={{
-        backgroundImage: `url(${poster})`
+        backgroundImage: `url(${cover_url})`
         }}>
       </div>
       <div className={styles.card__detail}>
@@ -39,10 +39,10 @@ export default function Card(props) {
           <ReactStars
             count={5}
             half={true}
-            value={3}
+            value={rt_score/20}
             edit={false}
             size={20}
-            activeColor="#ffd700"
+            activeColor="#d1c38b"
           />
         </div>
         <div className={styles.emoji__container}>

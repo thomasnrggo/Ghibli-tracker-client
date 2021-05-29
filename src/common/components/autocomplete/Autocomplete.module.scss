@@ -4,6 +4,11 @@
   position: relative;
   color: $text-color;
 
+  @media (max-width: $iphoneX) {
+    padding: 12px;
+  }
+
+
   .suggestions__container{
     position: absolute;
     top: 120%;
@@ -49,6 +54,12 @@
     right: 12px;
     top: 14px;
     transition: ease .4s;
+
+    @media (max-width: $iphoneX) {
+      right: 24px;
+      top: 24px;
+    }
+
     &:hover{
       color: $bg-color;
     }
