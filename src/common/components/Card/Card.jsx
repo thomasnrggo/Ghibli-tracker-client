@@ -27,6 +27,7 @@ export default function Card(props) {
       <div className={styles.card__thumbnail} style={{
         backgroundImage: `url(${cover_url})`
         }}>
+          <img className={`img-fluid ${styles.imgFluid}`} src={cover_url}></img>
       </div>
       <div className={styles.card__detail}>
         <h3 className={styles.subtitle}>

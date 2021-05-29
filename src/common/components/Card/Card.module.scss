@@ -22,17 +22,31 @@
 
   .card__thumbnail{
     width: 30%;
-    min-height: 285px;
+    // min-height: 285px;
     background-size: cover;
     background-repeat: no-repeat;
 
     @media (max-width: $iphoneX) {
+      background: none !important;
       min-height: 180px;
       width: 35%;
     }
 
-    .img-fluid{
+    @media screen and (min-width:1533px) {
+      min-height: 285px;
+      width: 44%;
+    }
+    @media screen and (min-width:2080px) {
+      min-height: 320px;
+      width: 44%;
+    }
+
+    .imgFluid{
       object-fit: cover;
+
+      @media screen and (min-width:1533px) {
+        display: none;
+      }
     }
   }
 
