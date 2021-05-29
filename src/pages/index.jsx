@@ -25,7 +25,9 @@ export default function Home() {
   const [showFilters, setShowFilters] = useState(false)
 
   const getFilms = async () => {
-    let res = await axios.get('https://masterghibli.herokuapp.com/films/')
+    let url = 'https://masterghibli.herokuapp.com/films/'
+    let res = await axios.get(url)
+    console.log(res.data);
     return res.data
   }
 

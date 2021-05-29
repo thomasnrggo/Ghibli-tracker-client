@@ -21,8 +21,8 @@
 
 
   .card__thumbnail{
-    width: 40%;
-    min-height: 300px;
+    width: 30%;
+    min-height: 285px;
     background-size: cover;
     background-repeat: no-repeat;
 
@@ -37,7 +37,7 @@
   }
 
   .card__detail{
-    width: 60%;
+    width: 70%;
     padding: 30px;
     display: flex;
     flex-direction: column;
