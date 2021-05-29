@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import styles from './Autocomplete.module.scss'
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useRouter } from 'next/router'
+import { store } from '../../context/store';
+
 
 export default function Autocomplete(props) {
   const router = useRouter();
+  const { dispatch } = useContext(store);
   const [activeSuggestion, setActiveSuggestion] = useState(0)
   const [filteredSuggestions, setFilteredSuggestions] = useState([])
   const [showSuggestions, setShowSuggestions] = useState(false)
@@ -27,28 +30,35 @@ export default function Autocomplete(props) {
     setFilteredSuggestions(filteredSuggestions)
     setShowSuggestions(true)
     setInputValue(value)
-    props.onChange(e.target.value)
+    // props.onChange(e.target.value)
   }
 
   let closeSuggestions = e => {
     setShowSuggestions(!showSuggestions)
   }
 
+  let handleSuggestionOnClick = id => {
+    dispatch({ type: 'SEARCH_TRIGGER' });
+    router.push(`/film/${id}`)
+  }
+
   let renderSuggestions = () => {
     if(filteredSuggestions.length >= 1) {
       return filteredSuggestions.map(item => (
-        <div key={item.id} className={styles.suggestion__container} onClick={() => router.push(`/film/${item.id}`)}>
-          <div className={styles.thumbnail} style={{backgroundImage: `url(${item.cover_url})`}}></div>
+        <div key={item.id} className={styles.suggestion__container} onClick={() => handleSuggestionOnClick(item.id)}>
+          <div className={styles.thumbnail} >
+            <img className='img-fluid' src={item.cover_url}/>
+          </div>
           <div className={styles.details}>
-            <p><b>{item.title}</b> (<i>{item.original_title_romanised}</i>)</p>
-            <p>Directed by {item.director} in <b>{item.release_date}</b></p>
+            <h2 className={styles.title}>{item.title}</h2>
+            {/* <p>Directed by {item.director} in <b>{item.release_date}</b></p> */}
           </div>
         </div>
       ))
     } else {
       return (
         <div className={styles.empty__suggestion}>
-          There's no suggestion on that, try with a film name, director or year.
+          There's no suggestion on that.
         </div>
       )
     }
@@ -58,7 +68,7 @@ export default function Autocomplete(props) {
     <div className={styles.autocomplete__container}>
       <input 
         type="text"
-        className='input'
+        className={`input ${styles.autocomplete__input}`}
         value={inputValue}
         placeholder='Search by name'
         onChange={onChange}

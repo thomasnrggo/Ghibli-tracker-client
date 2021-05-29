@@ -8,6 +8,11 @@
     padding: 12px;
   }
 
+  .autocomplete__input{
+    position: relative;
+    margin: 0;
+  }
+
 
   .suggestions__container{
     position: absolute;
@@ -20,10 +25,17 @@
     overflow: hidden;
     max-height: 212px;
     overflow-y: scroll;
+
+    @media (max-width: $iphoneX) {
+      top: inherit;
+      width: 94%;
+    }
   }
 
   .suggestion__container{
     display: flex;
+    width: 100%;
+    justify-content: space-between;
     cursor: pointer;
     padding: 8px;
     transition: ease .4s;
@@ -31,28 +43,33 @@
     &:hover {
       background: lighten($color: $container-color, $amount: 5%);
     }
+
+    .thumbnail {
+      width: 15%;
+    }
+  
+    .details{
+      width: 85%;
+
+      display: flex;
+      padding: 8px;
+      flex-direction: column;
+      .title{
+        font-size: 14px;
+      }
+    }
   }
 
-  .thumbnail{
-    background-size: cover;
-    background-repeat: no-repeat;
-    min-height: 50px;
-    min-width: 50px;
-  }
-
-  .details{
-    display: flex;
-    padding: 8px;
-    flex-direction: column;
-  }
+  
 
 
   .close__btn{
     cursor: pointer;
     color: $container-color;
     position: absolute;
-    right: 12px;
-    top: 14px;
+    font-size: 18px;
+    right: 2%;
+    top: 25%;
     transition: ease .4s;
 
     @media (max-width: $iphoneX) {
@@ -67,5 +84,7 @@
 }
 
 .empty__suggestion{
+  font-size: 14px;
+  text-align: center;
   padding: 8px;
 }
