@@ -1,12 +1,6 @@
 @import '../../../styles/Vars';
 .container{
     
-    .container h1{
-        color:$text-color; 
-        width: 260px;
-        margin: 0 auto;
-        text-transform: uppercase;
-    }
     .container__detail {
         display: flex;
         color: $text-color;
@@ -20,6 +14,7 @@
         }
         .movieImage {
             border-radius: 15px;
+            width: 90%;
         }
         
         .movieDetails {
@@ -28,6 +23,34 @@
         
         .firstItem {
             margin-top: 0;
+            text-transform: uppercase;
+            
         }  
     }
+
+    .container_image{
+        position: relative;
+
+        .container__button{
+            position: absolute;
+            top: 20px;
+            left: 25px;
+
+            .container__button_img{
+                color: #fefefe;
+                background-color: transparent;
+                border: none;
+                transition: all 0.3s ease;
+                font-size: 1.25rem;
+                padding: 5px;
+                margin: 0;
+
+            }
+            .container__button_img:hover{
+                color: #21d07a;
+                cursor: pointer;
+            }
+        }
+    }
 }
+

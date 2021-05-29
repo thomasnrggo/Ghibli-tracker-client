@@ -7,7 +7,7 @@ import styles from '../styles/pages/index.module.scss';
 import response from '../common/data/films.json';
 import { store } from '../common/context/store';
 import EmptyState from '../common/components/emptyState/emptyState';
-import Autocomplete from '../common/components/autocomplete/autocomplete';
+import Autocomplete from '../common/components/autocomplete/Autocomplete';
 import Loader from '../common/components/Loader/Loader';
 
 export default function Home() {

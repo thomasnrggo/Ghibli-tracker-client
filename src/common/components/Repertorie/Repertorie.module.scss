@@ -1,0 +1,15 @@
+@import '../../../styles/Vars';
+
+.images__container{
+    display: flex;
+        color: $text-color;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        margin-top: 30px;
+        font-size: 1.25rem;
+
+        .images__box {
+            border-radius: 50%;
+            
+        }
+}
