@@ -149,11 +149,15 @@ export default function Home() {
 
         <div className={styles.films__container}>
           {films.length >= 1 && !loading ? (
-            <Fragment>{renderCards()}</Fragment>
+            <Fragment>
+              {renderCards()}
+            </Fragment>
+            
           ) : (
             <Loader />
           )}
         </div>
+
       </Layout>
     </>
   );
