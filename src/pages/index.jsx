@@ -11,6 +11,33 @@ import { getFilms } from '../common/utils/services'
 
 import filters from '../common/utils/filters.json'
 
+let watchedByUser = [
+  {
+      "id": "c91ac357-fcbd-4c39-a90f-70f99c607bda",
+      "emoji_rating": 1,
+      "star_rating": 1,
+      "watched": true,
+      "user": 1,
+      "movie": "bef239cd-9830-4fcb-bc86-b202c5eccfca"
+  },
+  {
+      "id": "2653737d-88d3-4f71-89a3-64bd1de1402e",
+      "emoji_rating": 2,
+      "star_rating": 2,
+      "watched": false,
+      "user": 1,
+      "movie": "0d9ebc22-ce3c-4ff5-bdcc-b7591d1cf9b4"
+  },
+  {
+      "id": "f14def2c-815f-493f-89da-ffad49317b73",
+      "emoji_rating": 2,
+      "star_rating": 2,
+      "watched": false,
+      "user": 1,
+      "movie": "0d9ebc22-ce3c-4ff5-bdcc-b7591d1cf9b4"
+  }
+]
+
 export default function Home() {
   const [session, loading] = useSession();
   const [films, setFilms] = useState([]);
@@ -46,7 +73,15 @@ export default function Home() {
 
 
   const renderCards = () => {
-    return films.sort(filter).map((film) => <Card key={film.id} film={film} />)
+    return films.sort(filter).map((film) => (
+      <Card 
+        key={film.id} 
+        film={film} 
+        watched={watchedByUser.some(e => e.movie === film.id)}
+        qualification={watchedByUser.filter(e => e.movie === film.id)}
+      />)
+    )
+    
   };
 
   let setFilter = filter => {

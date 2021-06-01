@@ -52,7 +52,7 @@ export default function Autocomplete(props) {
           <div className={styles.details}>
             <h5 className={styles.subtitle}>{item.original_title_romanised}</h5>
             <h2 className={styles.title}>{item.title} <span className={styles.year}>({item.release_date})</span></h2>
-            <h6 className={styles.director}>By {item.director}</h6>
+            <h6 className={styles.director}>Directed by {item.director}</h6>
             <h6 className={styles.rating}>Audience score: {item.rt_score}</h6>
 
           </div>

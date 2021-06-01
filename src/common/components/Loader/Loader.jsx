@@ -84,7 +84,7 @@ export default function LoaderComponent(props) {
   }, [])
 
   const getRandonQuote = () => {
-    let number = Math.floor(Math.random() * (quotes.length - 1 + 1)) + 1;
+    let number = Math.floor(Math.random() * (quotes.length - 1)) + 1;
     return quotes[number]
   }
 

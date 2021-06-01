@@ -10,5 +10,9 @@
   {
     "value": "rt_score",
     "label": "RT Score"
+  },
+  {
+    "value": "running_time",
+    "label": "Duration"
   }
 ]
