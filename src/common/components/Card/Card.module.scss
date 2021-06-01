@@ -44,14 +44,6 @@
     .imgFluid{
       height: 100%;
       object-fit: cover;
-
-      // @media (max-width: $iphoneX) {
-      //   display: none;
-      // }
-
-      // @media screen and (min-width:1533px) {
-      //   display: none;
-      // }
     }
   }
 
@@ -96,14 +88,10 @@
       }
     }
 
-    .description {
-      display: none;
-      
-      @media (min-width: 768px) {
-        display: block;
-        margin-top: 8px;
-        font-size: 16px;
-      }
+    .dutation{
+      font-size: 1em;
+      font-weight: lighter;
+      margin-bottom: 4px;
     }
 
     .director{
@@ -119,9 +107,6 @@
     .score{
       font-size: 12px;
       font-weight: lighter;
-      @media (max-width: $iphoneX) {
-        display: none;
-      }
     }
 
     .rating{
@@ -145,11 +130,6 @@
     flex-direction: column;
   }
 
-  .rt__container{
-    @media (max-width: $iphoneX) {
-      display: none;
-    }
-  }
 }
 
 .emoji__container{

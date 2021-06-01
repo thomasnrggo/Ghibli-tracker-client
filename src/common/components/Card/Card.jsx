@@ -48,7 +48,7 @@ export default function Card(props) {
         <h4 className={styles.subtitle}>{original_title_romanised || ''}</h4>        
         <h5 className={styles.director}>by <b>{director || 'director'}</b></h5>
 
-        <h6 className={styles.subtitle}>{running_time}min</h6>
+        <h6 className={styles.dutation}>{running_time}min</h6>
 
         {/* //TODO: if user is auth and he has seen the film show rating and emojis */}
         {/* //TODO: if auth and user has seen the fill show user quelification else show rt score */}
