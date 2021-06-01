@@ -1,5 +1,4 @@
 import NextAuth from 'next-auth';
-import { session } from 'next-auth/client';
 import Providers from 'next-auth/providers';
 import users from '../../../common/data/userDBExample.json';
 
@@ -26,6 +25,10 @@ const providers = [
     name: 'Facebook',
     clientId: process.env.FACEBOOK_ID,
     clientSecret: process.env.FACEBOOK_SECRET,
+    profile(profile) {
+      console.log(profile);
+      return profile;
+    },
   }),
   Providers.Twitter({
     name: 'Twitter',
