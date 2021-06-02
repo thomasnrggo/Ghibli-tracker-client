@@ -15,7 +15,7 @@ let watchedByUser = [
   {
       "id": "c91ac357-fcbd-4c39-a90f-70f99c607bda",
       "emoji_rating": 1,
-      "star_rating": 1,
+      "star_rating": 4,
       "watched": true,
       "user": 1,
       "movie": "bef239cd-9830-4fcb-bc86-b202c5eccfca"
@@ -23,15 +23,7 @@ let watchedByUser = [
   {
       "id": "2653737d-88d3-4f71-89a3-64bd1de1402e",
       "emoji_rating": 2,
-      "star_rating": 2,
-      "watched": false,
-      "user": 1,
-      "movie": "0d9ebc22-ce3c-4ff5-bdcc-b7591d1cf9b4"
-  },
-  {
-      "id": "f14def2c-815f-493f-89da-ffad49317b73",
-      "emoji_rating": 2,
-      "star_rating": 2,
+      "star_rating": 3,
       "watched": false,
       "user": 1,
       "movie": "0d9ebc22-ce3c-4ff5-bdcc-b7591d1cf9b4"
@@ -45,10 +37,36 @@ export default function Home() {
   const [filterField, setFilterField] = useState('title')
   const [showFilters, setShowFilters] = useState(false)
 
+  const isAuth = true
+
   useEffect(() => {
     getFilms()
     .then(res => {
-      setFilms(res);
+      let films = res
+      let filmsByUser = []
+      if(isAuth) {
+
+        // TODO: if auth consult films by user
+
+        films.map(film => {
+          if(isAuth){
+            let f = watchedByUser.filter(e => e.movie === film.id)
+            if(f.length >= 1) {
+              let { emoji_rating, star_rating } = f[0]
+              let filmWithRating = {...film, emoji_rating, star_rating}
+              filmsByUser.push(filmWithRating)
+            } else {
+              let filmWithoutRating = {...film, emoji_rating: null, star_rating: null}
+              filmsByUser.push(filmWithoutRating)
+            }
+          }else{
+            filmsByUser.push(film)
+          }
+        })
+        setFilms(filmsByUser)
+      } else{
+        setFilms(res)
+      }
     })
     .catch(err => {
       console.log(err);
@@ -59,10 +77,10 @@ export default function Home() {
     let order = [a,b]
     reverse && order.reverse()
     
-    let A = order[0][filterField]
-    let B = order[1][filterField]
+    let A = `${order[0][filterField]}`
+    let B = `${order[1][filterField]}`
 
-    if (A >  B) {
+    if (A > B) {
       return 1;
     }
     if (A < B) {
@@ -77,8 +95,8 @@ export default function Home() {
       <Card 
         key={film.id} 
         film={film} 
-        watched={watchedByUser.some(e => e.movie === film.id)}
-        qualification={watchedByUser.filter(e => e.movie === film.id)}
+        watched={isAuth && watchedByUser.some(e => e.movie === film.id)}
+        qualification={isAuth && watchedByUser.filter(e => e.movie === film.id)}
       />)
     )
     
@@ -103,7 +121,11 @@ export default function Home() {
           {showFilters && (
             <div className={styles.filterButton__container}>
               {filters.map(filter => (
-                <button key={filter.value} className={`${styles.filterButton} ${filterField === filter.value ? styles.selected : ''} `} onClick={() => setFilter(filter.value)}>
+                <button 
+                  key={filter.value} 
+                  className={`${styles.filterButton} ${filterField === filter.value ? styles.selected : ''} ${filter.needAuth && !isAuth ? 'd-none' : ''}`} 
+                  onClick={() => setFilter(filter.value)}
+                >
                   {filter.label}
                 </button>
               ))}

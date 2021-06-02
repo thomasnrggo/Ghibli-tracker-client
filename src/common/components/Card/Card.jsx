@@ -2,6 +2,8 @@ import React, { Fragment } from 'react';
 import { useRouter } from 'next/router';
 import ReactStars from 'react-rating-stars-component';
 import styles from './Card.module.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 export default function Card(props) {
   const router = useRouter();
@@ -39,6 +41,10 @@ export default function Card(props) {
 
   return (
     <div className={styles.card__container} onClick={() => handleOnCardClik()}>
+      {watched && <div className={styles.watched}>
+        <span className={styles.watched__text}>Watched </span> 
+        <FontAwesomeIcon icon={faCheck}/>
+      </div>}
       <div className={styles.card__thumbnail}>
           <img className={`img-fluid ${styles.imgFluid}`} src={cover_url}></img>
       </div>

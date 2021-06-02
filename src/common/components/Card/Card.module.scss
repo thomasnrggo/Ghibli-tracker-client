@@ -1,9 +1,33 @@
 @import '../../../styles/Vars';
 
+.watched{
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  border: 1px solid greenyellow;
+  color: greenyellow;
+  border-radius: 6px;
+  padding: 6px;
+  font-size: 16px;
+
+  svg {
+    display: none;
+    @media (max-width: $iphoneX) {
+      display: block;
+    }
+  }
+
+  .watched__text{
+    @media (max-width: $iphoneX) {
+      display: none;
+    }
+  }
+}
+
 .card__container {
   background: $container-color;
   color: $text-color;
-  border-radius: 6px;
+  border-radius: 8px;
   overflow: hidden;
   box-shadow: $shadow;
 
@@ -12,12 +36,15 @@
 
   cursor: pointer;
   transition: ease .4s;
+  position: relative;
 
   max-width: 100%;
 
   &:hover {
-    transform: scale(1.01);
+    transform: scale(1.005);
   }
+  
+  
 
 
   .card__thumbnail{
@@ -118,11 +145,6 @@
       display: flex;
       flex-direction: column;
     }
-
-    .emoji__container{
-      // margin-top: auto;
-      // align-self: flex-end;
-    }
   }
 
   .qualification__container{
@@ -141,10 +163,6 @@
     @media (max-width: $iphoneX) {
       font-size: 24px;
       padding-right: 4px;
-    }
-
-    &:hover{
-      font-size: 34px;
     }
   }
 }
