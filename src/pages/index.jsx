@@ -1,15 +1,10 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/client';
 import Head from 'next/head';
 import Layout from '../common/components/Layout/Layout';
 import Card from '../common/components/Card/Card';
 import styles from '../styles/pages/index.module.scss';
-import response from '../common/data/films.json';
-import { store } from '../common/context/store';
-import EmptyState from '../common/components/emptyState/emptyState';
-import Autocomplete from '../common/components/autocomplete/Autocomplete';
 import Loader from '../common/components/Loader/Loader';
-import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFilter,
@@ -19,6 +14,25 @@ import {
   faSortAmountDownAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import filters from '../common/utils/filters.json';
+
+let watchedByUser = [
+  {
+    id: 'c91ac357-fcbd-4c39-a90f-70f99c607bda',
+    emoji_rating: 1,
+    star_rating: 4,
+    watched: true,
+    user: 1,
+    movie: 'bef239cd-9830-4fcb-bc86-b202c5eccfca',
+  },
+  {
+    id: '2653737d-88d3-4f71-89a3-64bd1de1402e',
+    emoji_rating: 2,
+    star_rating: 3,
+    watched: false,
+    user: 1,
+    movie: '0d9ebc22-ce3c-4ff5-bdcc-b7591d1cf9b4',
+  },
+];
 
 export default function Home() {
   const [session, loading] = useSession();
@@ -44,14 +58,6 @@ export default function Home() {
         console.log(err);
       });
   }, []);
-
-  // const NoSearchResults = () => (
-  //   <EmptyState>
-  //     <h2 className="h5">
-  //       Ups... Looks like the movie your looking for doesn't exists.
-  //     </h2>
-  //   </EmptyState>
-  // );
 
   let filter = (a, b) => {
     let order = [a, b];

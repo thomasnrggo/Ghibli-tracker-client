@@ -10,5 +10,19 @@
   {
     "value": "rt_score",
     "label": "RT Score"
+  },
+  {
+    "value": "running_time",
+    "label": "Duration"
+  },
+  {
+    "value": "star_rating",
+    "label": "My rating",
+    "needAuth": true
+  },
+  {
+    "value": "emoji_rating",
+    "label": "My reaction",
+    "needAuth": true
   }
 ]

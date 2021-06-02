@@ -1,6 +1,7 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
+import { store } from '../../context/store';
 import {
   faChevronLeft,
   faSearch,
@@ -8,13 +9,15 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Login from '../Login/Login';
-import { store } from '../../context/store';
-
+import Autocomplete from '../autocomplete/Autocomplete'
 import styles from './Header.module.scss';
+import { getFilms } from '../../utils/services';
 
 export default function Header() {
   const [session, loading] = useSession();
-  const { dispatch } = useContext(store);
+  const { dispatch, state } = useContext(store);
+  const { isSearchActive } = state;
+  const [films, setFilms] = useState([])
   const router = useRouter();
 
   let onSearchIconClick = () => {
@@ -31,31 +34,62 @@ export default function Header() {
   useEffect(() => {
     if (router.query.signin && !session && !loading)
       dispatch({ type: 'AUTH_TRIGGER' });
+
+    getFilms()
+    .then(res => {
+      setFilms(res)
+    })
+    .catch(err => {
+      console.error(err);
+    })
+    
   }, [router]);
 
   return (
     <>
       <header className={styles.header}>
-        <div className={styles.icon}>
-          {router.pathname !== '/' ? (
+        <div className={styles.menu__container}>
+          <div className={styles.icon}>
+            {router.pathname !== '/' ? (
+              <FontAwesomeIcon
+                icon={faChevronLeft}
+                onClick={() => router.back()}
+              />
+            ) : (
+              <FontAwesomeIcon icon={faUser} onClick={handleProfile} />
+            )}
+          </div>
+
+          <img className={styles.logo} src="/SVG/logo.svg" alt="Ghibli tracker" />
+
+          <div className={`${styles.icon} ${styles.autocomplete__container}`}>
+            {isSearchActive && (
+              <div className={styles.search__container}>
+                {films.length >= 1 && (
+                  <Autocomplete
+                    suggestions={films}
+                  />
+                )}
+              </div>
+            )}
             <FontAwesomeIcon
-              icon={faChevronLeft}
-              onClick={() => router.back()}
+              icon={faSearch}
+              onClick={() => onSearchIconClick()}
             />
-          ) : (
-            <FontAwesomeIcon icon={faUser} onClick={handleProfile} />
-          )}
+          </div>
         </div>
-
-        <img className={styles.logo} src="/SVG/logo.svg" alt="Ghibli tracker" />
-
-        <div className={styles.icon}>
-          <FontAwesomeIcon
-            icon={faSearch}
-            onClick={() => onSearchIconClick()}
-          />
-        </div>
+        {isSearchActive && (
+          <div className={styles.search__onMobile}>
+            {films.length >= 1 && (
+                <Autocomplete
+                  suggestions={films}
+                />
+              )}
+          </div>
+        )}
+        
       </header>
+      
 
       <Login />
     </>

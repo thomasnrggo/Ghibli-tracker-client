@@ -6,16 +6,22 @@
     max-width: 100%;
     z-index: 999;
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: .6rem ;
+    
 
     color: $text-color;
     background: darken($color: $bg-color, $amount: 3%);
 
-    @media (min-width: $iphoneX) {
-      padding: .6em 1.5em;
+    
+
+    .menu__container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: .6rem ;
+
+      @media (min-width: $iphoneX) {
+        padding: .6em 1.5em;
+      }
     }
 
     .logo{
@@ -35,4 +41,28 @@
         color: lighten($color: $brand-color, $amount: 25%);
       }
     }
+
+    .autocomplete__container{
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      .search__container{
+        position: absolute;
+        right: 150%;
+        min-width: 30vw;
+
+        @media (max-width: $iphoneX) {
+          display: none;
+        }
+      }
+    }
+}
+
+.search__onMobile {
+  display: none;
+
+  @media (max-width: $iphoneX) {
+    display: block;
+  }
 }
