@@ -1,9 +1,33 @@
 @import '../../../styles/Vars';
 
+.watched{
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  border: 1px solid greenyellow;
+  color: greenyellow;
+  border-radius: 6px;
+  padding: 6px;
+  font-size: 16px;
+
+  svg {
+    display: none;
+    @media (max-width: $iphoneX) {
+      display: block;
+    }
+  }
+
+  .watched__text{
+    @media (max-width: $iphoneX) {
+      display: none;
+    }
+  }
+}
+
 .card__container {
   background: $container-color;
   color: $text-color;
-  border-radius: 6px;
+  border-radius: 8px;
   overflow: hidden;
   box-shadow: $shadow;
 
@@ -12,71 +36,122 @@
 
   cursor: pointer;
   transition: ease .4s;
+  position: relative;
 
   max-width: 100%;
 
   &:hover {
-    transform: scale(1.01);
+    transform: scale(1.005);
   }
+  
+  
 
 
   .card__thumbnail{
-    width: 40%;
-    min-height: 300px;
-    background-size: cover;
-    background-repeat: no-repeat;
+    width: 35%;
+    background: none;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
 
     @media (max-width: $iphoneX) {
       min-height: 180px;
-      width: 35%;
+      width: 40%;
     }
 
-    .img-fluid{
+    @media screen and (min-width:1533px) {
+      min-height: 285px;
+      width: 44%;
+    }
+
+    @media screen and (min-width:2080px) {
+      min-height: 320px;
+      width: 44%;
+    }
+
+    .imgFluid{
+      height: 100%;
       object-fit: cover;
     }
   }
 
   .card__detail{
-    width: 60%;
-    padding: 30px;
+    width: 65%;
+    padding: 12px;
     display: flex;
     flex-direction: column;
 
-    @media (min-width: $iphoneX) {
-      width: 65%;
-      padding: 12px;
+    @media (max-width: $iphoneX) {
+      width: 60%;
+      padding: 8px;
     }
 
     .title {
       font-family: $heading-font;
-      font-size: 2em;
+      font-size: 1.8em;
+      line-height: .8em;
+      margin-bottom: 4px;
+
       @media (max-width: $iphoneX) {
-        font-size: 1.3em;
+        font-size: 1.2em;
+        line-height: 1.1em;
+      }
+
+      span{
+        font-weight: lighter;
+        font-size: 18px;
+        @media (max-width: $iphoneX) {
+          font-size: 16px;
+        }
       }
     }
 
     .subtitle{
       font-size: 1em;
+      font-weight: lighter;
+      margin-bottom: 4px;
+
       @media (max-width: $iphoneX) {
-        font-size: .7em;
+        display: none;
       }
     }
 
-    .description {
-      display: none;
-      
-      @media (min-width: 768px) {
-        display: block;
-        margin-top: 8px;
-        font-size: 14px;
+    .dutation{
+      font-size: 1em;
+      font-weight: lighter;
+      margin-bottom: 4px;
+    }
+
+    .director{
+      font-weight: lighter;
+      margin: 12px 0;
+
+      @media (max-width: $iphoneX) {
+        font-size: 12px;
+        margin: 8px 0;
       }
     }
 
-    .emoji__container{
-      margin-top: auto;
-      align-self: flex-end;
+    .score{
+      font-size: 12px;
+      font-weight: lighter;
+    }
+
+    .rating{
+      display: flex;
+      align-items: center;
+    }
+
+    .reaction__container{
+      display: flex;
+      flex-direction: column;
     }
   }
+
+  .qualification__container{
+    display: flex;
+    flex-direction: column;
+  }
+
 }
 
 .emoji__container{
@@ -85,8 +160,9 @@
     font-size: 28px;
     transition: ease .4s;
 
-    &:hover{
-      font-size: 34px;
+    @media (max-width: $iphoneX) {
+      font-size: 24px;
+      padding-right: 4px;
     }
   }
 }
