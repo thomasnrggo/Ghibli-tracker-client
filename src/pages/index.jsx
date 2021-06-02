@@ -10,9 +10,9 @@ import {
   faFilter,
   faSortAlphaDown,
   faSortAlphaUp,
-  faSortAmountDown,
-  faSortAmountDownAlt,
 } from '@fortawesome/free-solid-svg-icons';
+import { getFilms } from '../common/utils/services';
+
 import filters from '../common/utils/filters.json';
 
 let watchedByUser = [
@@ -37,22 +37,43 @@ let watchedByUser = [
 export default function Home() {
   const [session, loading] = useSession();
   const [films, setFilms] = useState([]);
-  const { state } = useContext(store);
-  const { isSearchActive } = state;
-  const [query, setQuery] = useState('');
   const [reverse, setReverse] = useState(false);
   const [filterField, setFilterField] = useState('title');
   const [showFilters, setShowFilters] = useState(false);
 
-  const getFilms = async () => {
-    let res = await axios.get('https://masterghibli.herokuapp.com/films/');
-    return res.data;
-  };
+  const isAuth = true;
 
   useEffect(() => {
     getFilms()
       .then((res) => {
-        setFilms(res);
+        let films = res;
+        let filmsByUser = [];
+        if (isAuth) {
+          // TODO: if auth consult films by user
+
+          films.map((film) => {
+            if (isAuth) {
+              let f = watchedByUser.filter((e) => e.movie === film.id);
+              if (f.length >= 1) {
+                let { emoji_rating, star_rating } = f[0];
+                let filmWithRating = { ...film, emoji_rating, star_rating };
+                filmsByUser.push(filmWithRating);
+              } else {
+                let filmWithoutRating = {
+                  ...film,
+                  emoji_rating: null,
+                  star_rating: null,
+                };
+                filmsByUser.push(filmWithoutRating);
+              }
+            } else {
+              filmsByUser.push(film);
+            }
+          });
+          setFilms(filmsByUser);
+        } else {
+          setFilms(res);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -63,8 +84,8 @@ export default function Home() {
     let order = [a, b];
     reverse && order.reverse();
 
-    let A = order[0][filterField];
-    let B = order[1][filterField];
+    let A = `${order[0][filterField]}`;
+    let B = `${order[1][filterField]}`;
 
     if (A > B) {
       return 1;
@@ -76,36 +97,18 @@ export default function Home() {
   };
 
   const renderCards = () => {
-    let allFilms = films;
-
-    // TODO: we will keep this? filter by search result
-
-    // let results = allFilms.filter((film) => {
-    //   if (query == null) {
-    //     return film;
-    //   } else if (
-    //     film.title.toLowerCase().includes(query.toLowerCase()) ||
-    //     film.original_title.toLowerCase().includes(query.toLowerCase()) ||
-    //     film.original_title_romanised.toLowerCase().includes(query.toLowerCase()) ||
-    //     film.director.toLowerCase().includes(query.toLowerCase()) ||
-    //     film.release_date.toString().toLowerCase().includes(query.toLowerCase())
-    //   ) {
-    //     return film;
-    //   }
-    // });
-
-    // if (results.length >= 1) {
-    //   return results.map((film) => <Card key={film.id} film={film} />);
-    // } else {
-    //   return NoSearchResults();
-    // }
-    return allFilms
+    return films
       .sort(filter)
-      .map((film) => <Card key={film.id} film={film} />);
-  };
-
-  let handleInputChange = (data) => {
-    setQuery(data);
+      .map((film) => (
+        <Card
+          key={film.id}
+          film={film}
+          watched={isAuth && watchedByUser.some((e) => e.movie === film.id)}
+          qualification={
+            isAuth && watchedByUser.filter((e) => e.movie === film.id)
+          }
+        />
+      ));
   };
 
   let setFilter = (filter) => {
@@ -123,28 +126,15 @@ export default function Home() {
       </Head>
 
       <Layout>
-        {isSearchActive && (
-          <Fragment>
-            <div className={styles.search__container}>
-              <label className="h2">Search</label>
-              {films.length >= 1 && (
-                <Autocomplete
-                  suggestions={films}
-                  onChange={handleInputChange}
-                />
-              )}
-            </div>
-          </Fragment>
-        )}
-
         <div className={styles.filter__container}>
           {showFilters && (
             <div className={styles.filterButton__container}>
               {filters.map((filter) => (
                 <button
+                  key={filter.value}
                   className={`${styles.filterButton} ${
                     filterField === filter.value ? styles.selected : ''
-                  } `}
+                  } ${filter.needAuth && !isAuth ? 'd-none' : ''}`}
                   onClick={() => setFilter(filter.value)}
                 >
                   {filter.label}
