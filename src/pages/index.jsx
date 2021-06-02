@@ -11,8 +11,14 @@ import Autocomplete from '../common/components/autocomplete/Autocomplete';
 import Loader from '../common/components/Loader/Loader';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter, faSortAlphaDown, faSortAlphaUp, faSortAmountDown, faSortAmountDownAlt } from '@fortawesome/free-solid-svg-icons';
-import filters from '../common/utils/filters.json'
+import {
+  faFilter,
+  faSortAlphaDown,
+  faSortAlphaUp,
+  faSortAmountDown,
+  faSortAmountDownAlt,
+} from '@fortawesome/free-solid-svg-icons';
+import filters from '../common/utils/filters.json';
 
 export default function Home() {
   const [session, loading] = useSession();
@@ -20,23 +26,23 @@ export default function Home() {
   const { state } = useContext(store);
   const { isSearchActive } = state;
   const [query, setQuery] = useState('');
-  const [reverse, setReverse] = useState(false)
-  const [filterField, setFilterField] = useState('title')
-  const [showFilters, setShowFilters] = useState(false)
+  const [reverse, setReverse] = useState(false);
+  const [filterField, setFilterField] = useState('title');
+  const [showFilters, setShowFilters] = useState(false);
 
   const getFilms = async () => {
-    let res = await axios.get('https://masterghibli.herokuapp.com/films/')
-    return res.data
-  }
+    let res = await axios.get('https://masterghibli.herokuapp.com/films/');
+    return res.data;
+  };
 
   useEffect(() => {
     getFilms()
-    .then(res => {
-      setFilms(res);
-    })
-    .catch(err => {
-      console.log(err);
-    })
+      .then((res) => {
+        setFilms(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   // const NoSearchResults = () => (
@@ -48,21 +54,20 @@ export default function Home() {
   // );
 
   let filter = (a, b) => {
-    let order = [a,b]
-    reverse && order.reverse()
-    
-    let A = order[0][filterField]
-    let B = order[1][filterField]
+    let order = [a, b];
+    reverse && order.reverse();
 
-    if (A >  B) {
+    let A = order[0][filterField];
+    let B = order[1][filterField];
+
+    if (A > B) {
       return 1;
     }
     if (A < B) {
       return -1;
     }
     return 0;
-  }
-
+  };
 
   const renderCards = () => {
     let allFilms = films;
@@ -88,16 +93,18 @@ export default function Home() {
     // } else {
     //   return NoSearchResults();
     // }
-    return allFilms.sort(filter).map((film) => <Card key={film.id} film={film} />)
+    return allFilms
+      .sort(filter)
+      .map((film) => <Card key={film.id} film={film} />);
   };
 
   let handleInputChange = (data) => {
     setQuery(data);
   };
 
-  let setFilter = filter => {
-    setFilterField(filter)
-  }
+  let setFilter = (filter) => {
+    setFilterField(filter);
+  };
 
   return (
     <>
@@ -123,41 +130,51 @@ export default function Home() {
             </div>
           </Fragment>
         )}
-        
 
         <div className={styles.filter__container}>
           {showFilters && (
             <div className={styles.filterButton__container}>
-              {filters.map(filter => (
-                <button className={`${styles.filterButton} ${filterField === filter.value ? styles.selected : ''} `} onClick={() => setFilter(filter.value)}>
+              {filters.map((filter) => (
+                <button
+                  className={`${styles.filterButton} ${
+                    filterField === filter.value ? styles.selected : ''
+                  } `}
+                  onClick={() => setFilter(filter.value)}
+                >
                   {filter.label}
                 </button>
               ))}
             </div>
           )}
           <div className={styles.triggers__container}>
-            <div className={`${styles.trigger} ${showFilters ? styles.active : ''}`} onClick={() => setShowFilters(!showFilters)}>
+            <div
+              className={`${styles.trigger} ${
+                showFilters ? styles.active : ''
+              }`}
+              onClick={() => setShowFilters(!showFilters)}
+            >
               <FontAwesomeIcon icon={faFilter} />
             </div>
-            <div className={styles.trigger} onClick={() => setReverse(!reverse)}>
-              {!reverse ? <FontAwesomeIcon icon={faSortAlphaDown}/> : <FontAwesomeIcon icon={faSortAlphaUp} />}
+            <div
+              className={styles.trigger}
+              onClick={() => setReverse(!reverse)}
+            >
+              {!reverse ? (
+                <FontAwesomeIcon icon={faSortAlphaDown} />
+              ) : (
+                <FontAwesomeIcon icon={faSortAlphaUp} />
+              )}
             </div>
           </div>
         </div>
 
-        
-
         <div className={styles.films__container}>
           {films.length >= 1 && !loading ? (
-            <Fragment>
-              {renderCards()}
-            </Fragment>
-            
+            <Fragment>{renderCards()}</Fragment>
           ) : (
             <Loader />
           )}
         </div>
-
       </Layout>
     </>
   );
