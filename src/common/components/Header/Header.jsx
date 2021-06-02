@@ -1,10 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/client';
+import { useSession, getSession } from 'next-auth/client';
 import {
   faChevronLeft,
   faSearch,
   faUser,
+  faSignInAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Login from '../Login/Login';
@@ -28,6 +29,12 @@ export default function Header() {
     );
   }
 
+  async function sessionData() {
+    const sessionData = await getSession();
+
+    return sessionData;
+  }
+
   useEffect(() => {
     if (router.query.signin && !session && !loading)
       dispatch({ type: 'AUTH_TRIGGER' });
@@ -43,7 +50,12 @@ export default function Header() {
               onClick={() => router.back()}
             />
           ) : (
-            <FontAwesomeIcon icon={faUser} onClick={handleProfile} />
+            <>
+              <FontAwesomeIcon
+                icon={session ? faUser : faSignInAlt}
+                onClick={handleProfile}
+              />
+            </>
           )}
         </div>
 

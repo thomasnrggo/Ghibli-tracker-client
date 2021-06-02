@@ -34,6 +34,10 @@ const providers = [
     name: 'Twitter',
     clientId: process.env.TWITTER_ID,
     clientSecret: process.env.TWITTER_SECRET,
+    profile(profile) {
+      console.log(profile);
+      return profile;
+    },
   }),
 ];
 
