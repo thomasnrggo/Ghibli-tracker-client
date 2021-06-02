@@ -18,7 +18,6 @@ export default function Detail(props) {
       });
   }, [id]);
 
-  console.log('....................');
   const addMovie = () => {
     alert('Añadida a lista de peliculas vistas no olvides calificarla');
   };
