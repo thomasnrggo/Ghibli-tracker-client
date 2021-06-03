@@ -12,20 +12,21 @@ export default function profile() {
 
   useEffect(() => {
     if (!session && !loading) router.push('/');
-    const getFilms = async () => {
-      let url = 'https://masterghibli.herokuapp.com/films/';
-      let res = await axios.get(url);
-      return res.data;
-    };
-    getFilms();
-  }, [session, loading]);
+    console.log(session);
+    // const getFilms = async () => {
+    //   let url = 'https://masterghibli.herokuapp.com/films/';
+    //   let res = await axios.get(url);
+    //   return res.data;
+    // };
+    // getFilms();
+  }, [session]);
 
   return (
     <Layout>
       {!session || loading ? (
         <Loader />
       ) : (
-        <div className={styles.profile__container}>
+        <div className={`container ${styles.profile__container}`}>
           <div className={styles.user__container}>
             <img
               className={`img-fluid ${styles.user__image}`}
@@ -33,14 +34,10 @@ export default function profile() {
               alt={'user'}
             />
             <h2 className={`h2 ${styles.username}`}>{session.user.name}</h2>
-
-            <button
-              className={`btn btn-primary ${styles.logout__btn}`}
-              onClick={() => signOut({ callbackUrl: '/' })}
-            >
-              Log out
-            </button>
           </div>
+
+          <div className={styles.progress__container}>progress</div>
+
           <div className={styles.rating__container}>
             <h4>Your stars</h4>
             <div className={styles.rating}>
@@ -72,7 +69,13 @@ export default function profile() {
               </div>
             </div>
           </div>
-          <div className={styles.progress__container}>progress</div>
+
+          <button
+              className={`btn btn-primary ${styles.logout__btn}`}
+              onClick={() => signOut({ callbackUrl: '/' })}
+            >
+              Log out
+            </button>
         </div>
       )}
     </Layout>
