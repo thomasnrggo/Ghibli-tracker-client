@@ -1,0 +1,39 @@
+@import '../../../styles/Vars';
+
+.progressBar__container{
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 12px;
+  align-items: center;
+
+  .label{
+    font-weight: lighter;
+    display: block;
+    width: 100%;
+  }
+
+  progress:not([value]) {
+    /* Styling here */
+    background: red;
+  }
+
+  progress[value] {
+    -webkit-appearance: none;
+    appearance: none;
+
+    width: 100%;
+    height: 26px;
+  }
+
+  progress[value]::-webkit-progress-bar{
+    background-color: $bg-color;
+    border-radius: 500px;
+    border: 6px solid $bg-color;
+  }
+
+  progress[value]::-webkit-progress-value{
+    background-color: #85C985;
+    border-radius: 500px;
+  }
+
+}

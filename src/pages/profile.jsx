@@ -4,6 +4,7 @@ import { signOut, useSession } from 'next-auth/client';
 import ReactStars from 'react-rating-stars-component';
 import Loader from '../common/components/Loader/Loader';
 import Layout from '../common/components/Layout/Layout';
+import ProgressBar from '../common/components/ProgressBar/ProgressBar'
 import styles from '../styles/pages/profile.module.scss';
 import axios from 'axios';
 export default function profile() {
@@ -36,7 +37,12 @@ export default function profile() {
             <h2 className={`h2 ${styles.username}`}>{session.user.name}</h2>
           </div>
 
-          <div className={styles.progress__container}>progress</div>
+          <div className={styles.progress__container}>
+            <h4 className={styles.section__title}>You have seen</h4>
+            <div className={styles.progress__container}>
+              <ProgressBar value={2} max={22}/>
+            </div>
+          </div>
 
           <div className={styles.rating__container}>
             <h4>Your stars</h4>
