@@ -121,6 +121,7 @@ export default function Login() {
         state: true,
         message: res.error,
       });
+
     if (res?.url) {
       router.push(res.url);
       dispatch({ type: 'AUTH_TRIGGER' });

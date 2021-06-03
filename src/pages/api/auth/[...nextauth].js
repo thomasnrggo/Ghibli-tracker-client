@@ -7,14 +7,6 @@ const providers = [
     name: 'Credentials',
     authorize: async (credentials) => {
       try {
-        // const response = users;
-        // const user = response.find((item) => credentials.email === item.email);
-
-        // if (user) {
-        //   console.log(`User logged: ${user.username}`);
-        //   return user;
-        // }
-
         const user = await axios
           .get('https://masterghibli.herokuapp.com/profiles/')
           .then(({ data }) =>
@@ -22,7 +14,14 @@ const providers = [
           );
 
         if (user) {
-          if (credentials.password === user.password) return user;
+          if (credentials.password === user.password)
+            return {
+              id: user.id,
+              username: user.username,
+              name: user.first_name,
+              email: user.email,
+              image: user.avatar_url,
+            };
         }
       } catch (e) {
         const { message } = e.response.data;
@@ -36,8 +35,12 @@ const providers = [
     clientId: process.env.FACEBOOK_ID,
     clientSecret: process.env.FACEBOOK_SECRET,
     profile(profile) {
-      console.log(profile);
-      return profile;
+      return {
+        id: profile.id,
+        name: profile.name,
+        email: profile.email,
+        image: profile.picture.data.url,
+      };
     },
   }),
   Providers.Twitter({
@@ -45,15 +48,20 @@ const providers = [
     clientId: process.env.TWITTER_ID,
     clientSecret: process.env.TWITTER_SECRET,
     profile(profile) {
-      console.log(profile);
-      return profile;
+      return {
+        id: profile.id,
+        username: profile.screen_name,
+        name: profile.name,
+        email: profile.email,
+        image: profile.profile_image_url_https,
+      };
     },
   }),
 ];
 
 const callbacks = {
   async signIn(user, account, profile) {},
-  async jwt(token, user, account, profile, isNewUser) {
+  async jwt(token, user) {
     if (user) {
       const { accessToken } = user;
 
@@ -62,8 +70,8 @@ const callbacks = {
 
     return token;
   },
-  async session(session, user) {
-    session.accessToken = user.accessToken;
+  async session(session, token) {
+    session.accessToken = token.accessToken;
 
     return session;
   },
@@ -71,6 +79,7 @@ const callbacks = {
 
 const options = {
   providers,
+  callbacks,
 };
 
 export default (req, res) => NextAuth(req, res, options);

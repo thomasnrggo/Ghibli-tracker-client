@@ -22,8 +22,6 @@ const ContextProvider = ({ children }) => {
         return { ...state, authModal: !state.authModal };
       case 'SEARCH_TRIGGER':
         return { ...state, isSearchActive: !state.isSearchActive };
-      case 'SET_USER':
-        return state;
       default:
         return state;
     }

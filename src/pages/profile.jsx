@@ -15,7 +15,6 @@ export default function profile() {
     const getFilms = async () => {
       let url = 'https://masterghibli.herokuapp.com/films/';
       let res = await axios.get(url);
-      console.log(res.data);
       return res.data;
     };
     getFilms();
@@ -30,12 +29,10 @@ export default function profile() {
           <div className={styles.user__container}>
             <img
               className={`img-fluid ${styles.user__image}`}
-              src={
-                'https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/styles/480/public/media/image/2020/09/funko-pop-fine-dog-meme-2066939.jpg?itok=oXihqxM0'
-              }
+              src={`${session.user.image}`}
               alt={'user'}
             />
-            <h2 className={`h2 ${styles.username}`}>This is fine</h2>
+            <h2 className={`h2 ${styles.username}`}>{session.user.name}</h2>
 
             <button
               className={`btn btn-primary ${styles.logout__btn}`}
