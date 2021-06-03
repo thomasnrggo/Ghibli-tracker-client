@@ -60,7 +60,49 @@ const providers = [
 ];
 
 const callbacks = {
-  async signIn(user, account, profile) {},
+  async signIn(user, account, profile) {
+    const { email, name, image, id } = user;
+
+    const options = {
+      credentials: () => true,
+      facebook: async () => {
+        const userDB = await axios
+          .get('https://masterghibli.herokuapp.com/profiles/')
+          .then(({ data }) => data.find((user) => email === user.email));
+
+        if (!userDB) {
+          const username = name.split(' ');
+
+          axios
+            .post('https://masterghibli.herokuapp.com/profiles/', {
+              username: `${username[0].toLowerCase()}${id}`,
+              first_name: name,
+              avatar_url: image,
+              email: email,
+            })
+            .catch((err) => console.log(err.message));
+        }
+      },
+      twitter: async () => {
+        const userDB = await axios
+          .get('https://masterghibli.herokuapp.com/profiles/')
+          .then(({ data }) => data.find((user) => email === user.email));
+
+        if (!userDB) {
+          axios
+            .post('https://masterghibli.herokuapp.com/profiles/', {
+              username: user.username,
+              first_name: name,
+              avatar_url: image,
+              email: email,
+            })
+            .catch((err) => console.log(err.message));
+        }
+      },
+    };
+
+    options[account.provider || account.type]();
+  },
   async jwt(token, user) {
     if (user) {
       const { accessToken } = user;
