@@ -1,9 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styles from './Detail.module.scss';
 import films from '../../data/films.json';
+import { useRouter } from 'next/router';
+import {getFilmsDetail} from '../../utils/services'
+import Modal from '../Modal/Modal'
+import { store } from '../../context/store';
+
+
 
 export default function Detail(props) {
   const IdPage = 0;
+  const { state, dispatch } = useContext(store);
+  const { isOpen } = state;
+
+  const [movie, setMovies] = useState(null);
+  const router = useRouter();
+  const { id } = router.query
+
+  useEffect(() => {
+    getFilmsDetail(id)
+    .then(res => {
+      setMovies(res);
+    })
+    .catch(err => {
+      console.error(err)
+    })
+  }, [id]);
 
   const addMovie = () => {
     alert('Añadida a lista de peliculas vistas no olvides calificarla');
@@ -13,6 +35,15 @@ export default function Detail(props) {
     alert('Elimidada de la lista de peliculas vistas');
   };
 
+
+  const handleModal = () => {
+    dispatch({ type: 'MODAL_TRIGGER' });
+  }
+
+  if (!movie) {
+    return null;
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.container__detail}>
@@ -20,8 +51,8 @@ export default function Detail(props) {
           <div>
             <img
               className={`${styles.col} ${styles.movieImage}`}
-              src={films[IdPage].poster}
-              alt={films[IdPage].title}
+              src={movie.cover_url}
+              alt={movie.title}
             />
           </div>
 
@@ -38,26 +69,38 @@ export default function Detail(props) {
 
         <div className={`${styles.col} ${styles.movieDetails}`}>
           <p className={styles.firstItem}>
-            <strong>TITLE: {films[IdPage].title}</strong>
+            <strong>TITLE: {movie.title}</strong>
           </p>
           <p>
             <strong>original title:</strong>
-            {films[IdPage].original_title}
+            {movie.original_title}
           </p>
           <p>
             <strong>director:</strong>
-            {films[IdPage].director}
+            {movie.director}
           </p>
           <p>
             <strong>producer:</strong>
-            {films[IdPage].producer}
+            {movie.producer}
           </p>
 
           <p>
-            <strong>Description:</strong> {films[IdPage].description}
+            <strong>Description:</strong> {movie.description}
           </p>
         </div>
       </div>
+
+      <button onClick={() => handleModal()}>
+        abrir modal
+      </button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={() => handleModal()}
+      >
+        estrellas
+        emojis
+      </Modal>
     </div>
   );
 }
