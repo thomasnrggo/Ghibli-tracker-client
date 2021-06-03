@@ -45,7 +45,8 @@ export default function profile() {
           </div>
 
           <div className={styles.rating__container}>
-            <h4>Your stars</h4>
+            <h4 className={styles.section__title}>Your stars</h4>
+
             <div className={styles.rating}>
               <ReactStars
                 count={5}
@@ -55,10 +56,12 @@ export default function profile() {
                 size={18}
                 activeColor="#d1c38b"
               />
+              4 of 5
             </div>
           </div>
           <div className={styles.reaction__container}>
-            <h4>Your reactions</h4>
+            <h4 className={styles.section__title}>Your reactions</h4>
+
 
             <div className={styles.emojis__container}>
               <div className={styles.emoji__container}>

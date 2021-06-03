@@ -6,6 +6,11 @@
   gap: 12px;
   align-items: center;
 
+  @media (max-width: $iphoneX) {
+    display: flex;
+    flex-direction: column;
+  }
+
   .label{
     font-weight: lighter;
     display: block;
