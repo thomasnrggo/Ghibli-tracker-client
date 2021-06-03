@@ -29,7 +29,7 @@ export default function profile() {
           <div className={styles.user__container}>
             <img
               className={`img-fluid ${styles.user__image}`}
-              src={`${session.user.image}`}
+              src={`${session.user.image || 'https://imgur.com/WxZS1Ff.jpg'}`}
               alt={'user'}
             />
             <h2 className={`h2 ${styles.username}`}>{session.user.name}</h2>

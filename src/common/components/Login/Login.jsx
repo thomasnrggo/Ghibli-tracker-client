@@ -6,6 +6,7 @@ import Modal from '../Modal/Modal';
 
 import styles from './Login.module.scss';
 import Alert from '../Alert/Alert';
+import axios from 'axios';
 
 export default function Login() {
   const [loginData, setLoginData] = useState({
@@ -18,11 +19,13 @@ export default function Login() {
   });
   const [signupData, setSignupData] = useState({
     username: '',
+    name: '',
     email: '',
     password: '',
   });
   const [signupFormValidation, setSignupFormValidation] = useState({
     username: false,
+    name: false,
     email: false,
     password: false,
   });
@@ -57,6 +60,7 @@ export default function Login() {
       },
       signup: {
         username: /(?=.{8,20}$)[a-zA-Z0-9._]/,
+        name: /[a-zA-Z0-9._]/,
         email: /\S+@\S+\.\S+/,
         password: /(?=.{8,})/,
       },
@@ -84,6 +88,9 @@ export default function Login() {
         const usernameValidated = validations.signup.username.test(
           signupData.username.trim().toLowerCase()
         );
+        const nameValidated = validations.signup.name.test(
+          signupData.name.trim()
+        );
         const emailValidated = validations.signup.username.test(
           signupData.email.trim().toLowerCase()
         );
@@ -93,11 +100,15 @@ export default function Login() {
 
         setSignupFormValidation((state) => ({
           username: usernameValidated,
+          name: nameValidated,
           email: emailValidated,
           password: passwordValidated,
         }));
 
-        usernameValidated && emailValidated && passwordValidated
+        usernameValidated &&
+        nameValidated &&
+        emailValidated &&
+        passwordValidated
           ? (isValid = true)
           : (isValid = false);
       },
@@ -108,10 +119,14 @@ export default function Login() {
     return isValid;
   }
 
-  async function getLoginResponse(type) {
+  async function getLoginResponse(type, form) {
+    const email = form === 'login' ? loginData.email : signupData.email;
+    const password =
+      form === 'login' ? loginData.password : signupData.password;
+
     const res = await signIn(type, {
-      email: loginData.email,
-      password: loginData.password,
+      email,
+      password,
       callbackUrl: `/`,
       redirect: false,
     });
@@ -132,7 +147,39 @@ export default function Login() {
   function handleSubmit(e, form, type) {
     e.preventDefault();
 
-    if (validateForm(form)) getLoginResponse(type);
+    if (validateForm(form)) getLoginResponse(type, 'login');
+  }
+
+  async function getSignUpResponse() {
+    const { email, username, name, password } = signupData;
+
+    const userExists = await axios
+      .get('https://masterghibli.herokuapp.com/profiles/')
+      .then(({ data }) => data.find((user) => email === user.email));
+
+    if (userExists) return [false, 'The email is already registered'];
+
+    axios
+      .post('https://masterghibli.herokuapp.com/profiles/', {
+        username,
+        first_name: name,
+        password,
+        email,
+      })
+      .then((response) => response.data);
+
+    return [true, null];
+  }
+
+  async function handleSignUp() {
+    if (validateForm('signup')) {
+      const message = await getSignUpResponse().then((response) => {
+        if (response[0]) getLoginResponse('credentials', 'signup');
+        return response;
+      });
+
+      if (!message[0]) setError({ state: true, message: message[1] });
+    }
   }
 
   async function handleSocialLogin(type) {
@@ -259,6 +306,25 @@ export default function Login() {
 
             <div
               className={`input__container ${
+                signupFormValidation.name ? 'input-success' : 'input-error'
+              }`}
+            >
+              <label htmlFor="name" className="input__label">
+                name
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  className="input"
+                  placeholder="Your name here..."
+                  value={signupData.name}
+                  onChange={(e) => handleChange(e, 'signup')}
+                />
+              </label>
+            </div>
+
+            <div
+              className={`input__container ${
                 signupFormValidation.email ? 'input-success' : 'input-error'
               }`}
             >
@@ -317,6 +383,7 @@ export default function Login() {
                 type="button"
                 className={`btn btn-primary ${styles.login__btn}`}
                 formNoValidate="formnovalidate"
+                onClick={handleSignUp}
               >
                 Sign Up{' '}
                 <i
