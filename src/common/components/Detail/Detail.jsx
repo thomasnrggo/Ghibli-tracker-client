@@ -1,21 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styles from './Detail.module.scss';
 import films from '../../data/films.json';
 import { useRouter } from 'next/router';
+import {getFilmsDetail} from '../../utils/services'
+import Modal from '../Modal/Modal'
+import { store } from '../../context/store';
+
+
 
 export default function Detail(props) {
   const IdPage = 0;
+  const { state, dispatch } = useContext(store);
+  const { isOpen } = state;
+
   const [movie, setMovies] = useState(null);
-  const {
-    query: { id },
-  } = useRouter();
+  const router = useRouter();
+  const { id } = router.query
 
   useEffect(() => {
-    fetch('https://masterghibli.herokuapp.com/films/' + id)
-      .then((result) => result.json())
-      .then((data) => {
-        setMovies(data);
-      });
+    getFilmsDetail(id)
+    .then(res => {
+      setMovies(res);
+    })
+    .catch(err => {
+      console.error(err)
+    })
   }, [id]);
 
   const addMovie = () => {
@@ -25,6 +34,11 @@ export default function Detail(props) {
   const removeMovie = () => {
     alert('Elimidada de la lista de peliculas vistas');
   };
+
+
+  const handleModal = () => {
+    dispatch({ type: 'MODAL_TRIGGER' });
+  }
 
   if (!movie) {
     return null;
@@ -75,6 +89,18 @@ export default function Detail(props) {
           </p>
         </div>
       </div>
+
+      <button onClick={() => handleModal()}>
+        abrir modal
+      </button>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={() => handleModal()}
+      >
+        estrellas
+        emojis
+      </Modal>
     </div>
   );
 }

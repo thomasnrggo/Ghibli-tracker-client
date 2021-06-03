@@ -5,13 +5,20 @@ import ReactStars from 'react-rating-stars-component';
 import Loader from '../common/components/Loader/Loader';
 import Layout from '../common/components/Layout/Layout';
 import styles from '../styles/pages/profile.module.scss'
-
+import axios from 'axios'
 export default function profile() {
   const [session, loading] = useSession();
   const router = useRouter();
 
   useEffect(() => {
     if (!session && !loading) router.push('/');
+    const getFilms = async () => {
+      let url = 'https://masterghibli.herokuapp.com/films/'
+      let res = await axios.get(url)
+      console.log(res.data);
+      return res.data
+    }
+    getFilms()
   }, [session, loading]);
 
   return (

@@ -3,20 +3,24 @@ import MovieDetail from '../../../pages/film/[id]';
 import films from '../../data/films.json';
 import { useRouter } from 'next/router';
 import styles from './EspecificDetail.module.scss';
+import {getFilmsDetail} from '../../utils/services'
+
 
 export default function Detail(props) {
   const IdPage = 0;
   const [movie, setMovies] = useState(null);
-  const {
-    query: { id },
-  } = useRouter();
+  const router = useRouter();
+  const { id } =  router.query
 
   useEffect(() => {
-    fetch('https://masterghibli.herokuapp.com/films/' + id)
-      .then((result) => result.json())
-      .then((data) => {
-        setMovies(data);
-      });
+    console.log(id);
+    getFilmsDetail(id)
+    .then(res => {
+      setMovies(res)
+    })
+    .catch(err => {
+      console.error(err);
+    })
   }, [id]);
 
   if (!movie) {
