@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useSession, getSession } from 'next-auth/client';
+import { useSession } from 'next-auth/client';
 import { store } from '../../context/store';
 import {
   faChevronLeft,
@@ -30,12 +30,6 @@ export default function Header() {
       !session ? '/?signin=true' : '/profile',
       !session ? '/signin' : '/profile'
     );
-  }
-
-  async function sessionData() {
-    const sessionData = await getSession();
-
-    return sessionData;
   }
 
   useEffect(() => {
