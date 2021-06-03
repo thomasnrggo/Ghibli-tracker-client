@@ -1,0 +1,75 @@
+@import '../Vars';
+
+.section{
+  padding: 12px;
+  margin-bottom: 12px;
+
+  @media (max-width: $iphoneX) {
+    width: 90%;
+    background: $container-color;
+    border-radius: 6px;
+  }
+
+}
+
+.profile__container{
+  color: $text-color;
+  display: flex;
+  width: 100%;
+
+  @media (max-width: $iphoneX) {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  
+  .logout__btn{
+    @media (max-width: $iphoneX) {
+      width: 100%;
+    }
+  }
+
+  .user__container {
+    // @extend .section;
+    @media (max-width: $iphoneX) {
+      width: 90%;
+    }
+    
+    margin-bottom: 8px;
+    .user__image{
+      height: 200px;
+      width: 200px;
+      border-radius: 500px;
+      overflow: hidden;
+      @media (max-width: $iphoneX) {
+        height: 150px;
+        width: 150px;
+      }
+    }
+    .username{
+      @media (max-width: $iphoneX) {
+      }
+    }
+  }
+
+  .rating__container{
+    @extend .section;
+  }
+
+  .reaction__container{
+    @extend .section;
+
+    @media (max-width: $iphoneX) {
+      width: 90%;
+    }
+    .emojis__container{
+      display: flex;
+      justify-content: space-around;
+      @media (max-width: $iphoneX) {
+        font-size: 28px;
+      }
+    }
+  }
+
+}
