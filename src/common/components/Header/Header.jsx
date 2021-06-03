@@ -53,7 +53,7 @@ export default function Header() {
             {router.pathname !== '/' ? (
               <FontAwesomeIcon
                 icon={faChevronLeft}
-                onClick={() => router.back()}
+                onClick={() => router.push('/')}
               />
             ) : (
               <FontAwesomeIcon
