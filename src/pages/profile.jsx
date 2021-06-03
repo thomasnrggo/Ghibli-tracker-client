@@ -4,8 +4,8 @@ import { signOut, useSession } from 'next-auth/client';
 import ReactStars from 'react-rating-stars-component';
 import Loader from '../common/components/Loader/Loader';
 import Layout from '../common/components/Layout/Layout';
-import styles from '../styles/pages/profile.module.scss'
-import axios from 'axios'
+import styles from '../styles/pages/profile.module.scss';
+import axios from 'axios';
 export default function profile() {
   const [session, loading] = useSession();
   const router = useRouter();
@@ -13,12 +13,12 @@ export default function profile() {
   useEffect(() => {
     if (!session && !loading) router.push('/');
     const getFilms = async () => {
-      let url = 'https://masterghibli.herokuapp.com/films/'
-      let res = await axios.get(url)
+      let url = 'https://masterghibli.herokuapp.com/films/';
+      let res = await axios.get(url);
       console.log(res.data);
-      return res.data
-    }
-    getFilms()
+      return res.data;
+    };
+    getFilms();
   }, [session, loading]);
 
   return (
@@ -26,29 +26,36 @@ export default function profile() {
       {!session || loading ? (
         <Loader />
       ) : (
-        <div className={styles.profile__container}> 
+        <div className={styles.profile__container}>
           <div className={styles.user__container}>
-            <img className={`img-fluid ${styles.user__image}`} src={'https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/styles/480/public/media/image/2020/09/funko-pop-fine-dog-meme-2066939.jpg?itok=oXihqxM0'} alt={'user'} />
+            <img
+              className={`img-fluid ${styles.user__image}`}
+              src={
+                'https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/styles/480/public/media/image/2020/09/funko-pop-fine-dog-meme-2066939.jpg?itok=oXihqxM0'
+              }
+              alt={'user'}
+            />
             <h2 className={`h2 ${styles.username}`}>This is fine</h2>
-            {/* <button
+
+            <button
               className={`btn btn-primary ${styles.logout__btn}`}
               onClick={() => signOut({ callbackUrl: '/' })}
             >
               Log out
-            </button> */}
+            </button>
           </div>
           <div className={styles.rating__container}>
-              <h4>Your stars</h4>
-              <div className={styles.rating}>
-                <ReactStars
-                  count={5}
-                  half={true}
-                  value={4}
-                  edit={false}
-                  size={18}
-                  activeColor="#d1c38b"
-                />
-              </div>
+            <h4>Your stars</h4>
+            <div className={styles.rating}>
+              <ReactStars
+                count={5}
+                half={true}
+                value={4}
+                edit={false}
+                size={18}
+                activeColor="#d1c38b"
+              />
+            </div>
           </div>
           <div className={styles.reaction__container}>
             <h4>Your reactions</h4>
@@ -68,9 +75,7 @@ export default function profile() {
               </div>
             </div>
           </div>
-          <div className={styles.progress__container}>
-            progress
-          </div>
+          <div className={styles.progress__container}>progress</div>
         </div>
       )}
     </Layout>

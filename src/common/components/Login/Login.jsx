@@ -305,7 +305,7 @@ export default function Login() {
 
             <div className={styles.login__buttons}>
               <button
-                type="submit"
+                type="button"
                 className={`btn btn-secondary ${styles.login__btn}`}
                 onClick={() => setCurrentTab('login')}
               >
@@ -313,7 +313,7 @@ export default function Login() {
               </button>
 
               <button
-                type="submit"
+                type="button"
                 className={`btn btn-primary ${styles.login__btn}`}
                 formNoValidate="formnovalidate"
               >
