@@ -19,10 +19,9 @@ export const getFilmsDetail = async (id) => {
 };
 
 export const getFilmsByUser = async (id) => {
-  let url = 'https://masterghibli.herokuapp.com/ratings/';
+  let url = `https://masterghibli.herokuapp.com/ratings/?user=${id}`;
   let res = await axios.get(url);
-  let filterResult = res.data.filter((r) => r.user === id);
-  return filterResult;
+  return res.data;
 };
 
 export const postSendScore = async (payLoad) => {
