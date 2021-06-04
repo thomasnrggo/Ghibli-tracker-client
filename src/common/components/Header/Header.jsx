@@ -26,10 +26,7 @@ export default function Header() {
   };
 
   function handleProfile() {
-    router.push(
-      !session ? '/?signin=true' : '/profile',
-      !session ? '/signin' : '/profile'
-    );
+    router.push(!session ? '/?signin=true' : '/profile');
   }
 
   useEffect(() => {
