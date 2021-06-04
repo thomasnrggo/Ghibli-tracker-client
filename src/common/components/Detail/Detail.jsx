@@ -70,19 +70,6 @@ export default function Detail(props) {
       });
   }, [id, loading]);
 
-  /* useEffect(() => {
-    if (!session && !loading) router.push('/');
-    if (!loading) getRatings(session.user.id);
-  }, [session, loading]); */
-  /* 
-  const toggle = () => {
-    const trailer = document.querySelector('.trailer');
-    const video = document.querySelector('video');
-    trailer.classList.toggle('active');
-    video.currentTime = 0;
-    video.pause();
-  }; */
-
   const handleModal = () => {
     dispatch({ type: 'MODAL_TRIGGER' });
   };
@@ -90,14 +77,14 @@ export default function Detail(props) {
   const HandlerSendScore = async () => {
     try {
       const res = await postSendScore({
-        emojiRating: 1,
+        emojiRating: 3,
         startRating: 1,
         watched: true,
         user: session.user.id,
         movie: id,
       });
+
       console.log(res);
-      /* res.data;  aqui capturo la respuesta de la peticion */
     } catch (error) {
       console.error(error);
     }
@@ -258,12 +245,7 @@ export default function Detail(props) {
               </div>
             </div>
           </div>
-          {/*  )} */}
         </Modal>
-        {/* <Modal isOpen={isOpen} onClose={() => handleModalTrailer()}>
-          {'Movie: ' + movie.title}
-          <div className={styles.slide}></div>
-        </Modal> */}
 
         <img
           src="https://raw.githubusercontent.com/WoojinFive/CSS_Playground/master/Responsive%20Movie%20Landing%20Page/close.png"

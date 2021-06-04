@@ -33,8 +33,6 @@ export const postSendScore = async (payLoad) => {
     )
     .then(({ data }) => data);
 
-  console.log(ratingExists, ratingExists.length === 0);
-
   if (ratingExists.length === 0) {
     let res = await axios.post(url, {
       emoji_rating: payLoad.emojiRating,
@@ -44,17 +42,16 @@ export const postSendScore = async (payLoad) => {
       movie: payLoad.movie,
     });
 
-    return res;
+    return res.data;
   }
 
-  // let res = await axios.put(url, {
-  //   emoji_rating: payLoad.emojiRating,
-  //   star_rating: payLoad.startRating,
-  //   watched: payLoad.watched,
-  //   user: payLoad.user,
-  //   movie: payLoad.movie,
-  // });
+  let res = await axios.put(url, {
+    emoji_rating: payLoad.emojiRating,
+    star_rating: payLoad.startRating,
+    watched: payLoad.watched,
+    user: payLoad.user,
+    movie: payLoad.movie,
+  });
 
-  // return res;
-  return 'bar';
+  return res.data;
 };
