@@ -11,49 +11,31 @@ import {
   faSortAlphaDown,
   faSortAlphaUp,
 } from '@fortawesome/free-solid-svg-icons';
-import { getFilms } from '../common/utils/services';
+import { getFilms, getFilmsByUser } from '../common/utils/services';
 
 import filters from '../common/utils/filters.json';
-
-let watchedByUser = [
-  {
-    id: 'c91ac357-fcbd-4c39-a90f-70f99c607bda',
-    emoji_rating: 1,
-    star_rating: 4,
-    watched: true,
-    user: 1,
-    movie: 'bef239cd-9830-4fcb-bc86-b202c5eccfca',
-  },
-  {
-    id: '2653737d-88d3-4f71-89a3-64bd1de1402e',
-    emoji_rating: 2,
-    star_rating: 3,
-    watched: false,
-    user: 1,
-    movie: '0d9ebc22-ce3c-4ff5-bdcc-b7591d1cf9b4',
-  },
-];
 
 export default function Home() {
   const [session, loading] = useSession();
   const [films, setFilms] = useState([]);
+  const [userFilms, setUserFilms] = useState([]);
+
   const [reverse, setReverse] = useState(false);
   const [filterField, setFilterField] = useState('title');
   const [showFilters, setShowFilters] = useState(false);
-
-  const isAuth = true;
 
   useEffect(() => {
     getFilms()
       .then((res) => {
         let films = res;
         let filmsByUser = [];
-        if (isAuth) {
-          // TODO: if auth consult films by user
-
-          films.map((film) => {
-            if (isAuth) {
-              let f = watchedByUser.filter((e) => e.movie === film.id);
+        
+        if (session) {
+          getFilmsByUser(session.user.id)
+          .then(res => {
+            setUserFilms(res)
+            films.map((film) => {
+              let f = res.filter((e) => e.movie === film.id);
               if (f.length >= 1) {
                 let { emoji_rating, star_rating } = f[0];
                 let filmWithRating = { ...film, emoji_rating, star_rating };
@@ -66,11 +48,12 @@ export default function Home() {
                 };
                 filmsByUser.push(filmWithoutRating);
               }
-            } else {
-              filmsByUser.push(film);
-            }
-          });
-          setFilms(filmsByUser);
+            });
+            setFilms(filmsByUser);
+          })
+          .catch(err => {
+            console.error(err);
+          })
         } else {
           setFilms(res);
         }
@@ -78,7 +61,7 @@ export default function Home() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [session]);
 
   let filter = (a, b) => {
     let order = [a, b];
@@ -103,9 +86,9 @@ export default function Home() {
         <Card
           key={film.id}
           film={film}
-          watched={isAuth && watchedByUser.some((e) => e.movie === film.id)}
+          watched={session && userFilms.some((e) => e.movie === film.id)}
           qualification={
-            isAuth && watchedByUser.filter((e) => e.movie === film.id)
+            session && userFilms.filter((e) => e.movie === film.id)
           }
         />
       ));
@@ -134,7 +117,7 @@ export default function Home() {
                   key={filter.value}
                   className={`${styles.filterButton} ${
                     filterField === filter.value ? styles.selected : ''
-                  } ${filter.needAuth && !isAuth ? 'd-none' : ''}`}
+                  } ${filter.needAuth && !session ? 'd-none' : ''}`}
                   onClick={() => setFilter(filter.value)}
                 >
                   {filter.label}

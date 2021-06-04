@@ -19,7 +19,7 @@ export default function Card(props) {
     cover_url
   } = props.film;
   let watched = props.watched
-  let qualification = props.qualification[0]
+  let qualification = props.qualification && props.qualification[0]
 
 
   const handleOnCardClik = () => {
