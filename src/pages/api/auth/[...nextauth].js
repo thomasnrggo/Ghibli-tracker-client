@@ -115,7 +115,16 @@ const callbacks = {
   async session(session, token) {
     session.accessToken = token.accessToken;
 
-    return session;
+    const userDB = await axios
+      .get('https://masterghibli.herokuapp.com/profiles/')
+      .then(({ data }) =>
+        data.find((user) => session.user.email === user.email)
+      );
+
+    return {
+      ...session,
+      user: { ...session.user, id: userDB.id, image: userDB.avatar_url },
+    };
   },
 };
 
