@@ -29,31 +29,31 @@ export default function Home() {
       .then((res) => {
         let films = res;
         let filmsByUser = [];
-        
+
         if (session) {
           getFilmsByUser(session.user.id)
-          .then(res => {
-            setUserFilms(res)
-            films.map((film) => {
-              let f = res.filter((e) => e.movie === film.id);
-              if (f.length >= 1) {
-                let { emoji_rating, star_rating } = f[0];
-                let filmWithRating = { ...film, emoji_rating, star_rating };
-                filmsByUser.push(filmWithRating);
-              } else {
-                let filmWithoutRating = {
-                  ...film,
-                  emoji_rating: null,
-                  star_rating: null,
-                };
-                filmsByUser.push(filmWithoutRating);
-              }
+            .then((res) => {
+              setUserFilms(res);
+              films.map((film) => {
+                let f = res.filter((e) => e.movie === film.id);
+                if (f.length >= 1) {
+                  let { emoji_rating, star_rating } = f[0];
+                  let filmWithRating = { ...film, emoji_rating, star_rating };
+                  filmsByUser.push(filmWithRating);
+                } else {
+                  let filmWithoutRating = {
+                    ...film,
+                    emoji_rating: null,
+                    star_rating: null,
+                  };
+                  filmsByUser.push(filmWithoutRating);
+                }
+              });
+              setFilms(filmsByUser);
+            })
+            .catch((err) => {
+              console.error(err);
             });
-            setFilms(filmsByUser);
-          })
-          .catch(err => {
-            console.error(err);
-          })
         } else {
           setFilms(res);
         }
