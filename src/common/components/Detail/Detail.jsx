@@ -1,15 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
 import styles from './Detail.module.scss';
-import films from '../../data/films.json';
 import { useRouter } from 'next/router';
 import { getFilmsDetail, postSendScore } from '../../utils/services';
 import Modal from '../Modal/Modal';
 import { store } from '../../context/store';
-import { signOut, useSession } from 'next-auth/client';
+import { useSession } from 'next-auth/client';
 import ProgressBar from '../../../common/components/ProgressBar/ProgressBar';
 import ReactStars from 'react-rating-stars-component';
 import stylesProfile from '../../../styles/pages/profile.module.scss';
-import Loader from '../../../common/components/Loader/Loader';
 
 export default function Detail(props) {
   const { state, dispatch } = useContext(store);
@@ -85,7 +83,7 @@ export default function Detail(props) {
         emojiRating: 1,
         startRating: 1,
         watched: true,
-        user: 1,
+        user: session.user.id,
         movie: id,
       });
       /* res.data;  aqui capturo la respuesta de la peticion */

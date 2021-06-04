@@ -39,7 +39,7 @@ export default function profile() {
           .map((rating) => rating.star_rating)
           .reduce((acc, current) => acc + current) / filmCount;
 
-          console.log('no se que es esto',avgStars);
+      console.log('no se que es esto', avgStars);
 
       setUserData((state) => ({
         ...state,
@@ -51,8 +51,9 @@ export default function profile() {
   }
 
   useEffect(() => {
+    console.log(session);
     if (!session && !loading) router.push('/');
-    if (!loading) getRatings(session.user.id);
+    // if (!loading) getRatings(session.user.id);
   }, [session, loading]);
 
   return (
@@ -96,9 +97,15 @@ export default function profile() {
                     size={48}
                     isHalf={true}
                     value={userData.stars}
-                    emptyIcon={<i className="far fa-star star-margin start-size"></i>}
-                    halfIcon={<i className="fa fa-star-half-alt star-margin start-size"></i>}
-                    filledIcon={<i className="fa fa-star star-margin start-size"></i>}
+                    emptyIcon={
+                      <i className="far fa-star star-margin start-size"></i>
+                    }
+                    halfIcon={
+                      <i className="fa fa-star-half-alt star-margin start-size"></i>
+                    }
+                    filledIcon={
+                      <i className="fa fa-star star-margin start-size"></i>
+                    }
                     activeColor="#d1c38b"
                     color="#30363D"
                   />

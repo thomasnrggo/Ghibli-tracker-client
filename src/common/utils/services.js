@@ -26,12 +26,31 @@ export const getFilmsByUser = async (id) => {
 
 export const postSendScore = async (payLoad) => {
   let url = 'https://masterghibli.herokuapp.com/ratings/';
-  let res = await axios.post(url, {
-    emoji_rating: payLoad.emojiRating,
-    star_rating: payLoad.startRating,
-    watched: payLoad.watched,
-    user: payLoad.user,
-    movie: payLoad.movie,
-  });
-  return res;
+
+  const ratingExists = await axios.get(
+    `https://masterghibli.herokuapp.com/ratings/?user=${payLoad.user}&movie=${payLoad.movie}`
+  );
+
+  if (!ratingExists) {
+    let res = await axios.post(url, {
+      emoji_rating: payLoad.emojiRating,
+      star_rating: payLoad.startRating,
+      watched: payLoad.watched,
+      user: payLoad.user,
+      movie: payLoad.movie,
+    });
+
+    return res;
+  }
+
+  // let res = await axios.put(url, {
+  //   emoji_rating: payLoad.emojiRating,
+  //   star_rating: payLoad.startRating,
+  //   watched: payLoad.watched,
+  //   user: payLoad.user,
+  //   movie: payLoad.movie,
+  // });
+
+  // return res;
+  return true;
 };
