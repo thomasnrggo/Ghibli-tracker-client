@@ -6,7 +6,6 @@ import Loader from '../common/components/Loader/Loader';
 import Layout from '../common/components/Layout/Layout';
 import ProgressBar from '../common/components/ProgressBar/ProgressBar';
 import styles from '../styles/pages/profile.module.scss';
-import axios from 'axios';
 import { getFilmsByUser } from '../common/utils/services';
 export default function profile() {
   const [session, loading] = useSession();
@@ -53,7 +52,7 @@ export default function profile() {
   useEffect(() => {
     console.log(session);
     if (!session && !loading) router.push('/');
-    // if (!loading) getRatings(session.user.id);
+    if (!loading) getRatings(session.user.id);
   }, [session, loading]);
 
   return (

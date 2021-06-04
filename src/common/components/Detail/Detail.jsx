@@ -1,7 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
 import styles from './Detail.module.scss';
 import { useRouter } from 'next/router';
-import { getFilmsDetail, postSendScore } from '../../utils/services';
+import {
+  getFilmsDetail,
+  postSendScore,
+  getFilmsByUser,
+} from '../../utils/services';
 import Modal from '../Modal/Modal';
 import { store } from '../../context/store';
 import { useSession } from 'next-auth/client';
@@ -14,14 +18,18 @@ export default function Detail(props) {
   const { isOpen } = state;
 
   const [movie, setMovies] = useState(null);
+  const [userData, setUserData] = useState({
+    emojis: [0, 0, 0],
+    stars: 0,
+    films: 0,
+  });
   const router = useRouter();
   const { id } = router.query;
 
   const [session, loading] = useSession();
 
-  /* function getRatings(id) {
+  function getRatings(id) {
     getFilmsByUser(id).then((response) => {
-      // Film count
       const filmCount = response.length;
 
       // Emojis count
@@ -48,9 +56,11 @@ export default function Detail(props) {
         films: filmCount,
       }));
     });
-  } */
+  }
 
   useEffect(() => {
+    if (!loading) getRatings(session.user.id);
+
     getFilmsDetail(id)
       .then((res) => {
         setMovies(res);
@@ -58,7 +68,7 @@ export default function Detail(props) {
       .catch((err) => {
         console.error(err);
       });
-  }, [id]);
+  }, [id, loading]);
 
   /* useEffect(() => {
     if (!session && !loading) router.push('/');
@@ -86,6 +96,7 @@ export default function Detail(props) {
         user: session.user.id,
         movie: id,
       });
+      console.log(res);
       /* res.data;  aqui capturo la respuesta de la peticion */
     } catch (error) {
       console.error(error);
@@ -191,13 +202,11 @@ export default function Detail(props) {
             <div className={stylesProfile.user__container}>
               <img
                 className={`img-fluid ${stylesProfile.user__image}`}
-                src={`${
-                  /*  session.user.image || */ 'https://imgur.com/WxZS1Ff.jpg'
-                }`}
+                src={`${session.user.image || 'https://imgur.com/WxZS1Ff.jpg'}`}
                 alt={'user'}
               />
               <h2 className={`h2 ${stylesProfile.username}`}>
-                {/* session.user.name */ 'Joanthan reyes'}
+                {session.user.name}
               </h2>
               <button
                 className={`btn btn-primary ${styles.logout__btn}`}
@@ -210,7 +219,7 @@ export default function Detail(props) {
             <div className={stylesProfile.progress__container}>
               <h4 className={stylesProfile.section__title}>You have seen</h4>
               <div className={stylesProfile.progress__container}>
-                <ProgressBar value={2} max={22} />
+                <ProgressBar value={userData.films} max={22} />
               </div>
             </div>
 
@@ -221,7 +230,7 @@ export default function Detail(props) {
                 <ReactStars
                   count={5}
                   half={true}
-                  value={4}
+                  value={userData.stars}
                   edit={false}
                   size={18}
                   activeColor="#d1c38b"
@@ -236,15 +245,15 @@ export default function Detail(props) {
               <div className={stylesProfile.emojis__container}>
                 <div className={stylesProfile.emoji__container}>
                   <span className={stylesProfile.emoji}>😭</span>
-                  {/* <h6>1</h6> */}
+                  <h6>{userData.emojis[0]}</h6>
                 </div>
                 <div className={stylesProfile.emoji__container}>
                   <span className={stylesProfile.emoji}>😐</span>
-                  {/* <h6>2</h6> */}
+                  <h6>{userData.emojis[1]}</h6>
                 </div>
                 <div className={stylesProfile.emoji__container}>
                   <span className={stylesProfile.emoji}>🤩</span>
-                  {/* <h6>65</h6> */}
+                  <h6>{userData.emojis[2]}</h6>
                 </div>
               </div>
             </div>
