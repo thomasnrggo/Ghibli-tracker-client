@@ -15,25 +15,6 @@ import { getFilms, getFilmsByUser } from '../common/utils/services';
 
 import filters from '../common/utils/filters.json';
 
-let watchedByUser = [
-  {
-    id: 'c91ac357-fcbd-4c39-a90f-70f99c607bda',
-    emoji_rating: 1,
-    star_rating: 4,
-    watched: true,
-    user: 1,
-    movie: 'bef239cd-9830-4fcb-bc86-b202c5eccfca',
-  },
-  {
-    id: '2653737d-88d3-4f71-89a3-64bd1de1402e',
-    emoji_rating: 2,
-    star_rating: 3,
-    watched: false,
-    user: 1,
-    movie: '0d9ebc22-ce3c-4ff5-bdcc-b7591d1cf9b4',
-  },
-];
-
 export default function Home() {
   const [session, loading] = useSession();
   const [films, setFilms] = useState([]);
@@ -50,30 +31,22 @@ export default function Home() {
         let filmsByUser = [];
         
         if (session) {
-          getFilmsByUser()
+          getFilmsByUser(session.user.id)
           .then(res => {
-            let filterMovies  = res.filter(r => r.user === session.user.id )
-            setUserFilms(filterMovies)
-            return filterMovies
-          })
-          .then(res => {
+            setUserFilms(res)
             films.map((film) => {
-              if (session) {
-                let f = res.filter((e) => e.movie === film.id);
-                if (f.length >= 1) {
-                  let { emoji_rating, star_rating } = f[0];
-                  let filmWithRating = { ...film, emoji_rating, star_rating };
-                  filmsByUser.push(filmWithRating);
-                } else {
-                  let filmWithoutRating = {
-                    ...film,
-                    emoji_rating: null,
-                    star_rating: null,
-                  };
-                  filmsByUser.push(filmWithoutRating);
-                }
+              let f = res.filter((e) => e.movie === film.id);
+              if (f.length >= 1) {
+                let { emoji_rating, star_rating } = f[0];
+                let filmWithRating = { ...film, emoji_rating, star_rating };
+                filmsByUser.push(filmWithRating);
               } else {
-                filmsByUser.push(film);
+                let filmWithoutRating = {
+                  ...film,
+                  emoji_rating: null,
+                  star_rating: null,
+                };
+                filmsByUser.push(filmWithoutRating);
               }
             });
             setFilms(filmsByUser);

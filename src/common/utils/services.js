@@ -18,8 +18,9 @@ export const getFilmsDetail = async (id) => {
   return res.data
 }
 
-export const getFilmsByUser = async () => {
+export const getFilmsByUser = async (id) => {
   let url = 'https://masterghibli.herokuapp.com/ratings/'
   let res = await axios.get(url)
-  return res.data
+  let filterResult = res.data.filter(r => r.user === id)
+  return filterResult
 }
