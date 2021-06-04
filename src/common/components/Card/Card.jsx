@@ -63,12 +63,15 @@ export default function Card(props) {
             <h6 className={styles.score}>Your score:</h6>
             <div className={styles.rating}>
               <ReactStars
-                count={5}
-                half={true}
-                value={qualification.star_rating}
                 edit={false}
-                size={18}
+                count={5}
+                size={20}
+                value={qualification.star_rating}
+                emptyIcon={<i className="far fa-star star-margin"></i>}
+                halfIcon={<i className="fa fa-star-half-alt star-margin"></i>}
+                filledIcon={<i className="fa fa-star star-margin"></i>}
                 activeColor="#d1c38b"
+                color="#30363D"
               />
             </div>
             <div className={styles.reaction__container}>
@@ -83,12 +86,15 @@ export default function Card(props) {
             <h6 className={styles.score}>RT Audience score:</h6>
             <div className={styles.rating}>
               <ReactStars
-                count={5}
-                half={true}
-                value={rt_score/20}
                 edit={false}
-                size={18}
+                count={5}
+                size={20}
+                value={rt_score/20}
+                emptyIcon={<i className="far fa-star star-margin"></i>}
+                halfIcon={<i className="fa fa-star-half-alt star-margin"></i>}
+                filledIcon={<i className="fa fa-star star-margin"></i>}
                 activeColor="#d1c38b"
+                color="#30363D"
               />
               ({rt_score})
             </div>

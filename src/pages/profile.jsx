@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { signOut, useSession } from 'next-auth/client';
 import ReactStars from 'react-rating-stars-component';
@@ -39,10 +39,12 @@ export default function profile() {
           .map((rating) => rating.star_rating)
           .reduce((acc, current) => acc + current) / filmCount;
 
+          console.log('no se que es esto',avgStars);
+
       setUserData((state) => ({
         ...state,
         emojis: [emojiCount1, emojiCount2, emojiCount3],
-        stars: parseInt(avgStars),
+        stars: avgStars,
         films: filmCount,
       }));
     });
@@ -83,22 +85,30 @@ export default function profile() {
           </div>
 
           <div className={styles.rating__container}>
-            <h4 className={styles.section__title}>Your stars</h4>
+            <h4 className={styles.section__title}>Films average score</h4>
 
             <div className={styles.rating}>
-              <ReactStars
-                count={5}
-                half={true}
-                value={userData.stars}
-                edit={false}
-                size={54}
-                activeColor="#d1c38b"
-              />
-              {`${userData.stars} of 5`}
+              {userData.stars && (
+                <Fragment>
+                  <ReactStars
+                    edit={false}
+                    count={5}
+                    size={48}
+                    isHalf={true}
+                    value={userData.stars}
+                    emptyIcon={<i className="far fa-star star-margin start-size"></i>}
+                    halfIcon={<i className="fa fa-star-half-alt star-margin start-size"></i>}
+                    filledIcon={<i className="fa fa-star star-margin start-size"></i>}
+                    activeColor="#d1c38b"
+                    color="#30363D"
+                  />
+                  {`${userData.stars} of 5`}
+                </Fragment>
+              )}
             </div>
           </div>
           <div className={styles.reaction__container}>
-            <h4 className={styles.section__title}>Your reactions</h4>
+            <h4 className={styles.section__title}>Films average reactions</h4>
 
             <div className={styles.emojis__container}>
               <div className={styles.emoji__container}>

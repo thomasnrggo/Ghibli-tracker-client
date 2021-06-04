@@ -79,6 +79,18 @@ body {
     color: $secondary-text-color;
 }
 
+.star-margin {
+    margin-right: 2px;
+
+    &.start-size{
+        @media (max-width: $iphoneX) {
+            font-size: 42px !important;
+        }
+    }
+
+    
+}
+
 // margin utils
 .mt-2{
     margin-top: 1em !important;
