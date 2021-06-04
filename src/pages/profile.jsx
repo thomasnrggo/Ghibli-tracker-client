@@ -91,7 +91,7 @@ export default function profile() {
                 half={true}
                 value={userData.stars}
                 edit={false}
-                size={58}
+                size={54}
                 activeColor="#d1c38b"
               />
               {`${userData.stars} of 5`}
