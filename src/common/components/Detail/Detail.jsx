@@ -2,12 +2,13 @@ import React, { useEffect, useState, useContext } from 'react';
 import styles from './Detail.module.scss';
 import films from '../../data/films.json';
 import { useRouter } from 'next/router';
-import { getFilmsDetail } from '../../utils/services';
+import { getFilmsDetail, postSendScore } from '../../utils/services';
 import Modal from '../Modal/Modal';
 import { store } from '../../context/store';
-import { useSession } from 'next-auth/client';
+import { signOut, useSession } from 'next-auth/client';
 import ProgressBar from '../../../common/components/ProgressBar/ProgressBar';
 import ReactStars from 'react-rating-stars-component';
+import stylesProfile from '../../../styles/pages/profile.module.scss';
 import Loader from '../../../common/components/Loader/Loader';
 
 export default function Detail(props) {
@@ -20,6 +21,37 @@ export default function Detail(props) {
 
   const [session, loading] = useSession();
 
+  /* function getRatings(id) {
+    getFilmsByUser(id).then((response) => {
+      // Film count
+      const filmCount = response.length;
+
+      // Emojis count
+      const emojiCount1 = response
+        .map((rating) => rating.emoji_rating === 1)
+        .reduce((acc, current) => acc + current);
+      const emojiCount2 = response
+        .map((rating) => rating.emoji_rating === 2)
+        .reduce((acc, current) => acc + current);
+      const emojiCount3 = response
+        .map((rating) => rating.emoji_rating === 3)
+        .reduce((acc, current) => acc + current);
+
+      // Average stars count
+      const avgStars =
+        response
+          .map((rating) => rating.star_rating)
+          .reduce((acc, current) => acc + current) / filmCount;
+
+      setUserData((state) => ({
+        ...state,
+        emojis: [emojiCount1, emojiCount2, emojiCount3],
+        stars: parseInt(avgStars),
+        films: filmCount,
+      }));
+    });
+  } */
+
   useEffect(() => {
     getFilmsDetail(id)
       .then((res) => {
@@ -29,6 +61,11 @@ export default function Detail(props) {
         console.error(err);
       });
   }, [id]);
+
+  /* useEffect(() => {
+    if (!session && !loading) router.push('/');
+    if (!loading) getRatings(session.user.id);
+  }, [session, loading]); */
   /* 
   const toggle = () => {
     const trailer = document.querySelector('.trailer');
@@ -39,6 +76,26 @@ export default function Detail(props) {
   }; */
 
   const handleModal = () => {
+    dispatch({ type: 'MODAL_TRIGGER' });
+  };
+
+  const HandlerSendScore = async () => {
+    try {
+      const res = await postSendScore({
+        emojiRating: 1,
+        startRating: 1,
+        watched: true,
+        user: 1,
+        movie: id,
+      });
+      /* res.data;  aqui capturo la respuesta de la peticion */
+    } catch (error) {
+      console.error(error);
+    }
+    handleModal();
+  };
+
+  const handleModalTrailer = () => {
     dispatch({ type: 'MODAL_TRIGGER' });
   };
 
@@ -78,12 +135,6 @@ export default function Detail(props) {
               </p>
               <p>{movie.rt_score}</p>
             </div>
-            {/* <div className={styles.container__box1}>
-              <p>
-                <strong>Link movie</strong>
-              </p>
-              <p>{movie.rt_score}</p>
-            </div> */}
           </div>
 
           <a href="#" className={styles.play} onClick={() => handleModal()}>
@@ -93,7 +144,11 @@ export default function Detail(props) {
             />
             rate movie
           </a>
-          <a href="#" className={styles.play} onClick={() => handleModal()}>
+          <a
+            href="#"
+            className={styles.play}
+            onClick={() => handleModalTrailer()}
+          >
             <img
               src="https://raw.githubusercontent.com/WoojinFive/CSS_Playground/master/Responsive%20Movie%20Landing%20Page/play.png"
               alt=""
@@ -134,31 +189,37 @@ export default function Detail(props) {
           {/* {!session || loading ? (
             <Loader />
           ) : ( */}
-          <div className={`container ${styles.profile__container}`}>
-            <div className={styles.user__container}>
+          <div className={`container ${stylesProfile.profile__container}`}>
+            <div className={stylesProfile.user__container}>
               <img
-                className={`img-fluid ${styles.user__image}`}
+                className={`img-fluid ${stylesProfile.user__image}`}
                 src={`${
-                  /* session.user.image || */ 'https://imgur.com/WxZS1Ff.jpg'
+                  /*  session.user.image || */ 'https://imgur.com/WxZS1Ff.jpg'
                 }`}
                 alt={'user'}
               />
-              <h2 className={`h2 ${styles.username}`}>
+              <h2 className={`h2 ${stylesProfile.username}`}>
                 {/* session.user.name */ 'Joanthan reyes'}
               </h2>
+              <button
+                className={`btn btn-primary ${styles.logout__btn}`}
+                onClick={() => HandlerSendScore()}
+              >
+                send score
+              </button>
             </div>
 
-            <div className={styles.progress__container}>
-              <h4 className={styles.section__title}>You have seen</h4>
-              <div className={styles.progress__container}>
+            <div className={stylesProfile.progress__container}>
+              <h4 className={stylesProfile.section__title}>You have seen</h4>
+              <div className={stylesProfile.progress__container}>
                 <ProgressBar value={2} max={22} />
               </div>
             </div>
 
-            <div className={styles.rating__container}>
-              <h4 className={styles.section__title}>Your stars</h4>
+            <div className={stylesProfile.rating__container}>
+              <h4 className={stylesProfile.section__title}>choose stars</h4>
 
-              <div className={styles.rating}>
+              <div className={stylesProfile.rating}>
                 <ReactStars
                   count={5}
                   half={true}
@@ -167,30 +228,35 @@ export default function Detail(props) {
                   size={18}
                   activeColor="#d1c38b"
                 />
-                4 of 5
               </div>
             </div>
-            <div className={styles.reaction__container}>
-              <h4 className={styles.section__title}>Your reactions</h4>
+            <div className={stylesProfile.reaction__container}>
+              <h4 className={stylesProfile.section__title}>
+                choose reaction movies
+              </h4>
 
-              <div className={styles.emojis__container}>
-                <div className={styles.emoji__container}>
-                  <span className={styles.emoji}>😭</span>
-                  <h6>1</h6>
+              <div className={stylesProfile.emojis__container}>
+                <div className={stylesProfile.emoji__container}>
+                  <span className={stylesProfile.emoji}>😭</span>
+                  {/* <h6>1</h6> */}
                 </div>
-                <div className={styles.emoji__container}>
-                  <span className={styles.emoji}>😐</span>
-                  <h6>2</h6>
+                <div className={stylesProfile.emoji__container}>
+                  <span className={stylesProfile.emoji}>😐</span>
+                  {/* <h6>2</h6> */}
                 </div>
-                <div className={styles.emoji__container}>
-                  <span className={styles.emoji}>🤩</span>
-                  <h6>65</h6>
+                <div className={stylesProfile.emoji__container}>
+                  <span className={stylesProfile.emoji}>🤩</span>
+                  {/* <h6>65</h6> */}
                 </div>
               </div>
             </div>
           </div>
-          {/* )} */}
+          {/*  )} */}
         </Modal>
+        {/* <Modal isOpen={isOpen} onClose={() => handleModalTrailer()}>
+          {'Movie: ' + movie.title}
+          <div className={styles.slide}></div>
+        </Modal> */}
 
         <img
           src="https://raw.githubusercontent.com/WoojinFive/CSS_Playground/master/Responsive%20Movie%20Landing%20Page/close.png"
