@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
 import styles from './Detail.module.scss';
-import { useRouter } from 'next/router';
 import {
   getFilmsDetail,
   postSendScore,
@@ -8,12 +7,11 @@ import {
 } from '../../utils/services';
 import Modal from '../Modal/Modal';
 import { store } from '../../context/store';
-import { useSession } from 'next-auth/client';
 import ProgressBar from '../../../common/components/ProgressBar/ProgressBar';
 import ReactStars from 'react-rating-stars-component';
 import stylesProfile from '../../../styles/pages/profile.module.scss';
 
-export default function Detail(props) {
+export default function Detail({ idMovie, session, loading }) {
   const { state, dispatch } = useContext(store);
   const { isOpen } = state;
 
@@ -23,10 +21,6 @@ export default function Detail(props) {
     stars: 0,
     films: 0,
   });
-  const router = useRouter();
-  const { id } = router.query;
-
-  const [session, loading] = useSession();
 
   function getRatings(id) {
     getFilmsByUser(id).then((response) => {
@@ -59,16 +53,17 @@ export default function Detail(props) {
   }
 
   useEffect(() => {
-    if (!loading) getRatings(session.user.id);
-
-    getFilmsDetail(id)
-      .then((res) => {
-        setMovies(res);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, [id, loading]);
+    if (!loading) {
+      getRatings(session.user.id);
+      getFilmsDetail(idMovie)
+        .then((res) => {
+          setMovies(res);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }, [idMovie, session, loading]);
 
   const handleModal = () => {
     dispatch({ type: 'MODAL_TRIGGER' });
@@ -110,7 +105,7 @@ export default function Detail(props) {
             <img src={movie.cover_url} alt="" />
           </div>
           <p> {movie.description} </p>
-          {/* espesific details */}
+          {/* specific details */}
 
           <div className={styles.container}>
             <div className={styles.container__box1}>
