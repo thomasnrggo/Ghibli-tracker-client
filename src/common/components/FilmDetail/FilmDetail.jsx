@@ -36,6 +36,8 @@ export default function FilmDetail(props) {
             };
             setFilm(filmScored);
             setLoading(false);
+            setStarsRating(filmScored.star_rating);
+            setEmojiRating(filmScored.emoji_rating);
           } else {
             setFilm(movie);
             setLoading(false);
