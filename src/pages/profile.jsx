@@ -7,6 +7,8 @@ import Layout from '../common/components/Layout/Layout';
 import ProgressBar from '../common/components/ProgressBar/ProgressBar';
 import styles from '../styles/pages/profile.module.scss';
 import { getFilmsByUser } from '../common/utils/services';
+import Image from 'next/image';
+
 export default function profile() {
   const [session, loading] = useSession();
   const [userData, setUserData] = useState({
@@ -38,8 +40,6 @@ export default function profile() {
           .map((rating) => rating.star_rating)
           .reduce((acc, current) => acc + current) / filmCount;
 
-      console.log('no se que es esto', avgStars);
-
       setUserData((state) => ({
         ...state,
         emojis: [emojiCount1, emojiCount2, emojiCount3],
@@ -50,7 +50,6 @@ export default function profile() {
   }
 
   useEffect(() => {
-    console.log(session);
     if (!session && !loading) router.push('/');
     if (!loading) getRatings(session.user.id);
   }, [session, loading]);
@@ -62,10 +61,13 @@ export default function profile() {
       ) : (
         <div className={`container ${styles.profile__container}`}>
           <div className={styles.user__container}>
-            <img
+            <Image
               className={`img-fluid ${styles.user__image}`}
               src={`${session.user.image || 'https://imgur.com/WxZS1Ff.jpg'}`}
               alt={'user'}
+              width={150}
+              height={150}
+              objectFit={'cover'}
             />
             <h2 className={`h2 ${styles.username}`}>{session.user.name}</h2>
 

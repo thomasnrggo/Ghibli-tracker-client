@@ -4,6 +4,9 @@ import { useRouter } from 'next/router';
 import { store } from '../../context/store';
 import Modal from '../Modal/Modal';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
+import { faFacebookF, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import styles from './Login.module.scss';
 import Alert from '../Alert/Alert';
 import axios from 'axios';
@@ -271,6 +274,7 @@ export default function Login() {
                 className={`btn btn-primary ${styles.login__btn}`}
                 formNoValidate="formnovalidate"
               >
+                <FontAwesomeIcon icon={faSignInAlt} />
                 Log In{' '}
                 <i
                   className={`fas fa-chevron-right ${styles.login__btn_icon}`}
@@ -385,6 +389,7 @@ export default function Login() {
                 formNoValidate="formnovalidate"
                 onClick={handleSignUp}
               >
+                <FontAwesomeIcon icon={faSignInAlt} />
                 Sign Up{' '}
                 <i
                   className={`fas fa-chevron-right ${styles.login__btn_icon}`}
@@ -409,7 +414,7 @@ export default function Login() {
           type="button"
           onClick={() => handleSocialLogin('facebook')}
         >
-          <i className="fab fa-facebook-f" /> Log in with Facebook
+          <FontAwesomeIcon icon={faFacebookF} /> Log in with Facebook
         </button>
 
         <button
@@ -417,7 +422,7 @@ export default function Login() {
           type="button"
           onClick={() => handleSocialLogin('twitter')}
         >
-          <i className="fab fa-twitter" /> Log in with Twitter
+          <FontAwesomeIcon icon={faTwitter} /> Log in with Twitter
         </button>
       </form>
     </Modal>

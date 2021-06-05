@@ -10,6 +10,6 @@ module.exports = {
     includePaths: [path.join(__dirname, 'src/styles')],
   },
   images: {
-    domains: ['i.imgur.com'],
+    domains: ['i.imgur.com', 'imgur.com'],
   },
 };

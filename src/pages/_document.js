@@ -9,7 +9,7 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html>
+      <Html lang="en">
         <Head>
           <link
             rel="apple-touch-icon"
@@ -29,11 +29,6 @@ class MyDocument extends Document {
             href="favicon/favicon-16x16.png"
           />
           <link rel="manifest" href="favicon/site.webmanifest" />
-
-          <script
-            src="https://kit.fontawesome.com/2ed1680cbf.js"
-            crossOrigin="anonymous"
-          />
         </Head>
         <body>
           <Main />

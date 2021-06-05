@@ -69,8 +69,8 @@ export default function Home({ films }) {
   };
 
   useEffect(() => {
-    if (!loading) matchUserDataWithFilms();
-  }, [loading]);
+    if (session && !loading) matchUserDataWithFilms();
+  }, [session, loading]);
 
   return (
     <>
