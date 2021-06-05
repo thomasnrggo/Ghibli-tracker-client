@@ -1,17 +1,33 @@
 import React from 'react';
-import { useRouter } from 'next/router';
 import Layout from '../../common/components/Layout/Layout';
 import Detail from '../../common/components/Detail/Detail';
 import { useSession } from 'next-auth/client';
+import { getFilms, getFilmsDetail } from '../../common/utils/services';
 
-export default function MovieDetail() {
-  const router = useRouter();
-  const { id } = router.query;
+export default function MovieDetail({ movie }) {
   const [session, loading] = useSession();
 
   return (
     <Layout>
-      <Detail idMovie={id} session={session} loading={loading} />
+      <Detail movie={movie} session={session} loading={loading} />
     </Layout>
   );
+}
+
+export async function getStaticPaths() {
+  const films = await getFilms();
+
+  const paths = films.map((film) => ({
+    params: { id: film.id },
+  }));
+
+  return { paths, fallback: true };
+}
+
+export async function getStaticProps({ params }) {
+  const movie = await getFilmsDetail(params.id);
+
+  return {
+    props: { movie },
+  };
 }

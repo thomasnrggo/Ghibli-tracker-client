@@ -1,21 +1,16 @@
 import React, { useEffect, useState, useContext } from 'react';
 import styles from './Detail.module.scss';
-import {
-  getFilmsDetail,
-  postSendScore,
-  getFilmsByUser,
-} from '../../utils/services';
+import { postSendScore, getFilmsByUser } from '../../utils/services';
 import Modal from '../Modal/Modal';
 import { store } from '../../context/store';
 import ProgressBar from '../../../common/components/ProgressBar/ProgressBar';
 import ReactStars from 'react-rating-stars-component';
 import stylesProfile from '../../../styles/pages/profile.module.scss';
 
-export default function Detail({ idMovie, session, loading }) {
+export default function Detail({ movie, session, loading }) {
   const { state, dispatch } = useContext(store);
   const { isOpen } = state;
 
-  const [movie, setMovies] = useState(null);
   const [userData, setUserData] = useState({
     emojis: [0, 0, 0],
     stars: 0,
@@ -53,17 +48,8 @@ export default function Detail({ idMovie, session, loading }) {
   }
 
   useEffect(() => {
-    if (!loading) {
-      getRatings(session.user.id);
-      getFilmsDetail(idMovie)
-        .then((res) => {
-          setMovies(res);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
-  }, [idMovie, session, loading]);
+    if (!loading) getRatings(session?.user.id);
+  }, [session, loading]);
 
   const handleModal = () => {
     dispatch({ type: 'MODAL_TRIGGER' });
@@ -75,7 +61,7 @@ export default function Detail({ idMovie, session, loading }) {
         emojiRating: 3,
         startRating: 1,
         watched: true,
-        user: session.user.id,
+        user: session?.user.id,
         movie: id,
       });
 
@@ -175,20 +161,20 @@ export default function Detail({ idMovie, session, loading }) {
           </ul>
         </div>
       </div>
+
       <div className={styles.trailer}>
         <Modal isOpen={isOpen} onClose={() => handleModal()}>
-          {/* {!session || loading ? (
-            <Loader />
-          ) : ( */}
           <div className={`container ${stylesProfile.profile__container}`}>
             <div className={stylesProfile.user__container}>
               <img
                 className={`img-fluid ${stylesProfile.user__image}`}
-                src={`${session.user.image || 'https://imgur.com/WxZS1Ff.jpg'}`}
+                src={`${
+                  session?.user.image || 'https://imgur.com/WxZS1Ff.jpg'
+                }`}
                 alt={'user'}
               />
               <h2 className={`h2 ${stylesProfile.username}`}>
-                {session.user.name}
+                {session?.user.name}
               </h2>
               <button
                 className={`btn btn-primary ${styles.logout__btn}`}
