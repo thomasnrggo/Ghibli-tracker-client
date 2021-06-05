@@ -33,13 +33,13 @@ export default function Header() {
     if (router.query.signin && !session && !loading)
       dispatch({ type: 'AUTH_TRIGGER' });
 
-    getFilms()
-      .then((res) => {
-        setFilms(res);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    // getFilms()
+    //   .then((res) => {
+    //     setFilms(res);
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //   });
   }, [router]);
 
   return (

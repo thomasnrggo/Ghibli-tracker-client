@@ -1,10 +1,12 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/client';
+
 import Head from 'next/head';
 import Layout from '../common/components/Layout/Layout';
 import Card from '../common/components/Card/Card';
 import styles from '../styles/pages/index.module.scss';
 import Loader from '../common/components/Loader/Loader';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFilter,
@@ -15,53 +17,21 @@ import { getFilms, getFilmsByUser } from '../common/utils/services';
 
 import filters from '../common/utils/filters.json';
 
-export default function Home() {
+export default function Home({ films }) {
   const [session, loading] = useSession();
-  const [films, setFilms] = useState([]);
   const [userFilms, setUserFilms] = useState([]);
 
   const [reverse, setReverse] = useState(false);
   const [filterField, setFilterField] = useState('title');
   const [showFilters, setShowFilters] = useState(false);
 
-  useEffect(() => {
-    getFilms()
-      .then((res) => {
-        let films = res;
-        let filmsByUser = [];
+  async function matchUserDataWithFilms() {
+    const userFilms = await getFilmsByUser(session?.user.id).then((res) =>
+      setUserFilms(res)
+    );
 
-        if (session) {
-          getFilmsByUser(session.user.id)
-            .then((res) => {
-              setUserFilms(res);
-              films.map((film) => {
-                let f = res.filter((e) => e.movie === film.id);
-                if (f.length >= 1) {
-                  let { emoji_rating, star_rating } = f[0];
-                  let filmWithRating = { ...film, emoji_rating, star_rating };
-                  filmsByUser.push(filmWithRating);
-                } else {
-                  let filmWithoutRating = {
-                    ...film,
-                    emoji_rating: null,
-                    star_rating: null,
-                  };
-                  filmsByUser.push(filmWithoutRating);
-                }
-              });
-              setFilms(filmsByUser);
-            })
-            .catch((err) => {
-              console.error(err);
-            });
-        } else {
-          setFilms(res);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [session]);
+    return userFilms;
+  }
 
   let filter = (a, b) => {
     let order = [a, b];
@@ -98,13 +68,18 @@ export default function Home() {
     setFilterField(filter);
   };
 
+  useEffect(() => {
+    if (!loading) matchUserDataWithFilms();
+  }, [loading]);
+
   return (
     <>
       <Head>
         <title>Studio Ghibli Tracker</title>
+
         <meta
           name="description"
-          content="Track your favorite movies from Studio Ghibli"
+          content="Track and rate your favorite movies from Studio Ghibli"
         />
       </Head>
 
@@ -148,13 +123,20 @@ export default function Home() {
         </div>
 
         <div className={styles.films__container}>
-          {films.length >= 1 && !loading ? (
-            <Fragment>{renderCards()}</Fragment>
-          ) : (
-            <Loader />
-          )}
+          {films.length >= 1 && !loading ? renderCards() : <Loader />}
         </div>
       </Layout>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const films = await getFilms();
+
+  return {
+    props: {
+      films,
+    },
+    revalidate: 10,
+  };
 }
