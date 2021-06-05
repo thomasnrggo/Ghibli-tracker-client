@@ -192,7 +192,8 @@ export default function Login() {
   }
 
   function handleAuthModal() {
-    router.push('/');
+    if (router.pathname === '/') router.back();
+
     dispatch({ type: 'AUTH_TRIGGER' });
   }
 
