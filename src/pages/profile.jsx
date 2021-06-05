@@ -40,8 +40,6 @@ export default function profile() {
           .map((rating) => rating.star_rating)
           .reduce((acc, current) => acc + current) / filmCount;
 
-      console.log('no se que es esto', avgStars);
-
       setUserData((state) => ({
         ...state,
         emojis: [emojiCount1, emojiCount2, emojiCount3],
@@ -52,7 +50,6 @@ export default function profile() {
   }
 
   useEffect(() => {
-    console.log(session);
     if (!session && !loading) router.push('/');
     if (!loading) getRatings(session.user.id);
   }, [session, loading]);
