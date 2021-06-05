@@ -206,7 +206,7 @@ export default function FilmDetail(props) {
           <div 
             className={styles.hero__container}
             style={{
-              backgroundImage: `url(${example_image})` 
+              backgroundImage: `url(${film.thumbnail})` 
             }}
           >
             {film.watched && 
