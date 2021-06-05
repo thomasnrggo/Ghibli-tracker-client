@@ -205,7 +205,6 @@ export default function FilmDetail(props) {
       setRateError(false);
       saveFilmRate(rate)
         .then((res) => {
-          console.log(res);
           setStarsRating(null);
           setEmojiRating(null);
           setupdate(!update);
