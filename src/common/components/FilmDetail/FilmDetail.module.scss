@@ -1,0 +1,203 @@
+@import '../../../styles/Vars';
+
+$padding: 12px;
+$radius: 8px;
+
+.stars{
+  @media (max-width: $iphoneX) {
+    color: red !important;
+  }
+}
+
+.watched{
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  border: 1px solid greenyellow;
+  background: greenyellow;
+  color: $container-color;
+  border-radius: 6px;
+  padding: 6px;
+  font-size: 16px;
+
+  @media (max-width: $iphoneX) {
+    right: 8px;
+    top: 8px;
+  }
+
+  svg {
+    display: none;
+    @media (max-width: $iphoneX) {
+      display: block;
+    }
+  }
+
+  // .watched__text{
+  //   @media (max-width: $iphoneX) {
+  //     display: none;
+  //   }
+  // }
+}
+
+.filmDetail__container {
+  padding: $padding 0;
+  width: 100%;
+
+  .title{
+    font-size: 4em;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+    max-width: 50%;
+    @media (max-width: $iphoneX) {
+      max-width: 100%;
+      font-size: 2.5em;
+    }
+  }
+  .subtitle{
+    font-size: 1em;
+    font-weight: normal;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+  }
+
+  .rating__container{
+    display: flex;
+    align-items: center;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+
+    .userScore__container{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 24px;
+      min-width: 180px;
+      @media (max-width: $iphoneX) {
+        min-width: 100%;
+        color: red !important;
+      }
+    }
+  }
+
+  .actions__container{
+    display: flex;
+    margin-top: 24px;
+    @media (max-width: $iphoneX) {
+      display: none;
+    }
+
+    .action{
+      &:first-child{
+        margin-right: $padding;
+      }
+      min-width: 150px;
+    }
+  }
+
+  .hero__container{
+    position: relative;
+    width: 100%;
+    min-height: 50vh;
+    border-radius: $radius;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center center;
+    display: flex;
+    align-items: flex-end;
+    padding: $padding;
+    color: $text-color;
+    margin-bottom: $padding;
+    @media (max-width: $iphoneX) {
+      min-height: auto;
+      background-image: none !important;
+    }
+
+    .hero__body{
+      width: 100%;
+    }
+
+    .poster__container{
+      display: none;
+      @media (max-width: $iphoneX) {
+        display: block;
+        overflow: hidden;
+        margin-bottom: $padding;
+        border-radius: $radius;
+      }
+    }
+  }
+
+  .detail__container{
+    display: grid;
+    gap: $padding;
+    grid-template-columns: 1fr 4fr;
+    @media (max-width: $iphoneX) {
+      display: flex;
+      flex-direction: column;
+    }
+
+
+    .poster__container{
+      border-radius: $radius;
+      overflow: hidden;
+      @media (max-width: $iphoneX) {
+        display: none;
+      }
+    }
+
+    .detail__body{
+      background: $container-color;
+      color: $text-color;
+      min-height: 100px;
+      border-radius: $radius;
+    }
+  }
+
+  .content__container{
+    .content__header{
+      display: flex;
+      padding:$padding;
+
+      font-weight: lighter;
+      font-size: 16px;
+      border-bottom: 1px solid gray;
+      
+
+      .link{
+        color: darken($color: $text-color, $amount: 30%);
+        transition: .4s ease;
+
+        cursor: pointer;
+        margin-right: 12px;
+
+        @media (max-width: $iphoneX) {
+          margin-right: 24px;
+        }
+        &:hover{
+          color: $text-color;
+        }
+
+        &.active{
+          color: $text-color;
+        }
+      }
+    }
+
+    .content__body{
+      padding: $padding;
+    }
+  }
+
+  .detail__group__container{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    @media (max-width: $iphoneX) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .detail__group{
+    margin-bottom: 12px;
+    label{
+      font-weight: lighter;
+    }
+  }
+}

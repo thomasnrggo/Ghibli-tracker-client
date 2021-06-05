@@ -18,6 +18,14 @@ body {
     background-color: $bg-color;
 }
 
+.d-flex{
+    display: flex;
+
+    &.align-center{
+        align-items: center;
+    }
+}
+
 // Typography
 .h1,
 .h2,
