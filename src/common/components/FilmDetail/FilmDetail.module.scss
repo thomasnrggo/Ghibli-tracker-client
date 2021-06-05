@@ -201,3 +201,55 @@ $radius: 8px;
     }
   }
 }
+
+.score__container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  margin: 0 auto;  
+
+
+  .score__title{
+    font-weight: lighter;
+    font-size: 20px;
+    margin: 12px 0;
+  }
+}
+
+
+
+.reactions__container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  margin: 0 auto;
+  min-height: 100px;
+
+
+  .emoji{
+    cursor: pointer;
+    font-size: 24px;
+    transition: .4s ease;
+    margin: 8px;
+    &:hover{
+      font-size: 36px;
+    }
+  }
+  .active{
+    font-size: 52px;
+    &:hover{
+      font-size: 52px;
+    }
+  }
+}
+
+.error__message{
+  margin: 12px;
+  text-align: center;
+  color: $warning;
+  font-weight: lighter;
+  font-size: 18px;
+}

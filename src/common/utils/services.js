@@ -30,6 +30,18 @@ export const checkFilmRating = async (user, movie) => {
   return res.data
 }
 
+export  const saveFilmRate = async rate => {
+  let url = 'https://masterghibli.herokuapp.com/ratings/'
+  let res = await axios.post(url, {...rate})
+  return res.data
+}
+
+export  const updateFilmRate = async rate => {
+  let url = 'https://masterghibli.herokuapp.com/ratings/'
+  let res = await axios.put(url, rate)
+  return res.data
+}
+
 export const postSendScore = async (payLoad) => {
   let url = 'https://masterghibli.herokuapp.com/ratings/';
 

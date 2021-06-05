@@ -4,10 +4,8 @@ import Loader from '../Loader/Loader'
 import ReactStars from 'react-rating-stars-component';
 import {store} from '../../context/store'
 import { useSession } from 'next-auth/client';
-import {getFilmsDetail, checkFilmRating} from '../../utils/services'
+import {checkFilmRating, saveFilmRate} from '../../utils/services'
 import styles from './FilmDetail.module.scss'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 let example_image = 'https://filasiete.com/wp-content/uploads/2005/06/chihiro5.jpg'
 
@@ -19,6 +17,10 @@ export default function FilmDetail(props) {
   const [selectedTab, setSelectedTab] = useState('synopsis')
   const [film, setFilm] = useState({})
   const [loading, setLoading] = useState(true)
+  const [emojiRating, setEmojiRating] = useState(null)
+  const [starsRating, setStarsRating] = useState(null)
+  const [rateError, setRateError] = useState(false)
+  const [update, setupdate] = useState(true)
 
   useEffect(() => {
     if(session){
@@ -44,7 +46,7 @@ export default function FilmDetail(props) {
       setFilm(movie)
       setLoading(false)
     }
-  }, [session])
+  }, [session, update])
 
   const handleModal = () => {
     dispatch({ type: 'MODAL_TRIGGER' });
@@ -160,6 +162,43 @@ export default function FilmDetail(props) {
     }
   }
 
+  let handleScoreFilm = () => {
+    
+    let rate = {
+      watched: true,
+      emoji_rating: emojiRating,
+      star_rating: starsRating,
+      user: session?.user.id,
+      movie: movie.id,
+    }
+
+    if(rate.emoji_rating && rate.star_rating) {
+      setRateError(false)
+      saveFilmRate(rate)
+      .then(res => {
+        console.log(res);
+        setStarsRating(null)
+        setEmojiRating(null)
+        setupdate(!update)
+        handleModal()
+      })
+      .catch(err => {
+        console.error(err)
+      })
+    } else {
+      setRateError(true)
+    }
+
+  }
+
+  let ratingChanged = newRating => {
+    setStarsRating(newRating)
+  }
+
+  let setReaction = reaction =>{
+    setEmojiRating(reaction)
+  }
+
   return (
     <div className={`container ${styles.filmDetail__container}`}>
       {!loading ? (
@@ -238,7 +277,50 @@ export default function FilmDetail(props) {
         isOpen={isOpen}
         onClose={() => handleModal()}
       >
-        soy un modal
+        <div className={styles.score__container}>
+          <h2 className={styles.score__title}>How may stars do you give to this film?</h2>
+          <ReactStars
+            count={5}
+            size={36}
+            value={starsRating}
+            emptyIcon={<i className="far fa-star star-margin"></i>}
+            halfIcon={<i className="fa fa-star-half-alt star-margin"></i>}
+            filledIcon={<i className="fa fa-star star-margin"></i>}
+            activeColor="#d1c38b"
+            color="#30363D"
+            onChange={ratingChanged}
+          />
+        </div>
+        
+        <div className={styles.score__container}>
+          <h4 className={styles.score__title}>How does it make you felt?</h4>
+
+          <div className={styles.reactions__container}>
+            <span 
+              onClick={() => setReaction(1)}
+              className={`${styles.emoji} ${emojiRating === 1 && styles.active}`}>
+                😭
+            </span>
+            <span 
+              onClick={() => setReaction(2)}
+              className={`${styles.emoji} ${emojiRating === 2 && styles.active}`}>
+                😐
+            </span>
+            <span 
+              onClick={() => setReaction(3)}
+              className={`${styles.emoji} ${emojiRating === 3 && styles.active}`}>
+                😍
+            </span>
+          </div>
+        </div>
+
+        {rateError && <h2 className={styles.error__message}>Please set your <b>score</b> and <b>reaction</b> to continue.</h2>}
+
+
+        <div className={`btn btn-primary`} onClick={() => handleScoreFilm()}>
+          Score film!
+        </div>
+
       </Modal>
     </div>
   )
