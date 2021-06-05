@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import ReactStars from 'react-rating-stars-component';
 import styles from './Card.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faStar, faStarHalf } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
 
 export default function Card(props) {
@@ -78,9 +78,24 @@ export default function Card(props) {
                 count={5}
                 size={20}
                 value={qualification.star_rating}
-                emptyIcon={<i className="far fa-star star-margin"></i>}
-                halfIcon={<i className="fa fa-star-half-alt star-margin"></i>}
-                filledIcon={<i className="fa fa-star star-margin"></i>}
+                emptyIcon={
+                  <FontAwesomeIcon
+                    className="star-margin start-size"
+                    icon={faStar}
+                  />
+                }
+                halfIcon={
+                  <FontAwesomeIcon
+                    icon={faStarHalf}
+                    className="star-margin start-size"
+                  />
+                }
+                filledIcon={
+                  <FontAwesomeIcon
+                    icon={faStar}
+                    className="star-margin start-size"
+                  />
+                }
                 activeColor="#d1c38b"
                 color="#30363D"
               />
@@ -101,9 +116,24 @@ export default function Card(props) {
                 count={5}
                 size={20}
                 value={rt_score / 20}
-                emptyIcon={<i className="far fa-star star-margin"></i>}
-                halfIcon={<i className="fa fa-star-half-alt star-margin"></i>}
-                filledIcon={<i className="fa fa-star star-margin"></i>}
+                emptyIcon={
+                  <FontAwesomeIcon
+                    className="star-margin start-size"
+                    icon={faStar}
+                  />
+                }
+                halfIcon={
+                  <FontAwesomeIcon
+                    icon={faStarHalf}
+                    className="star-margin start-size"
+                  />
+                }
+                filledIcon={
+                  <FontAwesomeIcon
+                    icon={faStar}
+                    className="star-margin start-size"
+                  />
+                }
                 activeColor="#d1c38b"
                 color="#30363D"
               />

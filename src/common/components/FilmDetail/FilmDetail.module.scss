@@ -19,6 +19,7 @@ $radius: 8px;
   border-radius: 6px;
   padding: 6px;
   font-size: 16px;
+  font-weight: 700;
 
   @media (max-width: $iphoneX) {
     right: 8px;
@@ -44,9 +45,10 @@ $radius: 8px;
   width: 100%;
 
   .title{
+    margin: 1rem 0;
+    line-height: 4rem;
     font-size: 4em;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
-    max-width: 50%;
     @media (max-width: $iphoneX) {
       max-width: 100%;
       font-size: 2.5em;
@@ -94,9 +96,9 @@ $radius: 8px;
   .hero__container{
     position: relative;
     width: 100%;
-    min-height: 50vh;
     border-radius: $radius;
     overflow: hidden;
+    background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
     display: flex;
@@ -105,6 +107,7 @@ $radius: 8px;
     color: $text-color;
     margin-bottom: $padding;
     @media (max-width: $iphoneX) {
+      padding-top: 4rem;
       min-height: auto;
       background-image: none !important;
     }

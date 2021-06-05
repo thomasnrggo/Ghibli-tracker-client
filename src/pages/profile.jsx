@@ -8,6 +8,8 @@ import ProgressBar from '../common/components/ProgressBar/ProgressBar';
 import styles from '../styles/pages/profile.module.scss';
 import { getFilmsByUser } from '../common/utils/services';
 import Image from 'next/image';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar, faStarHalf } from '@fortawesome/free-solid-svg-icons';
 
 export default function profile() {
   const [session, loading] = useSession();
@@ -99,13 +101,22 @@ export default function profile() {
                     isHalf={true}
                     value={userData.stars}
                     emptyIcon={
-                      <i className="far fa-star star-margin start-size"></i>
+                      <FontAwesomeIcon
+                        className="star-margin start-size"
+                        icon={faStar}
+                      />
                     }
                     halfIcon={
-                      <i className="fa fa-star-half-alt star-margin start-size"></i>
+                      <FontAwesomeIcon
+                        icon={faStarHalf}
+                        className="star-margin start-size"
+                      />
                     }
                     filledIcon={
-                      <i className="fa fa-star star-margin start-size"></i>
+                      <FontAwesomeIcon
+                        icon={faStar}
+                        className="star-margin start-size"
+                      />
                     }
                     activeColor="#d1c38b"
                     color="#30363D"
