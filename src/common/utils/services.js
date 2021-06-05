@@ -25,22 +25,39 @@ export const getFilmsByUser = async (id) => {
 };
 
 export const checkFilmRating = async (user, movie) => {
-  let url = `https://masterghibli.herokuapp.com/ratings/?user=${user}&movie=${movie}`
-  let res = await axios.get(url)
-  return res.data
-}
+  let url = `https://masterghibli.herokuapp.com/ratings/?user=${user}&movie=${movie}`;
+  let res = await axios.get(url);
+  return res.data;
+};
 
-export  const saveFilmRate = async rate => {
-  let url = 'https://masterghibli.herokuapp.com/ratings/'
-  let res = await axios.post(url, {...rate})
-  return res.data
-}
+export const saveFilmRate = async (rate) => {
+  let url = 'https://masterghibli.herokuapp.com/ratings/';
 
-export  const updateFilmRate = async rate => {
-  let url = 'https://masterghibli.herokuapp.com/ratings/'
-  let res = await axios.put(url, rate)
-  return res.data
-}
+  const ratingExists = await axios
+    .get(
+      `https://masterghibli.herokuapp.com/ratings/?user=${rate.user}&movie=${rate.movie}`
+    )
+    .then(({ data }) => data);
+
+  if (ratingExists.length === 0) {
+    let res = await axios.post(url, { ...rate });
+
+    return res.data;
+  }
+
+  let res = await axios.put(
+    `https://masterghibli.herokuapp.com/ratings/${ratingExists[0].id}/`,
+    { ...rate }
+  );
+
+  return res.data;
+};
+
+export const updateFilmRate = async (rate) => {
+  let url = 'https://masterghibli.herokuapp.com/ratings/';
+  let res = await axios.put(url, rate);
+  return res.data;
+};
 
 export const postSendScore = async (payLoad) => {
   let url = 'https://masterghibli.herokuapp.com/ratings/';

@@ -45,15 +45,15 @@ export default function profile() {
       setUserData((state) => ({
         ...state,
         emojis: [emojiCount1, emojiCount2, emojiCount3],
-        stars: avgStars,
+        stars: Math.round(avgStars * 10) / 10,
         films: filmCount,
       }));
     });
   }
 
   useEffect(() => {
-    if (!session && !loading) router.push('/');
-    if (!loading) getRatings(session.user.id);
+    if (!session) router.push('/');
+    if (session && !loading) getRatings(session?.user.id);
   }, [session, loading]);
 
   return (
@@ -84,7 +84,7 @@ export default function profile() {
           <div className={styles.progress__container}>
             <h4 className={styles.section__title}>You have seen</h4>
             <div className={styles.progress__container}>
-              <ProgressBar value={userData.films} max={22} />
+              <ProgressBar value={userData.films} max={25} />
             </div>
           </div>
 
