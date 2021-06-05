@@ -20,10 +20,9 @@
         width: 100%;
         max-width: 500px;
 
-        &_icon {
-            position: absolute;
-            top: 0.6rem;
-            right: 0.75rem;
+        svg {
+            margin-right: 0.8rem;
+            font-size: 1.2rem;
         }
     }
 }

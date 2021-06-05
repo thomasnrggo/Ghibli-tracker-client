@@ -54,6 +54,7 @@ export default function Card(props) {
           width={233}
           height={331}
           objectFit={'cover'}
+          alt={`"${original_title_romanised}" film cover`}
         />
       </div>
       <div className={styles.card__detail}>
@@ -62,9 +63,9 @@ export default function Card(props) {
           {title || ''} <span>({release_date || 'release_date'})</span>
         </h2>
         <h4 className={styles.subtitle}>{original_title_romanised || ''}</h4>
-        <h5 className={styles.director}>
+        <p className={styles.director}>
           by <b>{director || 'director'}</b>
-        </h5>
+        </p>
 
         <h6 className={styles.duration}>{running_time}min</h6>
 

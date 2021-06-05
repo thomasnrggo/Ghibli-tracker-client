@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Login from '../Login/Login';
 import Autocomplete from '../autocomplete/Autocomplete';
 import styles from './Header.module.scss';
-import { getFilms } from '../../utils/services';
+import Image from 'next/image';
 
 export default function Header({ films }) {
   const [session, loading] = useSession();
@@ -51,10 +51,12 @@ export default function Header({ films }) {
             )}
           </div>
 
-          <img
+          <Image
             className={styles.logo}
+            width={150}
+            height={72}
             src="/SVG/logo.svg"
-            alt="Ghibli tracker"
+            alt="Ghibli Tracker logo"
           />
 
           <div className={`${styles.icon} ${styles.autocomplete__container}`}>

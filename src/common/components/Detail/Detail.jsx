@@ -6,6 +6,18 @@ import { store } from '../../context/store';
 import ProgressBar from '../../../common/components/ProgressBar/ProgressBar';
 import ReactStars from 'react-rating-stars-component';
 import stylesProfile from '../../../styles/pages/profile.module.scss';
+import Image from 'next/image';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faPlayCircle,
+  faStar,
+  faTimes,
+} from '@fortawesome/free-solid-svg-icons';
+import {
+  faFacebook,
+  faInstagram,
+  faTwitter,
+} from '@fortawesome/free-brands-svg-icons';
 
 export default function Detail({ movie, session, loading }) {
   const { state, dispatch } = useContext(store);
@@ -88,7 +100,13 @@ export default function Detail({ movie, session, loading }) {
             <strong> {movie.title} </strong>
           </h2>
           <div className={styles.img}>
-            <img src={movie.cover_url} alt="" />
+            <Image
+              src={movie.cover_url}
+              width={375}
+              height={753}
+              alt={`"${movie.title}" film cover`}
+              objectFit={'cover'}
+            />
           </div>
           <p> {movie.description} </p>
           {/* specific details */}
@@ -114,48 +132,30 @@ export default function Detail({ movie, session, loading }) {
             </div>
           </div>
 
-          <a href="#" className={styles.play} onClick={() => handleModal()}>
-            <img
-              src="https://raw.githubusercontent.com/WoojinFive/CSS_Playground/master/Responsive%20Movie%20Landing%20Page/play.png"
-              alt=""
-            />
+          <span className={styles.play} onClick={() => handleModal()}>
+            <FontAwesomeIcon icon={faStar} />
             rate movie
-          </a>
-          <a
-            href="#"
-            className={styles.play}
-            onClick={() => handleModalTrailer()}
-          >
-            <img
-              src="https://raw.githubusercontent.com/WoojinFive/CSS_Playground/master/Responsive%20Movie%20Landing%20Page/play.png"
-              alt=""
-            />
+          </span>
+
+          <span className={styles.play} onClick={() => handleModalTrailer()}>
+            <FontAwesomeIcon icon={faPlayCircle} />
             Trailer
-          </a>
+          </span>
           <div className={styles.slide}></div>
           <ul className={styles.sci}>
             <li>
               <a href="#">
-                <img
-                  src="https://raw.githubusercontent.com/WoojinFive/CSS_Playground/master/Responsive%20Movie%20Landing%20Page/facebook.png"
-                  alt=""
-                />
+                <FontAwesomeIcon icon={faFacebook} />
               </a>
             </li>
             <li>
               <a href="#">
-                <img
-                  src="https://raw.githubusercontent.com/WoojinFive/CSS_Playground/master/Responsive%20Movie%20Landing%20Page/twitter.png"
-                  alt=""
-                />
+                <FontAwesomeIcon icon={faTwitter} />
               </a>
             </li>
             <li>
               <a href="#">
-                <img
-                  src="https://raw.githubusercontent.com/WoojinFive/CSS_Playground/master/Responsive%20Movie%20Landing%20Page/instagram.png"
-                  alt=""
-                />
+                <FontAwesomeIcon icon={faInstagram} />
               </a>
             </li>
           </ul>
@@ -166,8 +166,11 @@ export default function Detail({ movie, session, loading }) {
         <Modal isOpen={isOpen} onClose={() => handleModal()}>
           <div className={`container ${stylesProfile.profile__container}`}>
             <div className={stylesProfile.user__container}>
-              <img
+              <Image
                 className={`img-fluid ${stylesProfile.user__image}`}
+                width={150}
+                height={150}
+                objectFit={'cover'}
                 src={`${
                   session?.user.image || 'https://imgur.com/WxZS1Ff.jpg'
                 }`}
@@ -228,9 +231,8 @@ export default function Detail({ movie, session, loading }) {
           </div>
         </Modal>
 
-        <img
-          src="https://raw.githubusercontent.com/WoojinFive/CSS_Playground/master/Responsive%20Movie%20Landing%20Page/close.png"
-          alt=""
+        <FontAwesomeIcon
+          icon={faTimes}
           className={styles.close}
           onClick={() => handleModal()}
         />
