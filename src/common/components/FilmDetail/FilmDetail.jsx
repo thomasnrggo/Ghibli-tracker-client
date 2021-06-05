@@ -239,9 +239,7 @@ export default function FilmDetail(props) {
           <div
             className={styles.hero__container}
             style={{
-              background: `linear-gradient(180deg, #000 0%, transparent 100%), url(${
-                film.thumbnail || 'https://imgur.com/UR8qBkw.png'
-              })`,
+              backgroundImage: `url(${film.thumbnail})`
             }}
           >
             {film.watched && (

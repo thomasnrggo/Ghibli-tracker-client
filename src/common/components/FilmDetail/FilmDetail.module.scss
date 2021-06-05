@@ -98,7 +98,7 @@ $radius: 8px;
     width: 100%;
     border-radius: $radius;
     overflow: hidden;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat !important;
     background-size: cover;
     background-position: center center;
     display: flex;
@@ -106,6 +106,7 @@ $radius: 8px;
     padding: $padding;
     color: $text-color;
     margin-bottom: $padding;
+    min-height: 50vh;
     @media (max-width: $iphoneX) {
       padding-top: 4rem;
       min-height: auto;
