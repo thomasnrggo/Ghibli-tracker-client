@@ -14,11 +14,10 @@ import Autocomplete from '../autocomplete/Autocomplete';
 import styles from './Header.module.scss';
 import { getFilms } from '../../utils/services';
 
-export default function Header() {
+export default function Header({ films }) {
   const [session, loading] = useSession();
   const { dispatch, state } = useContext(store);
   const { isSearchActive } = state;
-  const [films, setFilms] = useState([]);
   const router = useRouter();
 
   let onSearchIconClick = () => {
@@ -32,15 +31,7 @@ export default function Header() {
   useEffect(() => {
     if (router.query.signin && !session && !loading)
       dispatch({ type: 'AUTH_TRIGGER' });
-
-    // getFilms()
-    //   .then((res) => {
-    //     setFilms(res);
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //   });
-  }, [router]);
+  }, [router, loading]);
 
   return (
     <>

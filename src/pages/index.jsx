@@ -83,7 +83,7 @@ export default function Home({ films }) {
         />
       </Head>
 
-      <Layout>
+      <Layout films={films}>
         <div className={styles.filter__container}>
           {showFilters && (
             <div className={styles.filterButton__container}>
