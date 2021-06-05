@@ -49,7 +49,11 @@ export default function FilmDetail(props) {
   }, [session, update]);
 
   const handleModal = () => {
-    dispatch({ type: 'MODAL_TRIGGER' });
+    if (session && !loading) {
+      dispatch({ type: 'MODAL_TRIGGER' });
+    } else {
+      dispatch({ type: 'AUTH_TRIGGER' });
+    }
   };
 
   let handleSelectedTab = (title) => {
