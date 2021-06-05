@@ -9,9 +9,9 @@ export default function MovieDetail({ movie }) {
 
   return (
     <Layout>
-      {/* <Detail movie={movie} session={session} loading={loading} /> */}
+      <Detail movie={movie} session={session} loading={loading} />
       {/* <Detail idMovie={id} session={session} loading={loading} /> */}
-      <FilmDetail movie={movie}/>
+      {/* <FilmDetail movie={movie}/> */}
     </Layout>
   );
 }
